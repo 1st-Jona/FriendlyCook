@@ -43,7 +43,7 @@ espacio=[ ,\t,\r,\n]+
 ( "las" ) {lexeme=yytext(); return LAS;}
 
 /*Pepsi*/
-( "Pepsi") {lexeme=yytext(); return PEPSI;}
+( "pepsi") {lexeme=yytext(); return PEPSI;}
 
 ( "los" ) {lexeme=yytext(); return LOS;}
 

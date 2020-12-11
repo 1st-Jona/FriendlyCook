@@ -55,7 +55,7 @@ espacio=[ ,\t,\r,\n]+
 ( "las" ) {return new Symbol(sym.LAS,yychar,yyline,yytext());}
 
 /*Pepsi*/
-( "Pepsi") {return new Symbol(sym.PEPSI,yychar,yyline,yytext());}
+( "pepsi") {return new Symbol(sym.PEPSI,yychar,yyline,yytext());}
 
 /*Cantidad UN y UNA*/
 ( "un" ) {return new Symbol(sym.CANT_UN,yychar,yyline,yytext());}
@@ -63,6 +63,18 @@ espacio=[ ,\t,\r,\n]+
 
 /*Cantidades plurales*/
 ( "dos" | "tres" | "cuatro" | "cinco" | "seis"| "siete" | "ocho" | "nueve" | "diez" | "once" | "doce" | "trece" | "catorce" | "quince" ) {return new Symbol(sym.CANT_PLURALES,yychar,yyline,yytext());}
+
+/*-------------------- PLATILLOS (MENU) -----------------------*/
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------*/
 
 ( "los" ) {return new Symbol(sym.LOS,yychar,yyline,yytext());}
 
