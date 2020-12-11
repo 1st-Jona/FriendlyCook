@@ -47,7 +47,7 @@ espacio=[ ,\t,\r,\n]+
 
 /*Platillos*/
 /* Sushi de camaron				$80.00*/
-(“sushi de camaron”) {lexeme=yytext(); return SUSHI_CAMARON;}
+("sushi de camaron") {lexeme=yytext(); return SUSHI_CAMARON;}
 /*Sushi de pollo				$80.00*/
 (“sushi de pollo”) {lexeme=yytext(); return SUSHI_POLLO;}
 /*Sushi de res					$80.00*/

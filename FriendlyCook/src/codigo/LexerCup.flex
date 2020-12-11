@@ -66,7 +66,7 @@ espacio=[ ,\t,\r,\n]+
 
 /*-------------------- PLATILLOS (MENU) -----------------------*/
 /* Sushi de camaron				$80.00*/
-(“sushi de camaron”) {return new Symbol(sym.SUSHI_CAMARON,yychar,yyline,yytext());}
+("sushi de camaron") {return new Symbol(sym.SUSHI_CAMARON,yychar,yyline,yytext());}
 /*Sushi de pollo				$80.00*/
 (“sushi de pollo”) {return new Symbol(sym.SUSHI_POLLO,yychar,yyline,yytext());}
 /*Sushi de res					$80.00*/
@@ -124,7 +124,7 @@ espacio=[ ,\t,\r,\n]+
 /*Piña colada 					$45.00*/
 (“piña colada”) {return new Symbol(sym.PIÑA_COLADA,yychar,yyline,yytext());}
 /*Jugo						$25.00*/
-(“jugo”) {lexeme=yytext(); return JUGO;}
+(“jugo”) {return new Symbol(sym.JUGO,yychar,yyline,yytext());}
 /*Vampiro					$55.00*/
 (“vampiro”) {return new Symbol(sym.VAMPIRO,yychar,yyline,yytext());}
 

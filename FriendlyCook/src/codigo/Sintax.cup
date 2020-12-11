@@ -2,6 +2,10 @@ package codigo;
 
 import java_cup.runtime.Symbol;
 
+action code{:
+    Ventana v=new Ventana();    
+:}
+
 parser code
 {:
     private Symbol s;
@@ -22,7 +26,8 @@ TERIYAKI, HELADO_VAINILLA, FRUTA_CARAMELO, HELADO_CACAO, PIE_LIMON, PIE_FRESA, P
 DULCE_LECHE, CAFE, EXPRESSO, MARTINI, LIMONADA, NARANJADA, COCA_COLA, VICTORIA, PIÑA_COLADA, JUGO, VAMPIRO, CORONA,
 FONDANT;
 
-non terminal INICIO,SENTENCIAS, SENT_SOLICITAR_PEDIDO, SENT_HACER_PEDIDO,PLATILLO,PETICION,CANTIDAD;
+non terminal INICIO,SENTENCIAS, SENT_SOLICITAR_PEDIDO, SENT_HACER_PEDIDO,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
+               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A;
 
 start with INICIO;
 
@@ -36,15 +41,20 @@ SENTENCIAS ::= SENT_HACER_PEDIDO |
 SENT_SOLICITAR_PEDIDO ::= QUIERO HACER CANT_UN PEDIDO 
 ;
 
-SENT_HACER_PEDIDO ::= QUIERO PLATILLO 
+SENT_HACER_PEDIDO ::= QUIERO PLATILLO | 
+                      SENT_HACER_PEDIDO QUIERO PLATILLO | 
+                      SENT_HACER_PEDIDO Coma PLATILLO | 
+                      SENT_HACER_PEDIDO PLATILLO |
+                      SENT_HACER_PEDIDO Y PLATILLO
 ;
 
-PLATILLO ::= CANTIDAD PEPSI :s{:  System.out.println("Se pidió PEPSI");    :}| 
-             PLATILLO Coma CANTIDAD PEPSI | PLATILLO CANTIDAD PEPSI | PLATILLO Y CANTIDAD PEPSI
+PLATILLO ::= CANTIDAD_CORRECTO_O SUSHI_CAMARON |  /* Sushi de camaron - $80.00*/
+             CANT_UNA SUSHI_CAMARON :s {:v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de camaron. \n Ejemplo: ' ...quiero 'un' sushi de camaron'\n");:}
+             
 ;
 
-CANTIDAD ::= CANT_UN | CANT_UNA | CANT_PLURALES
+CANTIDAD_CORRECTO_O ::=  CANT_UN | CANT_PLURALES
 ;
 
-
-
+CANTIDAD_CORRECTO_A ::= CANT_UNA | CANT_PLURALES
+;

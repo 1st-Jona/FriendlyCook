@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
@@ -45,8 +46,9 @@ public class Ventana extends javax.swing.JFrame {
     TextLineNumber lineas;
     DefaultTableModel model;
     
-
-
+    static ArrayList <String> genErrores = new ArrayList();
+    static ArrayList <String> genErroresL = new ArrayList();
+    String resultado;
     
     /**
      * Creates new form Analizador
@@ -337,6 +339,14 @@ public class Ventana extends javax.swing.JFrame {
 
     private void lblCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCompilarMouseClicked
         compilar();
+        //SEPARACIÓN POR LETRAS 
+        String CodigoTXT = txtCodigo.getText().toLowerCase().replaceAll("oye sanji", "oye sanji");
+        CodigoTXT=CodigoTXT.replaceAll("quiero", "\n\tquiero\n\t\t");
+        CodigoTXT=CodigoTXT.replaceAll(",", ",\n\t\t");
+        CodigoTXT=CodigoTXT.replaceAll(" y", " y\n\t\t");
+        CodigoTXT=CodigoTXT.replaceAll("por favor", "\npor favor");
+        txtCodigo.setText(CodigoTXT);
+        
     }//GEN-LAST:event_lblCompilarMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -344,8 +354,15 @@ public class Ventana extends javax.swing.JFrame {
         Sintax s= new Sintax(new codigo.LexerCup(new StringReader(ST)));
         try {
             s.parse();
+            resultado="";
             txtErrores.setText("Analisi sintáctico realizado con exito");
             txtErrores.setForeground(new Color(25,111,61));
+             for(int i=0;i<genErrores.size();i++){
+                    resultado=resultado+genErrores.get(i)+"\n";
+            }
+             txtErrores.setText(resultado+"Compilación completa.");
+             genErrores.clear();
+
         } catch (Exception ex) {
            Symbol sym = s.getS();
             txtErrores.setText("Erro de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", Texto: \""+ sym.value+ "\"");
