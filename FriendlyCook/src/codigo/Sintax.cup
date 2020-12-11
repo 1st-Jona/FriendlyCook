@@ -1,0 +1,45 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal SANJI,QUIERO,OYE,TRAER,CADENA,HACER,PEDIDO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,CANT_PLURALES,DE,PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR;
+
+non terminal INICIO,SENTENCIAS, SENT_SOLICITAR_PEDIDO, SENT_HACER_PEDIDO,PLATILLO,PETICION,CANTIDAD;
+
+start with INICIO;
+
+INICIO ::= OYE SANJI SENTENCIAS POR FAVOR
+;
+               
+SENTENCIAS ::= SENT_HACER_PEDIDO | 
+               SENT_SOLICITAR_PEDIDO   
+;
+
+SENT_SOLICITAR_PEDIDO ::= QUIERO HACER CANT_UN PEDIDO 
+;
+
+SENT_HACER_PEDIDO ::= QUIERO PLATILLO 
+;
+
+PLATILLO ::= CANTIDAD PEPSI :s{:  System.out.println("Se pidió PEPSI");    :}| 
+             PLATILLO Coma CANTIDAD PEPSI | PLATILLO CANTIDAD PEPSI | PLATILLO Y CANTIDAD PEPSI
+;
+
+CANTIDAD ::= CANT_UN | CANT_UNA | CANT_PLURALES
+;
+
+
+
