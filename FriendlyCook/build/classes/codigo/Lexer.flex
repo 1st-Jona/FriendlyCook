@@ -46,68 +46,65 @@ espacio=[ ,\t,\r,\n]+
 ( "pepsi") {lexeme=yytext(); return PEPSI;}
 
 /*Platillos*/
+
+/*Platillos*/
 /* Sushi de camaron				$80.00*/
 ("sushi de camaron") {lexeme=yytext(); return SUSHI_CAMARON;}
 /*Sushi de pollo				$80.00*/
-(“sushi de pollo”) {lexeme=yytext(); return SUSHI_POLLO;}
+("sushi de pollo") {lexeme=yytext(); return SUSHI_POLLO;}
 /*Sushi de res					$80.00*/
-(“sushi de res”) {lexeme=yytext(); return SUSHI_RES;}
+("sushi de res") {lexeme=yytext(); return SUSHI_RES;}
 /*Camaronito					$100.00*/
-(“camaronito”) {lexeme=yytext(); return CAMARONITO;}
+("camaronito") {lexeme=yytext(); return CAMARONITO;}
 /*Bombazo					$100.00*/
-(“bombazo”) {lexeme=yytext(); return BOMBAZO;}
-/*Cielo, mar y tierra				$90.00*/
-(“cielo mar y tierra”) {lexeme=yytext(); return CIELO_MAR_TIERRA;}
-/*Tres quesos					$90.00*/
-(“tres quesos”) {lexeme=yytext(); return TRES_QUESOS;}
-/*Mar y tierra					$85.00*/
-(“mar y tierra”) {lexeme=yytext(); return MAR_TIERRA;}
+("bombazo") {lexeme=yytext(); return BOMBAZO;}
 /*Hamburguesa de arroz                          $90.00*/
-(“hamburguesa de arroz”) {lexeme=yytext(); return HAMBURGUESA_ARROZ;}
+("hamburguesa") {lexeme=yytext(); return HAMBURGUESA_ARROZ;}
 /*Teriyaki					$120.00*/
-(“teriyaki”) {lexeme=yytext(); return TERIYAKI;}
+("teriyaki") {lexeme=yytext(); return TERIYAKI;}
 /*Helado de vainilla				$30.00*/
-(“helado de vainilla”) {lexeme=yytext(); return HELADO_VAINILLA;}
+("helado de vainilla") {lexeme=yytext(); return HELADO_VAINILLA;}
 /*Fruta en caramelo				$28.00*/
-(“fruta en caramelo”) {lexeme=yytext(); return FRUTA_CARAMELO;}
+("fruta en caramelo") {lexeme=yytext(); return FRUTA_CARAMELO;}
 /*Fondant					$40.00*/
-(“fondant”) {lexeme=yytext(); return FONDANT;}
+("fondant") {lexeme=yytext(); return FONDANT;}
 /*Helado de cacao				$30.00*/
-(“helado de cacao”) {lexeme=yytext(); return HELADO_CACAO;}
+("helado de cacao") {lexeme=yytext(); return HELADO_CACAO;}
 /*Pie de limón					$26.00*/
-(“pie de limon”) {lexeme=yytext(); return PIE_LIMON;}
+("pie de limon") {lexeme=yytext(); return PIE_LIMON;}
 /*Pie de fresa					$26.00*/
-(“pie de fresa”) {lexeme=yytext(); return PIE_FRESA;}
+("pie de fresa") {lexeme=yytext(); return PIE_FRESA;}
 /*Pie de mora					$26.00*/
-(“pie de mora”) {lexeme=yytext(); return PIE_MORA;}
+("pie de mora") {lexeme=yytext(); return PIE_MORA;}
 /*Pie de queso					$28.00*/
-(“pie de queso”) {lexeme=yytext(); return PIE_QUESO;}
+("pie de queso") {lexeme=yytext(); return PIE_QUESO;}
 /*Churros					$6.00*/
-(“churros”) {lexeme=yytext(); return CHURROS;}
+("churros") {lexeme=yytext(); return CHURROS;}
 /*Dulce de leche				$12.00*/
-(“dulce de leche”) {lexeme=yytext(); return DULCE_LECHE;}
+("dulce de leche") {lexeme=yytext(); return DULCE_LECHE;}
 /*Café						$20.00*/
-(“cafe”) {lexeme=yytext(); return CAFE;}
+("cafe") {lexeme=yytext(); return CAFE;}
 /*Expresso					$35.00*/
-(“expresso”) {lexeme=yytext(); return EXPRESSO;}
+("expresso") {lexeme=yytext(); return EXPRESSO;}
 /*Martini					$45.00*/
-(“martini”) {lexeme=yytext(); return MARTINI;}
+("martini") {lexeme=yytext(); return MARTINI;}
 /*Limonada					$22.00*/
-(“limonada”) {lexeme=yytext(); return LIMONADA;}
+("limonada") {lexeme=yytext(); return LIMONADA;}
 /*Naranjada					$22.00*/
-(“naranjada”) {lexeme=yytext(); return NARANJADA;}
+("naranjada") {lexeme=yytext(); return NARANJADA;}
 /*Coca-cola					$18.00*/
-(“coca cola”) {lexeme=yytext(); return COCA_COLA;}
+("coca cola") {lexeme=yytext(); return COCA_COLA;}
 /*Corona					$39.00*/
-(“corona”) {lexeme=yytext(); return CORONA;}
+("corona") {lexeme=yytext(); return CORONA;}
 /*Victoria					$39.00*/
-(“victoria”) {lexeme=yytext(); return VICTORIA;}
+("victoria") {lexeme=yytext(); return VICTORIA;}
 /*Piña colada 					$45.00*/
-(“piña colada”) {lexeme=yytext(); return PIÑA_COLADA;}
+("piña colada") {lexeme=yytext(); return PIÑA_COLADA;}
 /*Jugo						$25.00*/
-(“jugo”) {lexeme=yytext(); return JUGO;}
+("jugo") {lexeme=yytext(); return JUGO;}
 /*Vampiro					$55.00*/
-(“vampiro”) {lexeme=yytext(); return VAMPIRO;}
+("vampiro") {lexeme=yytext(); return VAMPIRO;}
+
 /*------------------------------------------------------------------------------*/
 ( "los" ) {lexeme=yytext(); return LOS;}
 

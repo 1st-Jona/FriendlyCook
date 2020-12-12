@@ -1,8 +1,31 @@
 oye sanji 
 	quiero
-		 un sushi de camaron,
-		 un sushi de camaron,
-		 un sushi de camaron y
-		 un sushi de camaron y
-		 un sushi de camaron y
+		 un sushi de camaron ,
+		 un sushi de pollo ,
+		 un sushi de res ,
+		 un camaronito ,
+		 un bombazo ,
+		 una hamburguesa ,
+		 un teriyaki ,
+		 un helado de vainilla ,
+		 una fruta en caramelo ,
+		 un fondant ,
+		 un helado de cacao ,
+		 un pie de limon ,
+		 un pie de fresa ,
+		 un pie de mora ,
+		 un pie de queso ,
+		 un churros ,
+		 un dulce de leche ,
+		 un cafe ,
+		 un expresso ,
+		 un martini ,
+		 una limonada ,
+		 una naranjada ,
+		 una coca cola ,
+		 una corona ,
+		 una victoria ,
+		 una piña colada ,
+		 un jugo y
+		 un vampiro 
 por favor

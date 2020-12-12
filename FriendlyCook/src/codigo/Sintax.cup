@@ -21,7 +21,7 @@ parser code
 
 terminal SANJI,QUIERO,OYE,TRAER,CADENA,HACER,PEDIDO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,CANT_PLURALES,DE,
 PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR,SUSHI_CAMARON,
-SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, CIELO_MAR_TIERRA, TRES_QUESOS, MAR_TIERRA, HAMBURGUESA_ARROZ,
+SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, HAMBURGUESA_ARROZ,
 TERIYAKI, HELADO_VAINILLA, FRUTA_CARAMELO, HELADO_CACAO, PIE_LIMON, PIE_FRESA, PIE_MORA, PIE_QUESO, CHURROS,
 DULCE_LECHE, CAFE, EXPRESSO, MARTINI, LIMONADA, NARANJADA, COCA_COLA, VICTORIA, PIÑA_COLADA, JUGO, VAMPIRO, CORONA,
 FONDANT;
@@ -49,8 +49,61 @@ SENT_HACER_PEDIDO ::= QUIERO PLATILLO |
 ;
 
 PLATILLO ::= CANTIDAD_CORRECTO_O SUSHI_CAMARON |  /* Sushi de camaron - $80.00*/
-             CANT_UNA SUSHI_CAMARON :s {:v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de camaron. \n Ejemplo: ' ...quiero 'un' sushi de camaron'\n");:}
-             
+             CANT_UNA SUSHI_CAMARON :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de camaron. \n Ejemplo: ' ...quiero 'un' sushi de camaron'\n");:} |
+             CANTIDAD_CORRECTO_O SUSHI_POLLO |  /* Sushi de pollo - $80.00*/
+             CANT_UNA SUSHI_POLLO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de pollo. \n Ejemplo: ' ...quiero 'un' sushi de pollo'\n");:} |
+             CANTIDAD_CORRECTO_O SUSHI_RES |  /* Sushi de res - $80.00*/
+             CANT_UNA SUSHI_RES :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de res. \n Ejemplo: ' ...quiero 'un' sushi de res'\n");:} |
+             CANTIDAD_CORRECTO_O CAMARONITO |  /* Camaronito - $100.00*/
+             CANT_UNA CAMARONITO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una camaronito. \n Ejemplo: ' ...quiero 'un' camaronito'\n");:} |
+             CANTIDAD_CORRECTO_O BOMBAZO |  /*  Bombazo - $100.00*/
+             CANT_UNA BOMBAZO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una bombazo. \n Ejemplo: ' ...quiero 'un' bombazo'\n");:} |
+             CANTIDAD_CORRECTO_A HAMBURGUESA_ARROZ |  /* Hamburguesa de Arroz - $90.00*/
+             CANT_UN HAMBURGUESA_ARROZ :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un hamburguesa de arroz. \n Ejemplo: ' ...quiero 'una' hamburguesa de arroz'\n");:} |
+             CANTIDAD_CORRECTO_O TERIYAKI |  /* Teriyaki - $120.00*/
+             CANT_UNA TERIYAKI :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una teriyaki. \n Ejemplo: ' ...quiero 'un' teriyaki'\n");:} |
+             CANTIDAD_CORRECTO_O HELADO_VAINILLA |  /* Helado de vainilla - $30.00*/
+             CANT_UNA HELADO_VAINILLA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una helado de vainilla. \n Ejemplo: ' ...quiero 'un' helado de vainilla'\n");:} |
+             CANTIDAD_CORRECTO_A FRUTA_CARAMELO |  /* Fruta en caramelo - $28.00*/
+             CANT_UN FRUTA_CARAMELO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un fruta en caramelo. \n Ejemplo: ' ...quiero 'una' fruta en caramelo'\n");:} |
+             CANTIDAD_CORRECTO_O FONDANT |  /* Fondant - $40.00*/
+             CANT_UNA FONDANT :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una fondant. \n Ejemplo: ' ...quiero 'un' fondant'\n");:} |
+             CANTIDAD_CORRECTO_O HELADO_CACAO |  /* Helado de cacao - $30.00*/
+             CANT_UNA HELADO_CACAO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una helado de cacao. \n Ejemplo: ' ...quiero 'un' helado de cacao'\n");:} |
+             CANTIDAD_CORRECTO_O PIE_LIMON |  /* Pie de limon - $26.00*/
+             CANT_UNA PIE_LIMON :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una pie de limon. \n Ejemplo: ' ...quiero 'un' pie de limon'\n");:} |
+             CANTIDAD_CORRECTO_O PIE_FRESA |  /* Pie de fresa - $26.00*/
+             CANT_UNA PIE_FRESA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una pie de fresa. \n Ejemplo: ' ...quiero 'un' pie de fresa'\n");:} |
+             CANTIDAD_CORRECTO_O PIE_MORA |  /* Pie de mora - $26.00*/
+             CANT_UNA PIE_MORA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una pie de mora. \n Ejemplo: ' ...quiero 'un' pie de mora'\n");:} |
+             CANTIDAD_CORRECTO_O PIE_QUESO |  /* Pie de queso - $26.00*/
+             CANT_UNA PIE_QUESO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una pie de queso. \n Ejemplo: ' ...quiero 'un' pie de queso'\n");:} |
+             CANTIDAD_CORRECTO_O CHURROS |  /* Churros - $6.00*/
+             CANT_UNA CHURROS :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una churro. \n Ejemplo: ' ...quiero 'un' churro'\n");:} |
+             CANT_UN DULCE_LECHE   /* Dulce de leche - $12.00*/ |
+             CANT_UNA DULCE_LECHE :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una dulce de leche. \n Ejemplo: ' ...quiero 'un' dulce de leche'\n");:} |
+             CANTIDAD_CORRECTO_O CAFE |  /* Cafe - $20.00*/
+             CANT_UNA CAFE :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una cafe. \n Ejemplo: ' ...quiero 'un' cafe'\n");:} |
+             CANTIDAD_CORRECTO_O EXPRESSO |  /* Expresso - $35.00*/
+             CANT_UNA EXPRESSO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una expresso. \n Ejemplo: ' ...quiero 'un' expresso'\n");:} |
+             CANTIDAD_CORRECTO_O MARTINI |  /* Martini - $45.00*/
+             CANT_UNA MARTINI :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una martini. \n Ejemplo: ' ...quiero 'un' martini'\n");:} |
+             CANTIDAD_CORRECTO_A LIMONADA |  /* Limonada - $22.00*/
+             CANT_UN LIMONADA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un limonada. \n Ejemplo: ' ...quiero 'una' limonada'\n");:} |
+             CANTIDAD_CORRECTO_A NARANJADA |  /* Naranjada - $22.00*/
+             CANT_UN NARANJADA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un naranjada. \n Ejemplo: ' ...quiero 'una' naranjada'\n");:} |
+             CANTIDAD_CORRECTO_A COCA_COLA |  /* Coca-cola - $18.00*/
+             CANT_UN COCA_COLA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un coca cola. \n Ejemplo: ' ...quiero 'una' coca cola'\n");:} |
+             CANTIDAD_CORRECTO_A CORONA |  /* Corona - $39.00*/
+             CANT_UN CORONA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un corona. \n Ejemplo: ' ...quiero 'una' corona'\n");:} |
+             CANTIDAD_CORRECTO_A VICTORIA |  /* Victoria - $39.00*/
+             CANT_UN VICTORIA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un victoria. \n Ejemplo: ' ...quiero 'una' victoria'\n");:} |
+             CANTIDAD_CORRECTO_A PIÑA_COLADA |  /* Piña colada - $45.00*/
+             CANT_UN PIÑA_COLADA :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir un piña colada. \n Ejemplo: ' ...quiero 'una' piña colada'\n");:} |
+             CANTIDAD_CORRECTO_O JUGO |  /* Jugo - $25.00*/
+             CANT_UNA JUGO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una jugo. \n Ejemplo: ' ...quiero 'un' jugo'\n");:} |
+             CANTIDAD_CORRECTO_O VAMPIRO |  /* Vampiro - $55.00*/
+             CANT_UNA VAMPIRO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una vampiro. \n Ejemplo: ' ...quiero 'un' vampiro'\n");:} 
 ;
 
 CANTIDAD_CORRECTO_O ::=  CANT_UN | CANT_PLURALES
