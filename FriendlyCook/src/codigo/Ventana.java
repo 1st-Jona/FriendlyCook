@@ -1,5 +1,6 @@
 package codigo;
 
+import static JFlex.Out.println;
 import compilador.TextLineNumber;
 import java.awt.Color;
 import java.awt.FileDialog;
@@ -17,6 +18,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
@@ -53,6 +55,77 @@ public class Ventana extends javax.swing.JFrame {
     
     static ArrayList <String> genErrores = new ArrayList();
     static ArrayList <String> genErroresL = new ArrayList();
+    static ArrayList <String> cuenta = new ArrayList<String>();
+    
+    static ArrayList <String> codObjPeticion = new ArrayList<String>();
+    static ArrayList <String> cantidadesPlatillos = new ArrayList<String>();
+    static String codObjeto;
+    
+    static int cantPlatillos;
+    static int numeroPlatillo;
+    
+    static String [] Platillos={
+    "Sushi de camaron           $80.00 ",
+    "Sushi de pollo             $80.00 ",
+    "Sushi de res               $80.00 ",
+    "Camaronito                 $100.00",
+    "Bombazo                    $100.00",
+    "Hamburguesa de arroz       $90.00 ",
+    "Teriyaki                   $120.00",
+    "Helado de vainilla         $30.00 ",
+    "Fruta en caramelo          $28.00 ",
+    "Fondant                    $40.00 ",
+    "Helado de cacao            $30.00 ",
+    "Pie de limón               $26.00 ",
+    "Pie de fresa               $26.00 ",
+    "Pie de mora                $26.00 ",
+    "Pie de queso               $28.00 ",
+    "Churros                    $06.00 ",
+    "Dulce de leche             $12.00 ",
+    "Café                       $20.00 ",
+    "Expresso                   $35.00 ",
+    "Martini                    $45.00 ",
+    "Limonada                   $22.00 ",
+    "Naranjada                  $22.00 ",
+    "Coca-cola                  $18.00 ",
+    "Corona                     $39.00 ",
+    "Victoria                   $39.00 ",
+    "Piña colada                $45.00 ",
+    "Jugo                       $25.00 ",
+    "Vampiro                    $55.00 "
+    };
+    
+    static double [] precioPlatillos={
+    80.00,
+    80.00,
+    80.00,
+    100.0,
+    100.0,
+    90.00,
+    120.0,
+    30.00,
+    28.00,
+    40.00,
+    30.00,
+    26.00,
+    26.00,
+    26.00,
+    28.00,
+    06.00,
+    12.00,
+    20.00,
+    35.00,
+    45.00,
+    22.00,
+    22.00,
+    18.00,
+    39.00,
+    39.00,
+    45.00,
+    25.00,
+    55.00
+    };
+    
     String resultado;
     String filename;
     boolean formatFlag=false;
@@ -168,7 +241,7 @@ public class Ventana extends javax.swing.JFrame {
     private void saveAS() {
         FileDialog fileDialog = new FileDialog(this, "Guardar archivo", FileDialog.SAVE);
         fileDialog.setVisible(true);
-
+ 
         if (fileDialog.getFile() != null) {
             filename = fileDialog.getDirectory() + fileDialog.getFile();
             setTitle(filename);
@@ -203,6 +276,43 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
     
+    public void mostrarMenu(){
+        println("se mostró menu");
+        txtCliente.setText(
+"________________[MENÚ]_______________\n"+
+"| Sushi de camaron           $80.00  |\n" +
+"| Sushi de pollo             $80.00  |\n" +
+"| Sushi de res               $80.00  |\n" +
+"| Camaronito                 $100.00 |\n" +
+"| Bombazo                    $100.00 |\n" +
+"| Hamburguesa de arroz       $90.00  |\n" +
+"| Teriyaki                   $120.00 |\n" +
+"| Helado de vainilla         $30.00  |\n" +
+"| Fruta en caramelo          $28.00  |\n" +
+"| Fondant                    $40.00  |\n" +
+"| Helado de cacao            $30.00  |\n" +
+"| Pie de limón               $26.00  |\n" +
+"| Pie de fresa               $26.00  |\n" +
+"| Pie de mora                $26.00  |\n" +
+"| Pie de queso               $28.00  |\n" +
+"| Churros                    $06.00  |\n" +
+"| Dulce de leche             $12.00  |\n" +
+"| Café                       $20.00  |\n" +
+"| Expresso                   $35.00  |\n" +
+"| Martini                    $45.00  |\n" +
+"| Limonada                   $22.00  |\n" +
+"| Naranjada                  $22.00  |\n" +
+"| Coca-cola                  $18.00  |\n" +
+"| Corona                     $39.00  |\n" +
+"| Victoria                   $39.00  |\n" +
+"| Piña colada                $45.00  |\n" +
+"| Jugo                       $25.00  |\n" +
+"| Vampiro                    $55.00  |\n" + 
+"|____________________________________|");
+    }
+    
+
+    
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -229,6 +339,8 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtCliente = new javax.swing.JTextPane();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
@@ -351,6 +463,12 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane1.getAccessibleContext().setAccessibleName("Tabla");
         jScrollPane1.getAccessibleContext().setAccessibleDescription("");
 
+        txtCliente.setEditable(false);
+        txtCliente.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        jScrollPane3.setViewportView(txtCliente);
+
+        jTabbedPane1.addTab("Pantalla Cliente", jScrollPane3);
+
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 100, 480, 510));
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
 
@@ -424,7 +542,7 @@ public class Ventana extends javax.swing.JFrame {
             txtErrores.setText("");
             filename = null;
             setTitle(filename);
-           model.setRowCount(0);
+            model.setRowCount(0);
         }
     }//GEN-LAST:event_lblNuevoMouseClicked
 
@@ -432,10 +550,12 @@ public class Ventana extends javax.swing.JFrame {
        
         compilar();
         sintactico();
+        //mostrarMenu();
+
         //SEPARACIÓN POR LETRAS 
         
     }//GEN-LAST:event_lblCompilarMouseClicked
-
+  
     private void btnFormatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormatoActionPerformed
     if (formatFlag){
         String CodigoTXT = txtCodigo.getText().toLowerCase()
@@ -473,12 +593,57 @@ public void sintactico(){
              for(int i=0;i<genErrores.size();i++){
                     resultado=resultado+genErrores.get(i)+"\n";
             }
-             txtErrores.setText(resultado+"Compilación completa.");
-             genErrores.clear();
-
+             
+            
+             /*Peticiones*/
+             
+             /*Asignar peticion*/
+             if (!codObjPeticion.isEmpty()){
+                
+                 for(int i=0;i<codObjPeticion.size();i++){
+                    codObjeto = codObjPeticion.get(i);
+                    
+                    /*Peticion mostrar cuenta*/
+                    if(codObjeto.equals("[oye,quiero,cuenta]")){
+                        JFlex.Out.println("se mostro cuenta");
+                        String cuentaAcumulada="";
+                        for(int j=0;j<cuenta.size();j++){
+                            cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                        }
+           
+                    txtCliente.setText(cuentaAcumulada+"total: precio");
+                    }
+                    /*Agregar platillo*/
+                    String[] params =  codObjeto.split(",");
+                    if(params[0].equals("add")){
+                        numeroPlatillo=Integer.parseInt(params[2]);
+                        cantPlatillos=Integer.parseInt(cantidadesPlatillos.get(i));
+                        for(int j=0;j<cantPlatillos;j++){
+                            JFlex.Out.println("se agrego "+Platillos[numeroPlatillo]);
+                            cuenta.add(Platillos[numeroPlatillo]);
+                        }       
+                
+                    }
+                       
+                    
+                    /*Mostra menu*/
+                    if(codObjeto.equals("[oye,quiero,menu]")){
+                        JFlex.Out.println("Se mostro menú"+Platillos[0]);
+                        mostrarMenu();
+                    } 
+                }
+             } else{
+                 codObjeto="[ , , ]";
+             }
+            
+            txtErrores.setText(resultado+"Compilación completa.");
+            genErrores.clear();
+            codObjPeticion.clear();
+             
+             
         } catch (Exception ex) {
            Symbol sym = s.getS();
-            txtErrores.setText("Erro de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", Texto: \""+ sym.value+ "\"");
+            txtErrores.setText("Error de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", Texto: \""+ sym.value+ "\"");
             txtErrores.setForeground(Color.RED);
         }
 }
@@ -636,9 +801,9 @@ public void sintactico(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
@@ -650,6 +815,7 @@ public void sintactico(){
     private javax.swing.JLabel lblNuevo;
     private javax.swing.JLabel lbllogo;
     private javax.swing.JTable tblTokens;
+    private javax.swing.JTextPane txtCliente;
     private javax.swing.JTextPane txtCodigo;
     private javax.swing.JTextPane txtErrores;
     // End of variables declaration//GEN-END:variables

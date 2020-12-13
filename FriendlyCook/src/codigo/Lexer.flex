@@ -45,9 +45,25 @@ espacio=[ ,\t,\r,\n]+
 /*Pepsi*/
 ( "pepsi") {lexeme=yytext(); return PEPSI;}
 
-/*Platillos*/
 
-/*Platillos*/
+
+/*--------- Pedir la cuenta ------------*/
+( "cuenta" ) {lexeme=yytext(); return CUENTA;}
+( "traeme" | "dame" ) {lexeme=yytext(); return TRAER;}
+/*--------- Fin pedir la cuenta --------*/
+
+
+
+ /*-------------------Mostrar Menu-------------------*/
+( "muestrame" | "enseñame" ) {lexeme=yytext(); return MOSTRAR;}
+( "ver" | "mirar" ) {lexeme=yytext(); return VER;}
+( "menu" ) {lexeme=yytext(); return MENU;}
+( "carta" ) {lexeme=yytext(); return CARTA;}
+/*--------------------Fin mostrar Menu----------------*/
+
+
+
+/*--------------------Platillos-----------------------*/
 /* Sushi de camaron				$80.00*/
 ("sushi de camaron") {lexeme=yytext(); return SUSHI_CAMARON;}
 /*Sushi de pollo				$80.00*/

@@ -19,23 +19,38 @@ parser code
 }
 :};
 
-terminal SANJI,QUIERO,OYE,TRAER,CADENA,HACER,PEDIDO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,CANT_PLURALES,DE,
+terminal SANJI,QUIERO,OYE,TRAER,CUENTA,CADENA,HACER,PEDIDO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,CANT_PLURALES,DE,
 PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR,SUSHI_CAMARON,
 SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, HAMBURGUESA_ARROZ,
 TERIYAKI, HELADO_VAINILLA, FRUTA_CARAMELO, HELADO_CACAO, PIE_LIMON, PIE_FRESA, PIE_MORA, PIE_QUESO, CHURROS,
 DULCE_LECHE, CAFE, EXPRESSO, MARTINI, LIMONADA, NARANJADA, COCA_COLA, VICTORIA, PIÑA_COLADA, JUGO, VAMPIRO, CORONA,
-FONDANT;
+FONDANT,MOSTRAR,VER,MENU,CARTA
+;
 
-non terminal INICIO,SENTENCIAS, SENT_SOLICITAR_PEDIDO, SENT_HACER_PEDIDO,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
-               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A;
+non terminal INICIO,SENTENCIAS, SENT_SOLICITAR_PEDIDO, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
+               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA
+; 
 
 start with INICIO;
 
 INICIO ::= OYE SANJI SENTENCIAS POR FAVOR
 ;
                
-SENTENCIAS ::= SENT_HACER_PEDIDO | 
-               SENT_SOLICITAR_PEDIDO   
+SENTENCIAS ::= SENT_HACER_PEDIDO |
+               SENT_MOSTRAR_MENU |
+               SENT_SOLICITAR_PEDIDO  |
+               SENT_DAR_CUENTA  
+;
+
+SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("[oye,quiero,cuenta]");  :}|
+                    TRAER LA CUENTA  :s {: v.codObjPeticion.add("[oye,quiero,cuenta]");  :} |
+                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("[oye,quiero,cuenta]");  :} 
+;   
+
+SENT_MOSTRAR_MENU ::= QUIERO VER EL MENU  :s {: v.codObjPeticion.add("[oye,quiero,menu]");  :} | 
+                      QUIERO VER LA CARTA  :s {: v.codObjPeticion.add("[oye,quiero,menu]");  :}| 
+                      MOSTRAR EL MENU :s {: v.codObjPeticion.add("[oye,quiero,menu]");  :} | 
+                      MOSTRAR LA CARTA  :s {: v.codObjPeticion.add("[oye,quiero,menu]");  :}
 ;
 
 SENT_SOLICITAR_PEDIDO ::= QUIERO HACER CANT_UN PEDIDO 
@@ -45,11 +60,22 @@ SENT_HACER_PEDIDO ::= QUIERO PLATILLO |
                       SENT_HACER_PEDIDO QUIERO PLATILLO | 
                       SENT_HACER_PEDIDO Coma PLATILLO | 
                       SENT_HACER_PEDIDO PLATILLO |
-                      SENT_HACER_PEDIDO Y PLATILLO
+                      SENT_HACER_PEDIDO Y PLATILLO 
 ;
 
-PLATILLO ::= CANTIDAD_CORRECTO_O SUSHI_CAMARON |  /* Sushi de camaron - $80.00*/
-             CANT_UNA SUSHI_CAMARON :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de camaron. \n Ejemplo: ' ...quiero 'un' sushi de camaron'\n");:} |
+PLATILLO ::= CANTIDAD_CORRECTO_O SUSHI_CAMARON   /* Sushi de camaron - $80.00*/
+                :s {:     
+                        /*Agregar a la cuenta*/
+                        v.codObjPeticion.add("add,cuenta,0");
+                        v.bitac
+                :}  |  
+             CANT_UNA SUSHI_CAMARON :s {:
+                    /*Errores platillo 0*/
+                        v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de camaron. \n Ejemplo: ' ...quiero 'un' sushi de camaron'\n");
+                    /*Agregar a la cuenta*/
+                        JFlex.Out.println("se agrego"+v.Platillos[0]);
+                        v.cuenta.add(v.Platillos[0]);
+                :} |
              CANTIDAD_CORRECTO_O SUSHI_POLLO |  /* Sushi de pollo - $80.00*/
              CANT_UNA SUSHI_POLLO :s {:v.genErrores.add("Error semántico 1. LINEA:"+(sright+1)+"\n No es posible pedir una sushi de pollo. \n Ejemplo: ' ...quiero 'un' sushi de pollo'\n");:} |
              CANTIDAD_CORRECTO_O SUSHI_RES |  /* Sushi de res - $80.00*/

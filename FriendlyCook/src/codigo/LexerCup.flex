@@ -64,6 +64,22 @@ espacio=[ ,\t,\r,\n]+
 /*Cantidades plurales*/
 ( "dos" | "tres" | "cuatro" | "cinco" | "seis"| "siete" | "ocho" | "nueve" | "diez" | "once" | "doce" | "trece" | "catorce" | "quince" ) {return new Symbol(sym.CANT_PLURALES,yychar,yyline,yytext());}
 
+
+/*--------- Pedir la cuenta ------------*/
+( "cuenta" ) {return new Symbol(sym.CUENTA,yychar,yyline,yytext());}
+( "traeme" | "dame" ) {return new Symbol(sym.TRAER,yychar,yyline,yytext());}
+/*--------- Fin pedir la cuenta --------*/
+
+
+ /*-------------------Mostrar Menu-------------------*/
+
+( "muestrame" | "enseñame" ) {return new Symbol(sym.MOSTRAR,yychar,yyline,yytext());}
+( "ver" | "mirar" ) {return new Symbol(sym.VER,yychar,yyline,yytext());}
+( "menu" ) {return new Symbol(sym.MENU,yychar,yyline,yytext());}
+( "carta" ) {return new Symbol(sym.CARTA,yychar,yyline,yytext());}
+/*--------------------Fin mostrar Menu----------------*/
+
+
 /*-------------------- PLATILLOS (MENU) -----------------------*/
 /* Sushi de camaron				$80.00*/
 ("sushi de camaron") {return new Symbol(sym.SUSHI_CAMARON,yychar,yyline,yytext());}
