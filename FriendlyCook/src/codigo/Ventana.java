@@ -60,6 +60,9 @@ public class Ventana extends javax.swing.JFrame {
     static ArrayList <String> codObjPeticion = new ArrayList<String>();
     static ArrayList <String> cantidadesPlatillos = new ArrayList<String>();
     static String codObjeto;
+    static double totalPagar;
+    
+    static String codObjGenerado; 
     
     static int cantPlatillos;
     static int numeroPlatillo;
@@ -335,6 +338,7 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtErrores = new javax.swing.JTextPane();
         jScrollPane7 = new javax.swing.JScrollPane();
+        txtCodObjGenerado = new javax.swing.JTextPane();
         jScrollPane8 = new javax.swing.JScrollPane();
         jScrollPane9 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -445,6 +449,9 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtErrores);
 
         jTabbedPane1.addTab("Consola", jScrollPane2);
+
+        jScrollPane7.setViewportView(txtCodObjGenerado);
+
         jTabbedPane1.addTab("Código Intermedio", jScrollPane7);
         jTabbedPane1.addTab("Código Generado Arduino", jScrollPane8);
         jTabbedPane1.addTab("Gramáticas Generadas", jScrollPane9);
@@ -602,7 +609,7 @@ public void sintactico(){
                 
                  for(int i=0;i<codObjPeticion.size();i++){
                     codObjeto = codObjPeticion.get(i);
-                    
+                    codObjGenerado+="["+codObjPeticion.get(i)+"]\n";
                     /*Peticion mostrar cuenta*/
                     if(codObjeto.equals("[oye,quiero,cuenta]")){
                         JFlex.Out.println("se mostro cuenta");
@@ -611,18 +618,26 @@ public void sintactico(){
                             cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
                         }
            
-                    txtCliente.setText(cuentaAcumulada+"total: precio");
+                    txtCliente.setText(cuentaAcumulada+"\nTotal a pagar:             $"+ totalPagar);
+                     JFlex.Out.println("Cantidad de platillos"+cuenta.size());
                     }
                     /*Agregar platillo*/
                     String[] params =  codObjeto.split(",");
+                    /*for(int j=0;j<params.length;j++){
+                    JFlex.Out.println("Pos "+ j +" = "+params[j]);
+                    }*/
+                    
                     if(params[0].equals("add")){
                         numeroPlatillo=Integer.parseInt(params[2]);
                         cantPlatillos=Integer.parseInt(cantidadesPlatillos.get(i));
                         for(int j=0;j<cantPlatillos;j++){
                             JFlex.Out.println("se agrego "+Platillos[numeroPlatillo]);
                             cuenta.add(Platillos[numeroPlatillo]);
-                        }       
-                
+                            
+                            totalPagar+=precioPlatillos[numeroPlatillo];
+                            
+                        }
+                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar );
                     }
                        
                     
@@ -639,6 +654,9 @@ public void sintactico(){
             txtErrores.setText(resultado+"Compilación completa.");
             genErrores.clear();
             codObjPeticion.clear();
+            cantidadesPlatillos.clear();
+            txtCodObjGenerado.setText(codObjGenerado);
+            codObjGenerado="";
              
              
         } catch (Exception ex) {
@@ -655,9 +673,7 @@ public void sintactico(){
        
          try {
            String ST = new String(Files.readAllBytes(archivo.toPath()));
-           
-           
-           
+
            txtCodigo.setText(ST);
          } catch (FileNotFoundException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
@@ -670,7 +686,7 @@ public void sintactico(){
         saveAS();        // TODO add your handling code here:
     }//GEN-LAST:event_lblGuardarMouseClicked
     public void compilar(){
-         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
+        String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
         File archivo = new File("archivo.txt");
         PrintWriter escribir;
@@ -816,6 +832,7 @@ public void sintactico(){
     private javax.swing.JLabel lbllogo;
     private javax.swing.JTable tblTokens;
     private javax.swing.JTextPane txtCliente;
+    private javax.swing.JTextPane txtCodObjGenerado;
     private javax.swing.JTextPane txtCodigo;
     private javax.swing.JTextPane txtErrores;
     // End of variables declaration//GEN-END:variables

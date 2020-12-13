@@ -57,12 +57,7 @@ espacio=[ ,\t,\r,\n]+
 /*Pepsi*/
 ( "pepsi") {return new Symbol(sym.PEPSI,yychar,yyline,yytext());}
 
-/*Cantidad UN y UNA*/
-( "un" ) {return new Symbol(sym.CANT_UN,yychar,yyline,yytext());}
-( "una" ) {return new Symbol(sym.CANT_UNA,yychar,yyline,yytext());}
 
-/*Cantidades plurales*/
-( "dos" | "tres" | "cuatro" | "cinco" | "seis"| "siete" | "ocho" | "nueve" | "diez" | "once" | "doce" | "trece" | "catorce" | "quince" ) {return new Symbol(sym.CANT_PLURALES,yychar,yyline,yytext());}
 
 
 /*--------- Pedir la cuenta ------------*/
@@ -138,6 +133,30 @@ espacio=[ ,\t,\r,\n]+
 /*Vampiro					$55.00*/
 ("vampiro") {return new Symbol(sym.VAMPIRO,yychar,yyline,yytext());}
 /*--------------------------------------------------------------*/
+
+
+/*------------------------Cantidades plurales-----------------------*/
+( "dos" ) {return new Symbol(sym.DOS,yychar,yyline,yytext());}
+( "tres" ) {return new Symbol(sym.TRES,yychar,yyline,yytext());}
+( "cuatro" ) {return new Symbol(sym.CUATRO,yychar,yyline,yytext());}
+( "cinco" ) {return new Symbol(sym.CINCO,yychar,yyline,yytext());}
+( "seis" ) {return new Symbol(sym.SEIS,yychar,yyline,yytext());}
+( "siete" ) {return new Symbol(sym.SIETE,yychar,yyline,yytext());}
+( "ocho" ) {return new Symbol(sym.OCHO,yychar,yyline,yytext());}
+( "nueve" ) {return new Symbol(sym.NUEVE,yychar,yyline,yytext());}
+( "diez" ) {return new Symbol(sym.DIEZ,yychar,yyline,yytext());}
+( "once" ) {return new Symbol(sym.ONCE,yychar,yyline,yytext());}
+( "doce" ) {return new Symbol(sym.DOCE,yychar,yyline,yytext());}
+( "trece" ) {return new Symbol(sym.TRECE,yychar,yyline,yytext());}
+( "catorce" ) {return new Symbol(sym.CATORCE,yychar,yyline,yytext());}
+( "quince" ) {return new Symbol(sym.QUINCE,yychar,yyline,yytext());}
+
+
+/*------------------Cantidad UN y UNA------------------------------*/
+( "un" ) {return new Symbol(sym.CANT_UN,yychar,yyline,yytext());}
+( "una" ) {return new Symbol(sym.CANT_UNA,yychar,yyline,yytext());}
+
+
 
 ( "los" ) {return new Symbol(sym.LOS,yychar,yyline,yytext());}
 

@@ -120,16 +120,31 @@ espacio=[ ,\t,\r,\n]+
 ("jugo") {lexeme=yytext(); return JUGO;}
 /*Vampiro					$55.00*/
 ("vampiro") {lexeme=yytext(); return VAMPIRO;}
-
 /*------------------------------------------------------------------------------*/
-( "los" ) {lexeme=yytext(); return LOS;}
 
-/*Cantidad UN y UNA*/
+/*------------Cantidades plurales-------------*/
+( "dos" ) {lexeme=yytext(); return DOS;}
+( "tres" ) {lexeme=yytext(); return TRES;}
+( "cuatro" ) {lexeme=yytext(); return CUATRO;}
+( "cinco" ) {lexeme=yytext(); return CINCO;}
+( "seis" ) {lexeme=yytext(); return SEIS;}
+( "siete" ) {lexeme=yytext(); return SIETE;}
+( "ocho" ) {lexeme=yytext(); return OCHO;}
+( "nueve" ) {lexeme=yytext(); return NUEVE;}
+( "diez" ) {lexeme=yytext(); return DIEZ;}
+( "once" ) {lexeme=yytext(); return ONCE;}
+( "doce" ) {lexeme=yytext(); return DOCE;}
+( "trece" ) {lexeme=yytext(); return TRECE;}
+( "catorce" ) {lexeme=yytext(); return CATORCE;}
+( "quince" ) {lexeme=yytext(); return QUINCE;}
+
+
+/*------------Cantidad Singulares-------------*/
 ( "un" ) {lexeme=yytext(); return CANT_UN;}
 ( "una" ) {lexeme=yytext(); return CANT_UNA;}
 
-/*Cantidades plurales*/
-( "dos" | "tres" | "cuatro" | "cinco" | "seis"| "siete" | "ocho" | "nueve" | "diez" | "once" | "doce" | "trece" | "catorce" | "quince" ) {lexeme=yytext(); return CANT_PLURALES;}
+
+( "los" ) {lexeme=yytext(); return LOS;}
 
 /*de*/
 ( "de" ) {lexeme=yytext(); return DE;}
