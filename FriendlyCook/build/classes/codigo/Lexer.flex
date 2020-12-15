@@ -96,8 +96,6 @@ espacio=[ ,\t,\r,\n]+
 ("pie de queso") {lexeme=yytext(); return PIE_QUESO;}
 /*Churros					$6.00*/
 ("churros") {lexeme=yytext(); return CHURROS;}
-/*Dulce de leche				$12.00*/
-("dulce de leche") {lexeme=yytext(); return DULCE_LECHE;}
 /*Café						$20.00*/
 ("cafe") {lexeme=yytext(); return CAFE;}
 /*Expresso					$35.00*/

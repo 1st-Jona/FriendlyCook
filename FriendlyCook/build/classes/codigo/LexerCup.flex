@@ -108,8 +108,6 @@ espacio=[ ,\t,\r,\n]+
 ("pie de queso") {return new Symbol(sym.PIE_QUESO,yychar,yyline,yytext());}
 /*Churros					$6.00*/
 ("churros") {return new Symbol(sym.CHURROS,yychar,yyline,yytext());}
-/*Dulce de leche				$12.00*/
-("dulce de leche") {return new Symbol(sym.DULCE_LECHE,yychar,yyline,yytext());}
 /*Café						$20.00*/
 ("cafe") {return new Symbol(sym.CAFE,yychar,yyline,yytext());}
 /*Expresso					$35.00*/

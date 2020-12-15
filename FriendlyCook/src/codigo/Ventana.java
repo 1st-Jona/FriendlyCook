@@ -62,7 +62,7 @@ public class Ventana extends javax.swing.JFrame {
     static String codObjeto;
     static double totalPagar;
     
-    static String codObjGenerado; 
+    static String codObjGenerado=""; 
     
     static int cantPlatillos;
     static int numeroPlatillo;
@@ -150,7 +150,7 @@ public class Ventana extends javax.swing.JFrame {
         
         
         final StyleContext cont = StyleContext.getDefaultStyleContext();
-        final AttributeSet attr = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.RED);
+        final AttributeSet attr = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.BLUE);
         final AttributeSet attg = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.GREEN);
         final AttributeSet atta = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.ORANGE);
         final AttributeSet attx = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, Color.RED);
@@ -174,12 +174,12 @@ public class Ventana extends javax.swing.JFrame {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
                         if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|sanji|por|favor)")) {
                             setCharacterAttributes(wordL, wordR - wordL, attg, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(un|una|unas|unos|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)")) {
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(un|una|unas|unos|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince)")) {
                             setCharacterAttributes(wordL, wordR - wordL, atta, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(quiero)")) { //VERBOS
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(quiero|muestrame|traeme|ver)")) { //VERBOS
                             setCharacterAttributes(wordL, wordR - wordL, attx, false);
-                        /*} else if (text.substring(wordL, wordR).matches("(\\W)*()")) { //VERBOS
-                            setCharacterAttributes(wordL, wordR - wordL, attx, false);*/
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(la|el)")) { //VERBOS
+                            setCharacterAttributes(wordL, wordR - wordL, attr, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(y)")) { //VERBOS
                             setCharacterAttributes(wordL, wordR - wordL, atty, false);
                         } else {
@@ -609,9 +609,14 @@ public void sintactico(){
                 
                  for(int i=0;i<codObjPeticion.size();i++){
                     codObjeto = codObjPeticion.get(i);
-                    codObjGenerado+="["+codObjPeticion.get(i)+"]\n";
+                    
+                    if(cantidadesPlatillos.isEmpty()){cantidadesPlatillos.add("");}
+                    
+                    
+                    
+                    codObjGenerado+="["+codObjPeticion.get(i)+","+cantidadesPlatillos.get(i)+"]\n";
                     /*Peticion mostrar cuenta*/
-                    if(codObjeto.equals("[oye,quiero,cuenta]")){
+                    if(codObjeto.equals("oye,quiero,cuenta")){
                         JFlex.Out.println("se mostro cuenta");
                         String cuentaAcumulada="";
                         for(int j=0;j<cuenta.size();j++){
@@ -642,7 +647,7 @@ public void sintactico(){
                        
                     
                     /*Mostra menu*/
-                    if(codObjeto.equals("[oye,quiero,menu]")){
+                    if(codObjeto.equals("oye,quiero,menu")){
                         JFlex.Out.println("Se mostro menú"+Platillos[0]);
                         mostrarMenu();
                     } 
