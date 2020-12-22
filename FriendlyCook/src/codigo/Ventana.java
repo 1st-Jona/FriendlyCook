@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
@@ -53,15 +55,35 @@ public class Ventana extends javax.swing.JFrame {
     TextLineNumber lineas;
     DefaultTableModel model;
     
+    //AUDIO
+    static ArrayList <Integer> audio = new ArrayList();
+    public Clip clip;
+    public String ruta="/Audio/";
+    int error=0;
+    
+    //ERRORES
     static ArrayList <String> genErrores = new ArrayList();
     static ArrayList <String> genErroresL = new ArrayList();
-    static ArrayList <String> cuenta = new ArrayList<String>();
-    
+    //CUENTAS DE MESA
+    static int mesaActual=0; //0=cocina
+    //Mesa 1 ->1
+        static ArrayList <String> cuenta = new ArrayList<String>();
+        static double totalPagar;
+    //Mesa 2 ->2
+        static ArrayList <String> cuenta2 = new ArrayList<String>();
+        static double totalPagar2;
+    //Mesa 1 ->3
+        static ArrayList <String> cuenta3 = new ArrayList<String>();
+        static double totalPagar3;
+    //Mesa 1 ->3
+        static ArrayList <String> cuenta4 = new ArrayList<String>();
+        static double totalPagar4;
+
     static ArrayList <String> codObjPeticion = new ArrayList<String>();
+    static ArrayList <String> codObjPeticionOptimizado = new ArrayList<String>();
     static ArrayList <String> cantidadesPlatillos = new ArrayList<String>();
     static String codObjeto;
-    static double totalPagar;
-    
+
     static String codObjGenerado=""; 
     
     static int cantPlatillos;
@@ -215,10 +237,11 @@ public class Ventana extends javax.swing.JFrame {
 
             }
         };
+        
         txtCodigo = new JTextPane(doc);
         txtCodigo.setFont(new java.awt.Font("Consolas", 0, 18));
-       
-
+      
+      
         this.setLocationRelativeTo(null);
 
         lineas = new TextLineNumber(txtCodigo);
@@ -241,6 +264,7 @@ public class Ventana extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     
+
     private void saveAS() {
         FileDialog fileDialog = new FileDialog(this, "Guardar archivo", FileDialog.SAVE);
         fileDialog.setVisible(true);
@@ -323,6 +347,7 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jPanel1 = new javax.swing.JPanel();
+        txtLlamar = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtCodigo = new javax.swing.JTextPane();
         lbllogo = new javax.swing.JLabel();
@@ -361,7 +386,25 @@ public class Ventana extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtLlamar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLlamarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLlamarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLlamarKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtLlamar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 80, 80));
+
         jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jScrollPane5KeyTyped(evt);
+            }
+        });
 
         txtCodigo.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -374,7 +417,7 @@ public class Ventana extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(txtCodigo);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 690, 540));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 690, 540));
         jPanel1.add(lbllogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 460, 50));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 36)); // NOI18N
@@ -450,6 +493,8 @@ public class Ventana extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Consola", jScrollPane2);
 
+        txtCodObjGenerado.setEditable(false);
+        txtCodObjGenerado.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         jScrollPane7.setViewportView(txtCodObjGenerado);
 
         jTabbedPane1.addTab("Código Intermedio", jScrollPane7);
@@ -519,6 +564,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void txtCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyPressed
        
+       
     }//GEN-LAST:event_txtCodigoKeyPressed
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
@@ -562,7 +608,23 @@ public class Ventana extends javax.swing.JFrame {
         //SEPARACIÓN POR LETRAS 
         
     }//GEN-LAST:event_lblCompilarMouseClicked
-  
+  public void sonido(String archivo){
+        try{
+            clip=AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo)));
+            clip.start();
+        }catch(Exception e){ 
+        }
+    }
+  public void reproduccionAudio(int a){
+       if(error==0){ //analisis correcto
+           sonido("PedidoCapturado.wav"); 
+       }else{
+           sonido(""+a+".wav");
+       }
+       audio.clear();
+       error=0;
+   }
     private void btnFormatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormatoActionPerformed
     if (formatFlag){
         String CodigoTXT = txtCodigo.getText().toLowerCase()
@@ -601,6 +663,38 @@ public void sintactico(){
                     resultado=resultado+genErrores.get(i)+"\n";
             }
              
+            /*Optimizr*/
+            if (!codObjPeticion.isEmpty()){
+                 int nPlatillo=0;
+                 int cant=0;
+                 String[] paramsObj;
+                 paramsObj=codObjPeticion.get(0).split(",");
+                 if(paramsObj[0].equals("add")){
+                    while(nPlatillo<=27){
+                        for(int l=0; l<codObjPeticion.size(); l++){
+                            paramsObj=codObjPeticion.get(l).split(",");
+                            if(paramsObj[2].equals(nPlatillo+"")){
+                               cant+=Integer.parseInt(cantidadesPlatillos.get(l));
+                           }
+                        }
+                     if(cant>0){
+                        codObjPeticionOptimizado.add("add,cuenta"+mesaActual+","+nPlatillo+","+cant);}
+                        nPlatillo++;
+                        cant=0;
+
+                    }
+                    for(int p=0;p<codObjPeticionOptimizado.size();p++){
+                    codObjGenerado+="["+codObjPeticionOptimizado.get(p)+"]\n";
+                    }
+                 }
+                 if(paramsObj[0].equals("show")){
+                    paramsObj=codObjPeticion.get(0).split(",");
+                    for(int p=0;p<codObjPeticion.size();p++){
+                        codObjGenerado+="[show,"+paramsObj[1]+mesaActual+","+mesaActual+", ]\n";
+                    }
+                 }
+                
+            }
             
              /*Peticiones*/
              
@@ -614,16 +708,36 @@ public void sintactico(){
                     
                     
                     
-                    codObjGenerado+="["+codObjPeticion.get(i)+","+cantidadesPlatillos.get(i)+"]\n";
                     /*Peticion mostrar cuenta*/
-                    if(codObjeto.equals("oye,quiero,cuenta")){
+                    if(codObjeto.equals("show,cuenta,mesa, ")){
                         JFlex.Out.println("se mostro cuenta");
                         String cuentaAcumulada="";
-                        for(int j=0;j<cuenta.size();j++){
-                            cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                        if(mesaActual==1){
+                            for(int j=0;j<cuenta.size();j++){
+                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                            }
+                            cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar;
                         }
-           
-                    txtCliente.setText(cuentaAcumulada+"\nTotal a pagar:             $"+ totalPagar);
+                        if(mesaActual==2){
+                            for(int j=0;j<cuenta2.size();j++){
+                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                            }
+                             cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar2;
+                        }
+                        if(mesaActual==3){
+                            for(int j=0;j<cuenta3.size();j++){
+                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                            }
+                             cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar3;
+                        }
+                        if(mesaActual==4){
+                            for(int j=0;j<cuenta4.size();j++){
+                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                            }
+                             cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar4;
+                        }
+                    txtCliente.setText(cuentaAcumulada);
+                    cuentaAcumulada="";
                      JFlex.Out.println("Cantidad de platillos"+cuenta.size());
                     }
                     /*Agregar platillo*/
@@ -637,17 +751,38 @@ public void sintactico(){
                         cantPlatillos=Integer.parseInt(cantidadesPlatillos.get(i));
                         for(int j=0;j<cantPlatillos;j++){
                             JFlex.Out.println("se agrego "+Platillos[numeroPlatillo]);
+                            if(mesaActual==1){
                             cuenta.add(Platillos[numeroPlatillo]);
-                            
                             totalPagar+=precioPlatillos[numeroPlatillo];
+                            }
+                            if(mesaActual==2){
+                            cuenta2.add(Platillos[numeroPlatillo]);
+                            totalPagar2+=precioPlatillos[numeroPlatillo];
+                            }
+                            if(mesaActual==3){
+                            cuenta3.add(Platillos[numeroPlatillo]);
+                            totalPagar3+=precioPlatillos[numeroPlatillo];
+                            }
+                            if(mesaActual==4){
+                            cuenta4.add(Platillos[numeroPlatillo]);
+                            totalPagar4+=precioPlatillos[numeroPlatillo];
+                            }
+                            
                             
                         }
-                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar );
+                        if(mesaActual==1){
+                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar );}
+                        if(mesaActual==2){
+                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar2 );}
+                        if(mesaActual==3){
+                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar3 );}
+                        if(mesaActual==4){
+                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar4 );}
                     }
                        
                     
                     /*Mostra menu*/
-                    if(codObjeto.equals("oye,quiero,menu")){
+                    if(codObjeto.equals("show,menu, , ")){
                         JFlex.Out.println("Se mostro menú"+Platillos[0]);
                         mostrarMenu();
                     } 
@@ -662,6 +797,8 @@ public void sintactico(){
             cantidadesPlatillos.clear();
             txtCodObjGenerado.setText(codObjGenerado);
             codObjGenerado="";
+            codObjPeticionOptimizado.clear();
+            
              
              
         } catch (Exception ex) {
@@ -669,6 +806,13 @@ public void sintactico(){
             txtErrores.setText("Error de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", Texto: \""+ sym.value+ "\"");
             txtErrores.setForeground(Color.RED);
         }
+        for(int i=0; i<audio.size();i++){
+                 if(error==0){
+                     error=audio.get(i);
+                     System.out.println(audio.get(i));
+                 }
+            }
+        reproduccionAudio(error);
 }
     private void lblAbrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAbrirMouseClicked
         JFileChooser chooser = new JFileChooser();
@@ -690,6 +834,43 @@ public void sintactico(){
     private void lblGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGuardarMouseClicked
         saveAS();        // TODO add your handling code here:
     }//GEN-LAST:event_lblGuardarMouseClicked
+
+    private void jScrollPane5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane5KeyTyped
+         System.out.println("Key Character: " + evt.getKeyChar() + "; Key Code: " + KeyEvent.getKeyText(evt.getKeyCode()));
+    }//GEN-LAST:event_jScrollPane5KeyTyped
+
+    private void txtLlamarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLlamarKeyPressed
+             
+    }//GEN-LAST:event_txtLlamarKeyPressed
+
+    private void txtLlamarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLlamarKeyReleased
+   
+    }//GEN-LAST:event_txtLlamarKeyReleased
+
+    private void txtLlamarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLlamarKeyTyped
+       char c=evt.getKeyChar();
+        if(c=='1'){
+             System.out.println("Mesa1");
+             mesaActual=1;
+        }
+        if(c=='2'){
+            System.out.println("Mesa2");
+             mesaActual=2;
+        }
+        if(c=='3'){
+            System.out.println("Mesa3");
+             mesaActual=3;
+        }
+        if(c=='4'){
+            System.out.println("Mesa4");
+             mesaActual=4;
+        }
+        if(Character.isDigit(c)){
+		evt.consume();
+        }
+        
+       
+    }//GEN-LAST:event_txtLlamarKeyTyped
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -803,7 +984,7 @@ public void sintactico(){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Ventana().setVisible(true);
-            
+                
             }
         });
     }
@@ -840,5 +1021,6 @@ public void sintactico(){
     private javax.swing.JTextPane txtCodObjGenerado;
     private javax.swing.JTextPane txtCodigo;
     private javax.swing.JTextPane txtErrores;
+    private javax.swing.JTextField txtLlamar;
     // End of variables declaration//GEN-END:variables
 }

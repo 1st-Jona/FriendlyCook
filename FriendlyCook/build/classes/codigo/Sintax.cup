@@ -36,20 +36,20 @@ start with INICIO;
 INICIO ::= OYE SANJI SENTENCIAS POR FAVOR
 ;
                
-SENTENCIAS ::= SENT_HACER_PEDIDO |
-               SENT_MOSTRAR_MENU |
-               SENT_DAR_CUENTA  
+SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(0);  :}|
+               SENT_MOSTRAR_MENU  :s {: v.audio.add(1);  :} |  //1=Mostrar menu
+               SENT_DAR_CUENTA    :s {: v.audio.add(2);  :}  
 ;
 
-SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("oye,quiero,cuenta");  :}|
-                    TRAER LA CUENTA  :s {: v.codObjPeticion.add("oye,quiero,cuenta");  :} |
-                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("oye,quiero,cuenta");  :} 
+SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :}|
+                    TRAER LA CUENTA  :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} |
+                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} 
 ;   
 
-SENT_MOSTRAR_MENU ::= QUIERO VER EL MENU  :s {: v.codObjPeticion.add("oye,quiero,menu");  :} | 
-                      QUIERO VER LA CARTA  :s {: v.codObjPeticion.add("oye,quiero,menu");  :}| 
-                      MOSTRAR EL MENU :s {: v.codObjPeticion.add("oye,quiero,menu");  :} | 
-                      MOSTRAR LA CARTA  :s {: v.codObjPeticion.add("oye,quiero,menu");  :}
+SENT_MOSTRAR_MENU ::= QUIERO VER EL MENU  :s {: v.codObjPeticion.add("show,menu, , ");  :} | 
+                      QUIERO VER LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :}| 
+                      MOSTRAR EL MENU :s {: v.codObjPeticion.add("show,menu, , ");  :} | 
+                      MOSTRAR LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :}
 ;
 
 SENT_HACER_PEDIDO ::= QUIERO PLATILLO | 
