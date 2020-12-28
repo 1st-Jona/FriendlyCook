@@ -17,7 +17,7 @@ espacio=[ ,\t,\r,\n]+
 
 /* Comillas */
 ", " {lexeme=yytext(); return Coma;}
-( "Sanji" | "SANJI" | "sanji" ) {lexeme=yytext(); return SANJI;}
+( "Sanji" | "SANJI" | "sanji" | Marvin ) {lexeme=yytext(); return SANJI;}
 
 /* Tipos de datos */
 ( "trae" | "traeme" ) {lexeme=yytext(); return TRAER;}
@@ -49,23 +49,24 @@ espacio=[ ,\t,\r,\n]+
 
 /*--------- Pedir la cuenta ------------*/
 ( "cuenta" ) {lexeme=yytext(); return CUENTA;}
-( "traeme" | "dame" ) {lexeme=yytext(); return TRAER;}
+( "traeme" | "dame" | "tráeme" ) {lexeme=yytext(); return TRAER;}
 /*--------- Fin pedir la cuenta --------*/
 
 
 
  /*-------------------Mostrar Menu-------------------*/
-( "muestrame" | "enseñame" ) {lexeme=yytext(); return MOSTRAR;}
+( "muestrame" | "enseñame" | "muéstrame" ) {lexeme=yytext(); return MOSTRAR;}
 ( "ver" | "mirar" ) {lexeme=yytext(); return VER;}
-( "menu" ) {lexeme=yytext(); return MENU;}
+( "menu" | "menú") {lexeme=yytext(); return MENU;}
 ( "carta" ) {lexeme=yytext(); return CARTA;}
+( "léeme" | "leeme" | "dictame" ) {lexeme=yytext(); return LEER;}
 /*--------------------Fin mostrar Menu----------------*/
 
 
 
 /*--------------------Platillos-----------------------*/
 /* Sushi de camaron				$80.00*/
-("sushi de camaron") {lexeme=yytext(); return SUSHI_CAMARON;}
+("sushi de camaron" | "sushi de camarón") {lexeme=yytext(); return SUSHI_CAMARON;}
 /*Sushi de pollo				$80.00*/
 ("sushi de pollo") {lexeme=yytext(); return SUSHI_POLLO;}
 /*Sushi de res					$80.00*/
@@ -87,13 +88,13 @@ espacio=[ ,\t,\r,\n]+
 /*Helado de cacao				$30.00*/
 ("helado de cacao") {lexeme=yytext(); return HELADO_CACAO;}
 /*Pie de limón					$26.00*/
-("pie de limon") {lexeme=yytext(); return PIE_LIMON;}
+("pay de limon" | "pay de limón") {lexeme=yytext(); return PIE_LIMON;}
 /*Pie de fresa					$26.00*/
-("pie de fresa") {lexeme=yytext(); return PIE_FRESA;}
+("pay de fresa") {lexeme=yytext(); return PIE_FRESA;}
 /*Pie de mora					$26.00*/
-("pie de mora") {lexeme=yytext(); return PIE_MORA;}
+("pay de mora") {lexeme=yytext(); return PIE_MORA;}
 /*Pie de queso					$28.00*/
-("pie de queso") {lexeme=yytext(); return PIE_QUESO;}
+("pay de queso") {lexeme=yytext(); return PIE_QUESO;}
 /*Churros					$6.00*/
 ("churros") {lexeme=yytext(); return CHURROS;}
 /*Café						$20.00*/
@@ -101,7 +102,7 @@ espacio=[ ,\t,\r,\n]+
 /*Expresso					$35.00*/
 ("expresso") {lexeme=yytext(); return EXPRESSO;}
 /*Martini					$45.00*/
-("martini") {lexeme=yytext(); return MARTINI;}
+("martini" | "martíni") {lexeme=yytext(); return MARTINI;}
 /*Limonada					$22.00*/
 ("limonada") {lexeme=yytext(); return LIMONADA;}
 /*Naranjada					$22.00*/

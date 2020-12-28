@@ -29,7 +29,7 @@ espacio=[ ,\t,\r,\n]+
 ", " {return new Symbol(sym.Coma,yychar,yyline,yytext());}
 
 /*Sanji*/
-( "Sanji" | "SANJI" | "sanji" ) {return new Symbol(sym.SANJI,yychar,yyline,yytext());}
+( "Sanji" | "SANJI" | "sanji" | "Marvin" ) {return new Symbol(sym.SANJI,yychar,yyline,yytext());}
 
 /* Tipos de datos */
 ( "trae" | "traeme" ) {return new Symbol(sym.TRAER,yychar,yyline,yytext());}
@@ -62,16 +62,17 @@ espacio=[ ,\t,\r,\n]+
 
 /*--------- Pedir la cuenta ------------*/
 ( "cuenta" ) {return new Symbol(sym.CUENTA,yychar,yyline,yytext());}
-( "traeme" | "dame" ) {return new Symbol(sym.TRAER,yychar,yyline,yytext());}
+( "traeme" | "dame" | "tráeme") {return new Symbol(sym.TRAER,yychar,yyline,yytext());}
 /*--------- Fin pedir la cuenta --------*/
 
 
  /*-------------------Mostrar Menu-------------------*/
 
-( "muestrame" | "enseñame" ) {return new Symbol(sym.MOSTRAR,yychar,yyline,yytext());}
+( "muestrame" | "enseñame" | "muéstrame") {return new Symbol(sym.MOSTRAR,yychar,yyline,yytext());}
 ( "ver" | "mirar" ) {return new Symbol(sym.VER,yychar,yyline,yytext());}
-( "menu" ) {return new Symbol(sym.MENU,yychar,yyline,yytext());}
+( "menu" | "menú" ) {return new Symbol(sym.MENU,yychar,yyline,yytext());}
 ( "carta" ) {return new Symbol(sym.CARTA,yychar,yyline,yytext());}
+( "léeme" | "leeme" | "dictame" ) {return new Symbol(sym.LEER,yychar,yyline,yytext());}
 /*--------------------Fin mostrar Menu----------------*/
 
 
@@ -99,21 +100,21 @@ espacio=[ ,\t,\r,\n]+
 /*Helado de cacao				$30.00*/
 ("helado de cacao") {return new Symbol(sym.HELADO_CACAO,yychar,yyline,yytext());}
 /*Pie de limón					$26.00*/
-("pie de limon") {return new Symbol(sym.PIE_LIMON,yychar,yyline,yytext());}
+("pay de limon" | "pay de limón") {return new Symbol(sym.PIE_LIMON,yychar,yyline,yytext());}
 /*Pie de fresa					$26.00*/
-("pie de fresa") {return new Symbol(sym.PIE_FRESA,yychar,yyline,yytext());}
+("pay de fresa") {return new Symbol(sym.PIE_FRESA,yychar,yyline,yytext());}
 /*Pie de mora					$26.00*/
-("pie de mora") {return new Symbol(sym.PIE_MORA,yychar,yyline,yytext());}
+("pay de mora") {return new Symbol(sym.PIE_MORA,yychar,yyline,yytext());}
 /*Pie de queso					$28.00*/
-("pie de queso") {return new Symbol(sym.PIE_QUESO,yychar,yyline,yytext());}
+("pay de queso") {return new Symbol(sym.PIE_QUESO,yychar,yyline,yytext());}
 /*Churros					$6.00*/
 ("churros") {return new Symbol(sym.CHURROS,yychar,yyline,yytext());}
 /*Café						$20.00*/
-("cafe") {return new Symbol(sym.CAFE,yychar,yyline,yytext());}
+("cafe" | "café") {return new Symbol(sym.CAFE,yychar,yyline,yytext());}
 /*Expresso					$35.00*/
 ("expresso") {return new Symbol(sym.EXPRESSO,yychar,yyline,yytext());}
 /*Martini					$45.00*/
-("martini") {return new Symbol(sym.MARTINI,yychar,yyline,yytext());}
+("martini" | "martíni") {return new Symbol(sym.MARTINI,yychar,yyline,yytext());}
 /*Limonada					$22.00*/
 ("limonada") {return new Symbol(sym.LIMONADA,yychar,yyline,yytext());}
 /*Naranjada					$22.00*/

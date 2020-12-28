@@ -194,11 +194,11 @@ public class Ventana extends javax.swing.JFrame {
 
                 while (wordR <= after) {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|sanji|por|favor)")) {
+                        if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|sanji|por|favor|Marvin|marvin)")) {
                             setCharacterAttributes(wordL, wordR - wordL, attg, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(un|una|unas|unos|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince)")) {
                             setCharacterAttributes(wordL, wordR - wordL, atta, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(quiero|muestrame|traeme|ver)")) { //VERBOS
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(quiero|muestrame|traeme|ver|muéstrame|tráeme)")) { //VERBOS
                             setCharacterAttributes(wordL, wordR - wordL, attx, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(la|el)")) { //VERBOS
                             setCharacterAttributes(wordL, wordR - wordL, attr, false);
@@ -347,7 +347,6 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jPanel1 = new javax.swing.JPanel();
-        txtLlamar = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtCodigo = new javax.swing.JTextPane();
         lbllogo = new javax.swing.JLabel();
@@ -371,6 +370,8 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txtCliente = new javax.swing.JTextPane();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextPane2 = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -385,19 +386,6 @@ public class Ventana extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtLlamar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtLlamarKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtLlamarKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtLlamarKeyTyped(evt);
-            }
-        });
-        jPanel1.add(txtLlamar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 80, 80));
 
         jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane5.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -417,8 +405,8 @@ public class Ventana extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(txtCodigo);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 690, 540));
-        jPanel1.add(lbllogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 460, 50));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 690, 480));
+        jPanel1.add(lbllogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 460, 50));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 36)); // NOI18N
         jLabel1.setText("Elementos Generados");
@@ -511,7 +499,7 @@ public class Ventana extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblTokens);
 
-        jTabbedPane1.addTab("Tab. Simb.", jScrollPane1);
+        jTabbedPane1.addTab("Tokens", jScrollPane1);
         jScrollPane1.getAccessibleContext().setAccessibleName("Tabla");
         jScrollPane1.getAccessibleContext().setAccessibleDescription("");
 
@@ -526,6 +514,15 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel4.setText("Formato");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+
+        jTextPane2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextPane2KeyTyped(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jTextPane2);
+
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 690, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 630));
 
@@ -568,7 +565,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoKeyPressed
 
     private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
-      
+       
     }//GEN-LAST:event_txtCodigoKeyTyped
 
     private void lblNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNuevoMouseClicked
@@ -839,16 +836,8 @@ public void sintactico(){
          System.out.println("Key Character: " + evt.getKeyChar() + "; Key Code: " + KeyEvent.getKeyText(evt.getKeyCode()));
     }//GEN-LAST:event_jScrollPane5KeyTyped
 
-    private void txtLlamarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLlamarKeyPressed
-             
-    }//GEN-LAST:event_txtLlamarKeyPressed
-
-    private void txtLlamarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLlamarKeyReleased
-   
-    }//GEN-LAST:event_txtLlamarKeyReleased
-
-    private void txtLlamarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLlamarKeyTyped
-       char c=evt.getKeyChar();
+    private void jTextPane2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane2KeyTyped
+             char c=evt.getKeyChar();
         if(c=='1'){
              System.out.println("Mesa1");
              mesaActual=1;
@@ -869,8 +858,7 @@ public void sintactico(){
 		evt.consume();
         }
         
-       
-    }//GEN-LAST:event_txtLlamarKeyTyped
+    }//GEN-LAST:event_jTextPane2KeyTyped
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -911,6 +899,481 @@ public void sintactico(){
                     model.addRow(fila);
                     tblTokens.setModel(model);
                     break;
+                    
+                    
+case SANJI:
+fila[0] = lexer.lexeme;
+    fila[1] = "SANJI";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case QUIERO:
+fila[0] = lexer.lexeme;
+    fila[1] = "QUIERO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case OYE:
+fila[0] = lexer.lexeme;
+    fila[1] = "OYE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CADENA:
+fila[0] = lexer.lexeme;
+    fila[1] = "CADENA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PEPSI:
+fila[0] = lexer.lexeme;
+    fila[1] = "PEPSI";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case LA:
+fila[0] = lexer.lexeme;
+    fila[1] = "LA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case Y:
+fila[0] = lexer.lexeme;
+    fila[1] = "Y";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case HACER:
+fila[0] = lexer.lexeme;
+    fila[1] = "HACER";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PEDIDO:
+fila[0] = lexer.lexeme;
+    fila[1] = "PEDIDO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case EL:
+fila[0] = lexer.lexeme;
+    fila[1] = "EL";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case LAS:
+fila[0] = lexer.lexeme;
+    fila[1] = "LAS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case LOS:
+fila[0] = lexer.lexeme;
+    fila[1] = "LOS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CANT_UN:
+fila[0] = lexer.lexeme;
+    fila[1] = "CANT_UN";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CANT_UNA:
+fila[0] = lexer.lexeme;
+    fila[1] = "CANT_UNA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CANT_PLURALES:
+fila[0] = lexer.lexeme;
+    fila[1] = "CANT_PLURALES";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case DE:
+fila[0] = lexer.lexeme;
+    fila[1] = "DE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case POR:
+fila[0] = lexer.lexeme;
+    fila[1] = "POR";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case FAVOR:
+fila[0] = lexer.lexeme;
+    fila[1] = "FAVOR";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case Coma:
+fila[0] = lexer.lexeme;
+    fila[1] = "Coma";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case ERROR:
+fila[0] = lexer.lexeme;
+    fila[1] = "ERROR";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+//cuenta
+case CUENTA:
+fila[0] = lexer.lexeme;
+    fila[1] = "CUENTA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case TRAER:
+fila[0] = lexer.lexeme;
+    fila[1] = "TRAER";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+ /*Menu*/
+case MOSTRAR:
+fila[0] = lexer.lexeme;
+    fila[1] = "MOSTRAR";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case VER:
+fila[0] = lexer.lexeme;
+    fila[1] = "VER";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case MENU:
+fila[0] = lexer.lexeme;
+    fila[1] = "MENU";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CARTA:
+fila[0] = lexer.lexeme;
+    fila[1] = "CARTA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+//Cantidades plurales
+case DOS:
+fila[0] = lexer.lexeme;
+    fila[1] = "DOS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case TRES:
+fila[0] = lexer.lexeme;
+    fila[1] = "TRES";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CUATRO:
+fila[0] = lexer.lexeme;
+    fila[1] = "CUATRO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CINCO:
+fila[0] = lexer.lexeme;
+    fila[1] = "CINCO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case SEIS:
+fila[0] = lexer.lexeme;
+    fila[1] = "SEIS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case SIETE:
+fila[0] = lexer.lexeme;
+    fila[1] = "SIETE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case OCHO:
+fila[0] = lexer.lexeme;
+    fila[1] = "OCHO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case NUEVE:
+fila[0] = lexer.lexeme;
+    fila[1] = "NUEVE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case DIEZ:
+fila[0] = lexer.lexeme;
+    fila[1] = "DIEZ";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case ONCE:
+fila[0] = lexer.lexeme;
+    fila[1] = "ONCE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case DOCE:
+fila[0] = lexer.lexeme;
+    fila[1] = "DOCE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case TRECE:
+fila[0] = lexer.lexeme;
+    fila[1] = "TRECE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CATORCE:
+fila[0] = lexer.lexeme;
+    fila[1] = "CATORCE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case QUINCE:
+fila[0] = lexer.lexeme;
+    fila[1] = "QUINCE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+/*Platillos*/
+case SUSHI_CAMARON:
+fila[0] = lexer.lexeme;
+    fila[1] = "SUSHI_CAMARON";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case SUSHI_POLLO:
+fila[0] = lexer.lexeme;
+    fila[1] = "SUSHI_POLLO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case SUSHI_RES:
+fila[0] = lexer.lexeme;
+    fila[1] = "SUSHI_RES";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CAMARONITO:
+fila[0] = lexer.lexeme;
+    fila[1] = "CAMARONITO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case BOMBAZO:
+fila[0] = lexer.lexeme;
+    fila[1] = "BOMBAZO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case HAMBURGUESA_ARROZ:
+fila[0] = lexer.lexeme;
+    fila[1] = "HAMBURGUESA_ARROZ";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case TERIYAKI:
+fila[0] = lexer.lexeme;
+    fila[1] = "TERIYAKI";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case HELADO_VAINILLA:
+fila[0] = lexer.lexeme;
+    fila[1] = "HELADO_VAINILLA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case FRUTA_CARAMELO:
+fila[0] = lexer.lexeme;
+    fila[1] = "FRUTA_CARAMELO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case HELADO_CACAO:
+fila[0] = lexer.lexeme;
+    fila[1] = "HELADO_CACAO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PIE_LIMON:
+fila[0] = lexer.lexeme;
+    fila[1] = "PIE_LIMON";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PIE_FRESA:
+fila[0] = lexer.lexeme;
+    fila[1] = "PIE_FRESA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PIE_MORA:
+fila[0] = lexer.lexeme;
+    fila[1] = "PIE_MORA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PIE_QUESO:
+fila[0] = lexer.lexeme;
+    fila[1] = "PIE_QUESO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CHURROS:
+fila[0] = lexer.lexeme;
+    fila[1] = "CHURROS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CAFE:
+fila[0] = lexer.lexeme;
+    fila[1] = "CAFE";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case EXPRESSO:
+fila[0] = lexer.lexeme;
+    fila[1] = "EXPRESSO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case MARTINI:
+fila[0] = lexer.lexeme;
+    fila[1] = "MARTINI";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case LIMONADA:
+fila[0] = lexer.lexeme;
+    fila[1] = "LIMONADA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case NARANJADA:
+fila[0] = lexer.lexeme;
+    fila[1] = "NARANJADA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case COCA_COLA:
+fila[0] = lexer.lexeme;
+    fila[1] = "COCA_COLA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case VICTORIA:
+fila[0] = lexer.lexeme;
+    fila[1] = "VICTORIA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case PIÑA_COLADA:
+fila[0] = lexer.lexeme;
+    fila[1] = "PIÑA_COLADA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case JUGO:
+fila[0] = lexer.lexeme;
+    fila[1] = "JUGO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case VAMPIRO:
+fila[0] = lexer.lexeme;
+    fila[1] = "VAMPIRO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case CORONA:
+fila[0] = lexer.lexeme;
+    fila[1] = "CORONA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+case FONDANT:
+fila[0] = lexer.lexeme;
+    fila[1] = "FONDAN";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
                    
                     //ERRORES LÉXICOS
                    /* case ErrorLEX00:
@@ -1006,11 +1469,13 @@ public void sintactico(){
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTextPane jTextPane2;
     private javax.swing.JLabel lblAbrir;
     private javax.swing.JLabel lblCompilar;
     private javax.swing.JLabel lblGuardar;
@@ -1021,6 +1486,5 @@ public void sintactico(){
     private javax.swing.JTextPane txtCodObjGenerado;
     private javax.swing.JTextPane txtCodigo;
     private javax.swing.JTextPane txtErrores;
-    private javax.swing.JTextField txtLlamar;
     // End of variables declaration//GEN-END:variables
 }

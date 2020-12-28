@@ -24,11 +24,11 @@ PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR,SUSHI_CAMARON,
 SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, HAMBURGUESA_ARROZ,
 TERIYAKI, HELADO_VAINILLA, FRUTA_CARAMELO, HELADO_CACAO, PIE_LIMON, PIE_FRESA, PIE_MORA, PIE_QUESO, CHURROS,
 CAFE, EXPRESSO, MARTINI, LIMONADA, NARANJADA, COCA_COLA, VICTORIA, PIÑA_COLADA, JUGO, VAMPIRO, CORONA,
-FONDANT,MOSTRAR,VER,MENU,CARTA,DOS,TRES,CUATRO,CINCO,SEIS,SIETE,OCHO,NUEVE,DIEZ,ONCE,DOCE,TRECE,CATORCE,QUINCE
+FONDANT,MOSTRAR,VER,LEER,MENU,CARTA,DOS,TRES,CUATRO,CINCO,SEIS,SIETE,OCHO,NUEVE,DIEZ,ONCE,DOCE,TRECE,CATORCE,QUINCE
 ;
 
 non terminal INICIO,SENTENCIAS, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
-               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES
+               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES,SENT_DICTAR_MENU
 ; 
 
 start with INICIO;
@@ -38,18 +38,24 @@ INICIO ::= OYE SANJI SENTENCIAS POR FAVOR
                
 SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(0);  :}|
                SENT_MOSTRAR_MENU  :s {: v.audio.add(1);  :} |  //1=Mostrar menu
-               SENT_DAR_CUENTA    :s {: v.audio.add(2);  :}  
+               SENT_DAR_CUENTA    :s {: v.audio.add(2);  :} |
+               SENT_DICTAR_MENU   :s {: v.audio.add(3);  :}
 ;
 
 SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :}|
                     TRAER LA CUENTA  :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} |
-                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} 
+                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :}  
 ;   
 
 SENT_MOSTRAR_MENU ::= QUIERO VER EL MENU  :s {: v.codObjPeticion.add("show,menu, , ");  :} | 
                       QUIERO VER LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :}| 
                       MOSTRAR EL MENU :s {: v.codObjPeticion.add("show,menu, , ");  :} | 
                       MOSTRAR LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :}
+;
+
+SENT_DICTAR_MENU ::= LEER EL MENU :s {: v.codObjPeticion.add("show,menu, , ");  :}  | 
+                     LEER LA CARTA :s {: v.codObjPeticion.add("show,menu, , ");  :}
+
 ;
 
 SENT_HACER_PEDIDO ::= QUIERO PLATILLO | 
