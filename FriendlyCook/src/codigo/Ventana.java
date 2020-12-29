@@ -613,6 +613,8 @@ public class Ventana extends javax.swing.JFrame {
        
         compilar();
         sintactico();
+        
+        atender();
         //mostrarMenu();
 
         //SEPARACIÓN POR LETRAS 
@@ -808,9 +810,7 @@ public void sintactico(){
             txtCodObjGenerado.setText(codObjGenerado);
             codObjGenerado="";
             codObjPeticionOptimizado.clear();
-            if(!statusMarvin){
-                atender();
-            }
+            
              
              
         } catch (Exception ex) {
@@ -827,16 +827,14 @@ public void sintactico(){
         reproduccionAudio(error);
 }
 public void atender(){
-    
+    if(!peticionesMarvin.isEmpty()){
     String c= peticionesMarvin.get(peticionesMarvin.size()-1)+"";
         if(c.equals('1')){
              mesaActual=1;
              System.out.println("Mesa1");
             try {
                 ino.sendData(mesaActual+"");
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
+            } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
              
@@ -846,9 +844,7 @@ public void atender(){
             System.out.println(mesaActual+"");
              try {
                 ino.sendData("2");
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
+            } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
              
@@ -858,9 +854,7 @@ public void atender(){
             System.out.println(mesaActual+"");
              try {
                 ino.sendData("3");
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
+            } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
              
@@ -870,9 +864,7 @@ public void atender(){
             System.out.println(mesaActual+"");
              try {
                 ino.sendData("4");
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
+            } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
              
@@ -882,15 +874,13 @@ public void atender(){
             System.out.println(mesaActual+"");
              try {
                 ino.sendData("5");
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
+            } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
              
         }
         println("Yendo a Mesa"+mesaActual);
-        
+    }
 }
     private void lblAbrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAbrirMouseClicked
         JFileChooser chooser = new JFileChooser();
@@ -931,7 +921,7 @@ public void atender(){
              }
     }
     private void jTextPane2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane2KeyTyped
-             char c=evt.getKeyChar();
+     char c=evt.getKeyChar();
         if(c=='1'){
              mesaActual=1;
               peticionesMarvin();
