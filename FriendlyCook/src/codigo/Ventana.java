@@ -1,5 +1,6 @@
 package codigo;
-
+import com.panamahitek.ArduinoException;
+import com.panamahitek.PanamaHitek_Arduino;
 import static JFlex.Out.println;
 import compilador.TextLineNumber;
 import java.awt.Color;
@@ -39,6 +40,7 @@ import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import jdk.nashorn.internal.runtime.regexp.joni.Syntax;
+import jssc.SerialPortException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -60,7 +62,9 @@ public class Ventana extends javax.swing.JFrame {
     public Clip clip;
     public String ruta="/Audio/";
     int error=0;
-    
+    //Manejo de peticiones de Marvin
+    static boolean statusMarvin; //TRUE= OCUPADO | FALSE = DESOCUPADO
+    static ArrayList <Integer> peticionesMarvin = new ArrayList();
     //ERRORES
     static ArrayList <String> genErrores = new ArrayList();
     static ArrayList <String> genErroresL = new ArrayList();
@@ -158,9 +162,18 @@ public class Ventana extends javax.swing.JFrame {
     /**
      * Creates new form Analizador
      */
+    
+    PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
     public Ventana() {
 
         initComponents();
+        
+        try {
+            ino.arduinoTX("COM3", 9600);
+        } catch (ArduinoException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
         //RESCALAR IMAGEN
         ImageIcon logo1= new ImageIcon(getClass().getResource("/imagenes/logo.png"));
         Icon logo=new ImageIcon(logo1.getImage().getScaledInstance(400, 100,Image.SCALE_DEFAULT));
@@ -168,7 +181,7 @@ public class Ventana extends javax.swing.JFrame {
         
         this.repaint();
         Color blues = new Color(127,160,252);
-        this.setResizable(false);
+        this.setResizable(true);
         
         
         final StyleContext cont = StyleContext.getDefaultStyleContext();
@@ -194,7 +207,7 @@ public class Ventana extends javax.swing.JFrame {
 
                 while (wordR <= after) {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|sanji|por|favor|Marvin|marvin)")) {
+                        if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|listo|Listo|sanji|por|favor|Marvin|marvin)")) {
                             setCharacterAttributes(wordL, wordR - wordL, attg, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(un|una|unas|unos|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince)")) {
                             setCharacterAttributes(wordL, wordR - wordL, atta, false);
@@ -795,7 +808,9 @@ public void sintactico(){
             txtCodObjGenerado.setText(codObjGenerado);
             codObjGenerado="";
             codObjPeticionOptimizado.clear();
-            
+            if(!statusMarvin){
+                atender();
+            }
              
              
         } catch (Exception ex) {
@@ -810,6 +825,72 @@ public void sintactico(){
                  }
             }
         reproduccionAudio(error);
+}
+public void atender(){
+    
+    String c= peticionesMarvin.get(peticionesMarvin.size()-1)+"";
+        if(c.equals('1')){
+             mesaActual=1;
+             System.out.println("Mesa1");
+            try {
+                ino.sendData(mesaActual+"");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        if(c.equals('2')){
+            mesaActual=2;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("2");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        if(c.equals('3')){
+            mesaActual=3;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("3");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        if(c.equals('4')){
+            mesaActual=4;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("4");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        if(c.equals('5')){
+            mesaActual=5;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("5");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+        }
+        println("Yendo a Mesa"+mesaActual);
+        
 }
     private void lblAbrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAbrirMouseClicked
         JFileChooser chooser = new JFileChooser();
@@ -835,24 +916,44 @@ public void sintactico(){
     private void jScrollPane5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane5KeyTyped
          System.out.println("Key Character: " + evt.getKeyChar() + "; Key Code: " + KeyEvent.getKeyText(evt.getKeyCode()));
     }//GEN-LAST:event_jScrollPane5KeyTyped
-
+    private void peticionesMarvin(){
+        if(peticionesMarvin.isEmpty()){
+                 peticionesMarvin.add(mesaActual);
+                 statusMarvin=true;
+                System.out.println("Mesa"+mesaActual+"   Estado"+statusMarvin);
+                   
+             }else{
+                 if(peticionesMarvin.get(peticionesMarvin.size()-1)!=mesaActual){
+                     statusMarvin=true;
+                     peticionesMarvin.add(mesaActual);
+                       System.out.println("Mesa"+mesaActual+"   Estado"+statusMarvin);
+                 }
+             }
+    }
     private void jTextPane2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane2KeyTyped
              char c=evt.getKeyChar();
         if(c=='1'){
-             System.out.println("Mesa1");
              mesaActual=1;
+              peticionesMarvin();
         }
         if(c=='2'){
-            System.out.println("Mesa2");
+            
              mesaActual=2;
+             peticionesMarvin();
         }
         if(c=='3'){
-            System.out.println("Mesa3");
+            
              mesaActual=3;
+             peticionesMarvin();
         }
         if(c=='4'){
-            System.out.println("Mesa4");
+            
              mesaActual=4;
+             peticionesMarvin();
+        }
+        if(c=='5'){
+             mesaActual=5;
+             println("Estado: "+statusMarvin);
         }
         if(Character.isDigit(c)){
 		evt.consume();

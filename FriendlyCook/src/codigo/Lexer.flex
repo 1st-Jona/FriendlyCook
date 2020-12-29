@@ -52,6 +52,9 @@ espacio=[ ,\t,\r,\n]+
 ( "traeme" | "dame" | "tráeme" ) {lexeme=yytext(); return TRAER;}
 /*--------- Fin pedir la cuenta --------*/
 
+/*--------- Liberar a Marvin -----------*/
+( "listo" | "Listo" ) {lexeme=yytext(); return LISTO;}
+/*--------- Fin Liberar a Marvin -------*/
 
 
  /*-------------------Mostrar Menu-------------------*/

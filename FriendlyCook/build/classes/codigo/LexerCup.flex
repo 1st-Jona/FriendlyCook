@@ -65,9 +65,11 @@ espacio=[ ,\t,\r,\n]+
 ( "traeme" | "dame" | "tráeme") {return new Symbol(sym.TRAER,yychar,yyline,yytext());}
 /*--------- Fin pedir la cuenta --------*/
 
+/*--------- Liberar a Marvin -----------*/
+( "listo" | "Listo" ) {return new Symbol(sym.LISTO,yychar,yyline,yytext());}
+/*--------- Fin Liberar a Marvin -------*/
 
  /*-------------------Mostrar Menu-------------------*/
-
 ( "muestrame" | "enseñame" | "muéstrame") {return new Symbol(sym.MOSTRAR,yychar,yyline,yytext());}
 ( "ver" | "mirar" ) {return new Symbol(sym.VER,yychar,yyline,yytext());}
 ( "menu" | "menú" ) {return new Symbol(sym.MENU,yychar,yyline,yytext());}

@@ -32,10 +32,9 @@ Numero,
 Coma,
 LINEA,
 ERROR,
-
+LISTO,
 /*CUENTA*/
 CUENTA,TRAER,
-
 /*Menu*/
 MOSTRAR,VER,MENU,CARTA,LEER,
 
