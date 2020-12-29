@@ -63,13 +63,14 @@ public class Ventana extends javax.swing.JFrame {
     public String ruta="/Audio/";
     int error=0;
     //Manejo de peticiones de Marvin
-    static boolean statusMarvin; //TRUE= OCUPADO | FALSE = DESOCUPADO
+    static boolean statusMarvin=false; //TRUE= OCUPADO | FALSE = DESOCUPADO
     static ArrayList <Integer> peticionesMarvin = new ArrayList();
     //ERRORES
     static ArrayList <String> genErrores = new ArrayList();
     static ArrayList <String> genErroresL = new ArrayList();
     //CUENTAS DE MESA
-    static int mesaActual=0; //0=cocina
+    static int mesaActual=5; //0=cocina
+    static int mesaTemp=5;
     //Mesa 1 ->1
         static ArrayList <String> cuenta = new ArrayList<String>();
         static double totalPagar;
@@ -168,11 +169,7 @@ public class Ventana extends javax.swing.JFrame {
 
         initComponents();
         
-        try {
-            ino.arduinoTX("COM3", 9600);
-        } catch (ArduinoException ex) {
-            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
                 
         //RESCALAR IMAGEN
         ImageIcon logo1= new ImageIcon(getClass().getResource("/imagenes/logo.png"));
@@ -385,6 +382,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
+        btnConectarArduino = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -537,6 +535,19 @@ public class Ventana extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 690, 40));
 
+        btnConectarArduino.setText("Conectar a Arduino");
+        btnConectarArduino.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConectarArduinoMouseClicked(evt);
+            }
+        });
+        btnConectarArduino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnConectarArduinoKeyPressed(evt);
+            }
+        });
+        jPanel1.add(btnConectarArduino, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 630));
 
         jMenu4.setText("Ver");
@@ -612,9 +623,10 @@ public class Ventana extends javax.swing.JFrame {
     private void lblCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCompilarMouseClicked
        
         compilar();
-        sintactico();
         
-        atender();
+        sintactico();
+                            
+        //atender();
         //mostrarMenu();
 
         //SEPARACIÓN POR LETRAS 
@@ -664,7 +676,7 @@ public class Ventana extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnFormatoActionPerformed
 public void sintactico(){
-       String ST=txtCodigo.getText();
+        String ST=txtCodigo.getText();
         Sintax s= new Sintax(new codigo.LexerCup(new StringReader(ST)));
         try {
             s.parse();
@@ -719,7 +731,26 @@ public void sintactico(){
                     if(cantidadesPlatillos.isEmpty()){cantidadesPlatillos.add("");}
                     
                     
-                    
+                    //Liberar
+                    if(codObjeto.equals("free,marvin,mesa, ")){
+                        statusMarvin=false;
+                         if(!peticionesMarvin.isEmpty() && peticionesMarvin.size()>1 && statusMarvin==false){
+                            String c= peticionesMarvin.get(1)+"";
+                            mesaActual=peticionesMarvin.get(1);
+                                    System.out.println(c);
+                                     try {
+                                        ino.sendData(c);
+                                    } catch (ArduinoException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (SerialPortException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                println("Yendo a Mesa"+mesaActual);
+                            }
+                         if(!peticionesMarvin.isEmpty())  {
+                             peticionesMarvin.remove(0);
+                         }
+                     }
                     /*Peticion mostrar cuenta*/
                     if(codObjeto.equals("show,cuenta,mesa, ")){
                         JFlex.Out.println("se mostro cuenta");
@@ -818,6 +849,7 @@ public void sintactico(){
             txtErrores.setText("Error de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", Texto: \""+ sym.value+ "\"");
             txtErrores.setForeground(Color.RED);
         }
+        
         for(int i=0; i<audio.size();i++){
                  if(error==0){
                      error=audio.get(i);
@@ -826,62 +858,7 @@ public void sintactico(){
             }
         reproduccionAudio(error);
 }
-public void atender(){
-    if(!peticionesMarvin.isEmpty()){
-    String c= peticionesMarvin.get(0)+"";
-        if(c.equals('1')){
-             mesaActual=1;
-             System.out.println("Mesa1");
-            try {
-                ino.sendData(mesaActual+"");
-            } catch (ArduinoException | SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-        }
-        if(c.equals('2')){
-            mesaActual=2;
-            System.out.println(mesaActual+"");
-             try {
-                ino.sendData(mesaActual+"");
-            } catch (ArduinoException | SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-        }
-        if(c.equals('3')){
-            mesaActual=3;
-            System.out.println(mesaActual+"");
-             try {
-                ino.sendData(mesaActual+"");
-            } catch (ArduinoException | SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-        }
-        if(c.equals('4')){
-            mesaActual=4;
-            System.out.println(mesaActual+"");
-             try {
-                ino.sendData("4");
-            } catch (ArduinoException | SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-        }
-        if(c.equals('5')){
-            mesaActual=5;
-            System.out.println(mesaActual+"");
-             try {
-                ino.sendData(mesaActual+"");
-            } catch (ArduinoException | SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-             
-        }
-        println("Yendo a Mesa"+mesaActual);
-    }
-}
+
     private void lblAbrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAbrirMouseClicked
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
@@ -906,80 +883,99 @@ public void atender(){
     private void jScrollPane5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane5KeyTyped
          System.out.println("Key Character: " + evt.getKeyChar() + "; Key Code: " + KeyEvent.getKeyText(evt.getKeyCode()));
     }//GEN-LAST:event_jScrollPane5KeyTyped
-    private void peticionesMarvin(){
+    private void peticionesMarvin(char c){
+        int mesa=Integer.parseInt(c+"");
         if(peticionesMarvin.isEmpty()){
-                 peticionesMarvin.add(mesaActual);
+                 peticionesMarvin.add(mesa);
                  statusMarvin=true;
-                System.out.println("Mesa"+mesaActual+"   Estado"+statusMarvin);
+                System.out.println("Mesa"+mesa+"   Estado"+statusMarvin);
                    
              }else{
-                 if(peticionesMarvin.get(peticionesMarvin.size()-1)!=mesaActual){
-                     statusMarvin=true;
-                     peticionesMarvin.add(mesaActual);
-                       System.out.println("Mesa"+mesaActual+"   Estado"+statusMarvin);
+                 if(peticionesMarvin.get(peticionesMarvin.size()-1)!=mesa){
+                statusMarvin=true;
+                     peticionesMarvin.add(mesa);
+                       System.out.println("Mesa"+mesa+"   Estado"+statusMarvin);
                  }
              }
     }
     private void jTextPane2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane2KeyTyped
     char c=evt.getKeyChar();
         if(c=='1'){
-             mesaActual=1;
-             System.out.println("Mesa1");
+             
+             //System.out.println("Mesa1");
+             if (statusMarvin==false){
+                 mesaActual=1;
             try {
-                ino.sendData(mesaActual+"");
+                ino.sendData(c+"");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
-             
+             }
+             peticionesMarvin(c); 
         }
         if(c=='2'){
-            mesaActual=2;
-            System.out.println(mesaActual+"");
+            
+            //System.out.println(mesaActual+"");
+            if (statusMarvin==false){
+                mesaActual=2;
              try {
-                ino.sendData("2");
+                ino.sendData(c+"");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
              
+            }
+           peticionesMarvin(c);
         }
         if(c=='3'){
-            mesaActual=3;
-            System.out.println(mesaActual+"");
+            
+            //System.out.println(mesaActual+"");
+            
+            if (statusMarvin==false){
+                mesaActual=3;
              try {
-                ino.sendData("3");
+                ino.sendData(c+"");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
-             
+            }
+            peticionesMarvin(c);
         }
         if(c=='4'){
-            mesaActual=4;
-            System.out.println(mesaActual+"");
+            
+            //System.out.println(mesaActual+"");  
+            if (statusMarvin==false){
+                mesaActual=4;
              try {
-                ino.sendData("4");
+                ino.sendData(c+"");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
-             
+            }
+           peticionesMarvin(c);
         }
         if(c=='5'){
-            mesaActual=5;
-            System.out.println(mesaActual+"");
+            
+            //System.out.println(mesaActual+"");
+            if (statusMarvin==false){
+                mesaActual=5;
              try {
-                ino.sendData("5");
+                ino.sendData(c+"");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
+            }
+            peticionesMarvin(c);
              
         }
         
@@ -988,6 +984,21 @@ public void atender(){
         }
         
     }//GEN-LAST:event_jTextPane2KeyTyped
+
+    private void btnConectarArduinoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConectarArduinoKeyPressed
+       
+    }//GEN-LAST:event_btnConectarArduinoKeyPressed
+
+    private void btnConectarArduinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConectarArduinoMouseClicked
+        try {
+            ino.arduinoTX("COM3", 9600);
+        }catch(ArduinoException e){
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+       
+        btnConectarArduino.setEnabled(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConectarArduinoMouseClicked
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -1582,6 +1593,7 @@ break;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConectarArduino;
     private javax.swing.JButton btnFormato;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

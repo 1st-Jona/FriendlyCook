@@ -33,7 +33,7 @@ non terminal INICIO,SENTENCIAS, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,PLATILLO,PET
 
 start with INICIO;
 
-INICIO ::= OYE SANJI SENTENCIAS POR FAVOR | LISTO SANJI :s {: v.statusMarvin=false; v.peticionesMarvin.remove(0);  :}
+INICIO ::= OYE SANJI SENTENCIAS POR FAVOR | LISTO SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, ");  :}
 ;
                
 SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(0);  :}|
