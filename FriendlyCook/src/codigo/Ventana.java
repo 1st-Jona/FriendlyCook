@@ -828,7 +828,7 @@ public void sintactico(){
 }
 public void atender(){
     if(!peticionesMarvin.isEmpty()){
-    String c= peticionesMarvin.get(peticionesMarvin.size()-1)+"";
+    String c= peticionesMarvin.get(0)+"";
         if(c.equals('1')){
              mesaActual=1;
              System.out.println("Mesa1");
@@ -843,7 +843,7 @@ public void atender(){
             mesaActual=2;
             System.out.println(mesaActual+"");
              try {
-                ino.sendData("2");
+                ino.sendData(mesaActual+"");
             } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -853,7 +853,7 @@ public void atender(){
             mesaActual=3;
             System.out.println(mesaActual+"");
              try {
-                ino.sendData("3");
+                ino.sendData(mesaActual+"");
             } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -873,7 +873,7 @@ public void atender(){
             mesaActual=5;
             System.out.println(mesaActual+"");
              try {
-                ino.sendData("5");
+                ino.sendData(mesaActual+"");
             } catch (ArduinoException | SerialPortException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -921,30 +921,68 @@ public void atender(){
              }
     }
     private void jTextPane2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane2KeyTyped
-     char c=evt.getKeyChar();
+    char c=evt.getKeyChar();
         if(c=='1'){
              mesaActual=1;
-              peticionesMarvin();
+             System.out.println("Mesa1");
+            try {
+                ino.sendData(mesaActual+"");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
         }
         if(c=='2'){
-            
-             mesaActual=2;
-             peticionesMarvin();
+            mesaActual=2;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("2");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
         }
         if(c=='3'){
-            
-             mesaActual=3;
-             peticionesMarvin();
+            mesaActual=3;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("3");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
         }
         if(c=='4'){
-            
-             mesaActual=4;
-             peticionesMarvin();
+            mesaActual=4;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("4");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
         }
         if(c=='5'){
-             mesaActual=5;
-             println("Estado: "+statusMarvin);
+            mesaActual=5;
+            System.out.println(mesaActual+"");
+             try {
+                ino.sendData("5");
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
         }
+        
         if(Character.isDigit(c)){
 		evt.consume();
         }
