@@ -62,7 +62,7 @@ espacio=[ ,\t,\r,\n]+
 ( "ver" | "mirar" ) {lexeme=yytext(); return VER;}
 ( "menu" | "menú") {lexeme=yytext(); return MENU;}
 ( "carta" ) {lexeme=yytext(); return CARTA;}
-( "léeme" | "leeme" | "dictame" ) {lexeme=yytext(); return LEER;}
+( "léeme" | "leeme" | "dictame" | "díctame" ) {lexeme=yytext(); return LEER;}
 /*--------------------Fin mostrar Menu----------------*/
 
 
@@ -124,6 +124,25 @@ espacio=[ ,\t,\r,\n]+
 ("vampiro") {lexeme=yytext(); return VAMPIRO;}
 /*------------------------------------------------------------------------------*/
 
+/*---------- Entregar pedido -----------------*/
+
+("mesa uno") {lexeme=yytext(); return MESAA;}
+("mesa dos") {lexeme=yytext(); return MESAB;}
+("mesa tres") {lexeme=yytext(); return MESAC;}
+("mesa cuatro") {lexeme=yytext(); return MESAD;}
+/*--------------------------------------------*/
+
+/* ------------------ Adios -----------------*/
+("adios" | "Adios" | "adiós"| "Adiós") {lexeme=yytext(); return ADIOS;}
+/* ------------------------------------------*/
+
+/*-------------- Utencilios ------------------*/
+("vasos") {lexeme=yytext(); return VASOS;}
+("servilletas") {lexeme=yytext(); return SERVILLETAS;}
+("cucharas") {lexeme=yytext(); return CUCHARAS;}
+("tenedores") {lexeme=yytext(); return TENEDORES;}
+/*--------------------------------------------*/
+
 /*------------Cantidades plurales-------------*/
 ( "dos" ) {lexeme=yytext(); return DOS;}
 ( "tres" ) {lexeme=yytext(); return TRES;}
@@ -164,6 +183,6 @@ espacio=[ ,\t,\r,\n]+
 /* Salto de linea */
 ("(-"{D}+")")|{D}+ {lexeme=yytext(); return Numero;}
 
-{MM}* {lexeme=yytext(); return CADENA;} 
+
 
  . {return ERROR;}

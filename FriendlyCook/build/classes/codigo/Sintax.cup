@@ -19,27 +19,42 @@ parser code
 }
 :};
 
-terminal SANJI,QUIERO,OYE,TRAER,CUENTA,CADENA,HACER,PEDIDO,LISTO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,DE,
-PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR,SUSHI_CAMARON,
-SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, HAMBURGUESA_ARROZ,
+terminal SANJI,QUIERO,OYE,TRAER,CUENTA,HACER,PEDIDO,LISTO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,DE,VASOS,CUCHARAS,TENEDORES,SERVILLETAS,
+PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR,SUSHI_CAMARON,MESAA,MESAB,MESAC,MESAD,
+SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, HAMBURGUESA_ARROZ,ADIOS,
 TERIYAKI, HELADO_VAINILLA, FRUTA_CARAMELO, HELADO_CACAO, PIE_LIMON, PIE_FRESA, PIE_MORA, PIE_QUESO, CHURROS,
 CAFE, EXPRESSO, MARTINI, LIMONADA, NARANJADA, COCA_COLA, VICTORIA, PIÑA_COLADA, JUGO, VAMPIRO, CORONA,
 FONDANT,MOSTRAR,VER,LEER,MENU,CARTA,DOS,TRES,CUATRO,CINCO,SEIS,SIETE,OCHO,NUEVE,DIEZ,ONCE,DOCE,TRECE,CATORCE,QUINCE
 ;
 
 non terminal INICIO,SENTENCIAS, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
-               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES,SENT_DICTAR_MENU
+               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES,SENT_DICTAR_MENU,UTENCILIOS,MESAS
 ; 
 
 start with INICIO;
 
-INICIO ::= OYE SANJI SENTENCIAS POR FAVOR | LISTO SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, ");  :}
+INICIO ::= OYE SANJI SENTENCIAS POR FAVOR | 
+           LISTO SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, ");  :} |
+           LISTO MESAS |
+           ADIOS SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, "); v.delete=true;  :}
+;
+
+MESAS ::= MESAA :s {: v.codObjPeticion.add("entregar,mesaa, , "); :} |
+          MESAB :s {: v.codObjPeticion.add("entregar,mesab, , "); :} |
+          MESAC :s {: v.codObjPeticion.add("entregar,mesac, , "); :} |
+          MESAD :s {: v.codObjPeticion.add("entregar,mesad, , "); :} 
 ;
                
 SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(0);  :}|
                SENT_MOSTRAR_MENU  :s {: v.audio.add(1);  :} |  //1=Mostrar menu
                SENT_DAR_CUENTA    :s {: v.audio.add(2);  :} |
-               SENT_DICTAR_MENU   :s {: v.audio.add(3);  :}
+               SENT_DICTAR_MENU   :s {: v.audio.add(3);  :} |
+               TRAER UTENCILIOS   
+;
+UTENCILIOS ::= VASOS        :s {: v.codObjPeticion.add("traer,mesa,vaso, "); :}|
+               SERVILLETAS  :s {: v.codObjPeticion.add("traer,mesa,serv, "); :}| 
+               CUCHARAS     :s {: v.codObjPeticion.add("traer,mesa,cuch, "); :}| 
+               TENEDORES    :s {: v.codObjPeticion.add("traer,mesa,tene, "); :}
 ;
 
 SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :}|

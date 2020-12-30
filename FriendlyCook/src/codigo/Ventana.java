@@ -90,7 +90,7 @@ public class Ventana extends javax.swing.JFrame {
     static String codObjeto;
 
     static String codObjGenerado=""; 
-    
+    static boolean delete=false;
     static int cantPlatillos;
     static int numeroPlatillo;
     
@@ -169,6 +169,7 @@ public class Ventana extends javax.swing.JFrame {
 
         initComponents();
         
+        
        
                 
         //RESCALAR IMAGEN
@@ -204,11 +205,11 @@ public class Ventana extends javax.swing.JFrame {
 
                 while (wordR <= after) {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|listo|Listo|sanji|por|favor|Marvin|marvin)")) {
+                        if (text.substring(wordL, wordR).matches("(\\W)*(OYE|oye|Oye|listo|Listo|sanji|por|favor|Marvin|marvin|adios|Adios|adios|adiós)")) {
                             setCharacterAttributes(wordL, wordR - wordL, attg, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(un|una|unas|unos|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince)")) {
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(un|uno|una|unas|unos|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|trece|catorce|quince)")) {
                             setCharacterAttributes(wordL, wordR - wordL, atta, false);
-                        } else if (text.substring(wordL, wordR).matches("(\\W)*(quiero|muestrame|traeme|ver|muéstrame|tráeme)")) { //VERBOS
+                        } else if (text.substring(wordL, wordR).matches("(\\W)*(quiero|muestrame|traeme|ver|muéstrame|tráeme|leeme|léeme|dictame|díctame)")) { //VERBOS
                             setCharacterAttributes(wordL, wordR - wordL, attx, false);
                         } else if (text.substring(wordL, wordR).matches("(\\W)*(la|el)")) { //VERBOS
                             setCharacterAttributes(wordL, wordR - wordL, attr, false);
@@ -250,7 +251,7 @@ public class Ventana extends javax.swing.JFrame {
         
         txtCodigo = new JTextPane(doc);
         txtCodigo.setFont(new java.awt.Font("Consolas", 0, 18));
-      
+        txtCodigo.setEditable(false);
       
         this.setLocationRelativeTo(null);
 
@@ -381,7 +382,7 @@ public class Ventana extends javax.swing.JFrame {
         txtCliente = new javax.swing.JTextPane();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTextPane2 = new javax.swing.JTextPane();
+        txtCodigoDictado = new javax.swing.JTextPane();
         btnConectarArduino = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
@@ -405,6 +406,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -416,7 +418,7 @@ public class Ventana extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(txtCodigo);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 690, 480));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 690, 380));
         jPanel1.add(lbllogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 460, 50));
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 36)); // NOI18N
@@ -526,14 +528,17 @@ public class Ventana extends javax.swing.JFrame {
         jLabel4.setText("Formato");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
-        jTextPane2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCodigoDictado.setBorder(null);
+        txtCodigoDictado.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        txtCodigoDictado.setForeground(new java.awt.Color(102, 102, 102));
+        txtCodigoDictado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextPane2KeyTyped(evt);
+                txtCodigoDictadoKeyTyped(evt);
             }
         });
-        jScrollPane6.setViewportView(jTextPane2);
+        jScrollPane6.setViewportView(txtCodigoDictado);
 
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 690, 40));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 690, 130));
 
         btnConectarArduino.setText("Conectar a Arduino");
         btnConectarArduino.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -621,7 +626,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_lblNuevoMouseClicked
 
     private void lblCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCompilarMouseClicked
-       
+       txtCodigo.setText(txtCodigoDictado.getText().toString());
         compilar();
         
         sintactico();
@@ -734,12 +739,32 @@ public void sintactico(){
                     //Liberar
                     if(codObjeto.equals("free,marvin,mesa, ")){
                         statusMarvin=false;
+                        if(delete){
+                            if(mesaActual==1){
+                                   cuenta.clear();
+                                   totalPagar=0;
+                            }
+                            if(mesaActual==2){
+                                cuenta2.clear();
+                                totalPagar2=0;
+                            }
+                            if(mesaActual==3){
+                                cuenta3.clear();
+                                totalPagar3=0;
+                            }
+                            if(mesaActual==4){
+                                cuenta4.clear();
+                                totalPagar4=0;
+                            }
+                            delete=false;
+                        }
                          if(!peticionesMarvin.isEmpty() && peticionesMarvin.size()>1 && statusMarvin==false){
                             String c= peticionesMarvin.get(1)+"";
                             mesaActual=peticionesMarvin.get(1);
                                     System.out.println(c);
                                      try {
                                         ino.sendData(c);
+                                        ino.sendData("o");
                                     } catch (ArduinoException ex) {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                                     } catch (SerialPortException ex) {
@@ -749,6 +774,16 @@ public void sintactico(){
                             }
                          if(!peticionesMarvin.isEmpty())  {
                              peticionesMarvin.remove(0);
+                             if(peticionesMarvin.isEmpty()){
+                              try {
+                                        ino.sendData("l");
+                                        ino.sendData("5");
+                                    } catch (ArduinoException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (SerialPortException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                             }
                          }
                      }
                     /*Peticion mostrar cuenta*/
@@ -763,19 +798,19 @@ public void sintactico(){
                         }
                         if(mesaActual==2){
                             for(int j=0;j<cuenta2.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                                cuentaAcumulada=cuentaAcumulada+cuenta2.get(i)+"\n";
                             }
                              cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar2;
                         }
                         if(mesaActual==3){
                             for(int j=0;j<cuenta3.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                                cuentaAcumulada=cuentaAcumulada+cuenta3.get(i)+"\n";
                             }
                              cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar3;
                         }
                         if(mesaActual==4){
                             for(int j=0;j<cuenta4.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                                cuentaAcumulada=cuentaAcumulada+cuenta4.get(i)+"\n";
                             }
                              cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar4;
                         }
@@ -783,6 +818,51 @@ public void sintactico(){
                     cuentaAcumulada="";
                      JFlex.Out.println("Cantidad de platillos"+cuenta.size());
                     }
+                    //utencilios
+                    String m="";
+                    if(mesaActual==1){m="a";}
+                    if(mesaActual==2){m="b";}
+                    if(mesaActual==3){m="c";}
+                    if(mesaActual==4){m="d";}
+                     if(codObjeto.equals("traer,mesa,vaso, ")){  
+                          codObjGenerado+="[traer,mesa"+mesaActual+",vaso, ]\n";
+                         traer(m);
+                     }
+                     if(codObjeto.equals("traer,mesa,cuch, ")){
+                         codObjGenerado+="[traer,mesa"+mesaActual+",cuch, ]\n";
+                         traer(m);
+                     }
+                     if(codObjeto.equals("traer,mesa,tene, ")){
+                         codObjGenerado+="[traer,mesa"+mesaActual+",tene, ]\n";
+                         traer(m);
+                     }
+                     if(codObjeto.equals("traer,mesa,serv, ")){
+                         codObjGenerado+="[traer,mesa"+mesaActual+",serv, ]\n";
+                         traer(m);
+                     }
+                     
+                     //ENTREGAR PEDIDOS
+                     
+                     if(codObjeto.equals("entregar,mesaa, , ")){  
+                          codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
+                          traer("a");
+                          regresarCocina();
+                     }
+                     if(codObjeto.equals("entregar,mesab, , ")){  
+                          codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
+                           traer("b");
+                          regresarCocina();
+                     }
+                     if(codObjeto.equals("entregar,mesac, , ")){  
+                          codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
+                           traer("c");
+                          regresarCocina();
+                     }
+                     if(codObjeto.equals("entregar,mesad, , ")){  
+                          codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
+                           traer("d");
+                           regresarCocina();
+                     }
                     /*Agregar platillo*/
                     String[] params =  codObjeto.split(",");
                     /*for(int j=0;j<params.length;j++){
@@ -858,7 +938,25 @@ public void sintactico(){
             }
         reproduccionAudio(error);
 }
-
+public void regresarCocina(){
+                                    try {
+                                        ino.sendData("r");
+                                    } catch (ArduinoException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (SerialPortException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    
+}
+public void traer(String c){
+                                    try {
+                                        ino.sendData(c);
+                                    } catch (ArduinoException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (SerialPortException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+}
     private void lblAbrirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAbrirMouseClicked
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
@@ -898,7 +996,7 @@ public void sintactico(){
                  }
              }
     }
-    private void jTextPane2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane2KeyTyped
+    private void txtCodigoDictadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDictadoKeyTyped
     char c=evt.getKeyChar();
         if(c=='1'){
              
@@ -907,6 +1005,7 @@ public void sintactico(){
                  mesaActual=1;
             try {
                 ino.sendData(c+"");
+                ino.sendData("o");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
@@ -922,6 +1021,7 @@ public void sintactico(){
                 mesaActual=2;
              try {
                 ino.sendData(c+"");
+                ino.sendData("o");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
@@ -939,6 +1039,7 @@ public void sintactico(){
                 mesaActual=3;
              try {
                 ino.sendData(c+"");
+                ino.sendData("o");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
@@ -954,6 +1055,7 @@ public void sintactico(){
                 mesaActual=4;
              try {
                 ino.sendData(c+"");
+                ino.sendData("o");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
@@ -969,6 +1071,7 @@ public void sintactico(){
                 mesaActual=5;
              try {
                 ino.sendData(c+"");
+                ino.sendData("o");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
@@ -983,7 +1086,7 @@ public void sintactico(){
 		evt.consume();
         }
         
-    }//GEN-LAST:event_jTextPane2KeyTyped
+    }//GEN-LAST:event_txtCodigoDictadoKeyTyped
 
     private void btnConectarArduinoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConectarArduinoKeyPressed
        
@@ -1048,6 +1151,13 @@ fila[0] = lexer.lexeme;
     model.addRow(fila);
     tblTokens.setModel(model);
 break;
+case LEER:
+fila[0] = lexer.lexeme;
+    fila[1] = "LEER";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
 case QUIERO:
 fila[0] = lexer.lexeme;
     fila[1] = "QUIERO";
@@ -1062,13 +1172,7 @@ fila[0] = lexer.lexeme;
     model.addRow(fila);
     tblTokens.setModel(model);
 break;
-case CADENA:
-fila[0] = lexer.lexeme;
-    fila[1] = "CADENA";
-    fila[2] = cont + "";
-    model.addRow(fila);
-    tblTokens.setModel(model);
-break;
+
 case PEPSI:
 fila[0] = lexer.lexeme;
     fila[1] = "PEPSI";
@@ -1142,6 +1246,85 @@ break;
 case CANT_PLURALES:
 fila[0] = lexer.lexeme;
     fila[1] = "CANT_PLURALES";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+    case LISTO:
+fila[0] = lexer.lexeme;
+    fila[1] = "LISTO";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case VASOS:
+fila[0] = lexer.lexeme;
+    fila[1] = "VASOS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case CUCHARAS:
+fila[0] = lexer.lexeme;
+    fila[1] = "CUCHARAS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case TENEDORES:
+fila[0] = lexer.lexeme;
+    fila[1] = "TENEDORES";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case SERVILLETAS:
+fila[0] = lexer.lexeme;
+    fila[1] = "SERVILLETAS";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case MESAA:
+fila[0] = lexer.lexeme;
+    fila[1] = "MESAA";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case MESAB:
+fila[0] = lexer.lexeme;
+    fila[1] = "MESAB";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case MESAC:
+fila[0] = lexer.lexeme;
+    fila[1] = "MESAC";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case MESAD:
+fila[0] = lexer.lexeme;
+    fila[1] = "MESAD";
+    fila[2] = cont + "";
+    model.addRow(fila);
+    tblTokens.setModel(model);
+break;
+
+case ADIOS:
+fila[0] = lexer.lexeme;
+    fila[1] = "ADIOS";
     fila[2] = cont + "";
     model.addRow(fila);
     tblTokens.setModel(model);
@@ -1616,7 +1799,6 @@ break;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JTextPane jTextPane2;
     private javax.swing.JLabel lblAbrir;
     private javax.swing.JLabel lblCompilar;
     private javax.swing.JLabel lblGuardar;
@@ -1626,6 +1808,7 @@ break;
     private javax.swing.JTextPane txtCliente;
     private javax.swing.JTextPane txtCodObjGenerado;
     private javax.swing.JTextPane txtCodigo;
+    private javax.swing.JTextPane txtCodigoDictado;
     private javax.swing.JTextPane txtErrores;
     // End of variables declaration//GEN-END:variables
 }

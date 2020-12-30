@@ -74,7 +74,7 @@ espacio=[ ,\t,\r,\n]+
 ( "ver" | "mirar" ) {return new Symbol(sym.VER,yychar,yyline,yytext());}
 ( "menu" | "menú" ) {return new Symbol(sym.MENU,yychar,yyline,yytext());}
 ( "carta" ) {return new Symbol(sym.CARTA,yychar,yyline,yytext());}
-( "léeme" | "leeme" | "dictame" ) {return new Symbol(sym.LEER,yychar,yyline,yytext());}
+( "léeme" | "leeme" | "dictame" | "díctame") {return new Symbol(sym.LEER,yychar,yyline,yytext());}
 /*--------------------Fin mostrar Menu----------------*/
 
 
@@ -135,6 +135,23 @@ espacio=[ ,\t,\r,\n]+
 ("vampiro") {return new Symbol(sym.VAMPIRO,yychar,yyline,yytext());}
 /*--------------------------------------------------------------*/
 
+/*-------------- Utencilios ------------------*/
+("vasos") {return new Symbol(sym.VASOS,yychar,yyline,yytext());}
+("servilletas") {return new Symbol(sym.SERVILLETAS,yychar,yyline,yytext());}
+("cucharas") {return new Symbol(sym.CUCHARAS,yychar,yyline,yytext());}
+("tenedores") {return new Symbol(sym.TENEDORES,yychar,yyline,yytext());}
+/*--------------------------------------------*/
+
+
+/*---------- Entregar pedido -----------------*/
+
+("mesa uno") {return new Symbol(sym.MESAA,yychar,yyline,yytext());}
+("mesa dos") {return new Symbol(sym.MESAB,yychar,yyline,yytext());}
+("mesa tres") {return new Symbol(sym.MESAC,yychar,yyline,yytext());}
+("mesa cuatro") {return new Symbol(sym.MESAD,yychar,yyline,yytext());}
+/*--------------------------------------------*/
+("adios" | "Adios" | "adiós"| "Adiós") {return new Symbol(sym.ADIOS,yychar,yyline,yytext());}
+/*----------------- Adios ------------------------------------*/
 
 /*------------------------Cantidades plurales-----------------------*/
 ( "dos" ) {return new Symbol(sym.DOS,yychar,yyline,yytext());}
@@ -173,6 +190,6 @@ espacio=[ ,\t,\r,\n]+
 /* Comentarios */
 ( "//"(.)* ) {/*Ignore*/}
 
-{MM}* {return new Symbol(sym.CADENA,yychar,yyline,yytext());}
+
 
  . {return new Symbol (sym.ERROR,yychar,yyline,yytext());}
