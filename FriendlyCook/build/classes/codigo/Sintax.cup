@@ -28,7 +28,7 @@ FONDANT,MOSTRAR,VER,LEER,MENU,CARTA,DOS,TRES,CUATRO,CINCO,SEIS,SIETE,OCHO,NUEVE,
 ;
 
 non terminal INICIO,SENTENCIAS, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
-               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES,SENT_DICTAR_MENU,UTENCILIOS,MESAS
+               CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES,SENT_DICTAR_MENU,UTENCILIOS,MESAS,ERROR_SENTENCIAS,SENT_DAR_CUENTA_ERR
 ; 
 
 start with INICIO;
@@ -41,7 +41,7 @@ INICIO ::= OYE SANJI SENTENCIAS POR FAVOR |
 OYE SANJI SENTENCIAS POR :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :} |
 OYE SANJI SENTENCIAS FAVOR 
 :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
-OYE SANJI SENTENCIAS 
+OYE SANJI  ERROR_SENTENCIAS
 :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
 OYE SANJI 
 :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n Estructura de oraciones incorrecra.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
@@ -74,6 +74,12 @@ SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(0);  :}|
                SENT_DICTAR_MENU   :s {: v.audio.add(3);  :} |
                TRAER UTENCILIOS   
 ;
+ERROR_SENTENCIAS ::= SENT_DAR_CUENTA_ERR
+;
+SENT_DAR_CUENTA_ERR ::= QUIERO LA CUENTA
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No especifica lo que requiere. \n Ejemplo: 'OYE SANJI QUIERO LA CUENTA POR FAVOR' "); :} 
+;
+
 UTENCILIOS ::= VASOS        :s {: v.codObjPeticion.add("traer,mesa,vaso, "); :}|
                SERVILLETAS  :s {: v.codObjPeticion.add("traer,mesa,serv, "); :}| 
                CUCHARAS     :s {: v.codObjPeticion.add("traer,mesa,cuch, "); :}| 
@@ -84,8 +90,7 @@ SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mes
                     TRAER LA CUENTA  :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} |
                     MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} |
 /*Errores de cuenta*/
-QUIERO LA 
-:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No especifica lo que requiere. \n Ejemplo: 'OYE SANJI QUIERO LA CUENTA POR FAVOR' "); :} |
+
 TRAER LA 
 :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No especifica lo que requiere. \n Ejemplo: 'OYE SANJI TRAER LA CUENTA POR FAVOR' "); :} |
 MOSTRAR LA 
