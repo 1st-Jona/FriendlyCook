@@ -759,6 +759,7 @@ public void sintactico(){
                             delete=false;
                         }
                          if(!peticionesMarvin.isEmpty() && peticionesMarvin.size()>1 && statusMarvin==false){
+                             statusMarvin=true;
                             String c= peticionesMarvin.get(1)+"";
                             mesaActual=peticionesMarvin.get(1);
                                     System.out.println(c);

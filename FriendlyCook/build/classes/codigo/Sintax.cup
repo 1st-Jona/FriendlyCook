@@ -36,7 +36,30 @@ start with INICIO;
 INICIO ::= OYE SANJI SENTENCIAS POR FAVOR | 
            LISTO SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, ");  :} |
            LISTO MESAS |
-           ADIOS SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, "); v.delete=true;  :}
+           ADIOS SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, "); v.delete=true;  :} |
+/*Errores de Inicio*/
+OYE SANJI SENTENCIAS POR :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :} |
+OYE SANJI SENTENCIAS FAVOR 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+OYE SANJI SENTENCIAS 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+OYE SANJI 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n Estructura de oraciones incorrecra.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+OYE 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n Estructura de oraciones incorrecra.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+SANJI 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n Estructura de oraciones incorrecra.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+SANJI SENTENCIAS POR FAVOR 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+OYE SENTENCIAS POR FAVOR 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+SENTENCIAS POR FAVOR 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+OYE SANJI POR FAVOR SENTENCIAS 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n Estructura de oraciones incorrecta.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}|
+OYE SANJI POR FAVOR 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n Debe de incluir peticiones en su pedido.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :}
+/*Error general*/
 ;
 
 MESAS ::= MESAA :s {: v.codObjPeticion.add("entregar,mesaa, , "); :} |
@@ -59,17 +82,53 @@ UTENCILIOS ::= VASOS        :s {: v.codObjPeticion.add("traer,mesa,vaso, "); :}|
 
 SENT_DAR_CUENTA ::= QUIERO LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :}|
                     TRAER LA CUENTA  :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} |
-                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :}  
+                    MOSTRAR LA CUENTA :s {: v.codObjPeticion.add("show,cuenta,mesa, ");  :} |
+/*Errores de cuenta*/
+QUIERO LA 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No especifica lo que requiere. \n Ejemplo: 'OYE SANJI QUIERO LA CUENTA POR FAVOR' "); :} |
+TRAER LA 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No especifica lo que requiere. \n Ejemplo: 'OYE SANJI TRAER LA CUENTA POR FAVOR' "); :} |
+MOSTRAR LA 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No especifica lo que requiere. \n Ejemplo: 'OYE SANJI MOSTRAR LA CUENTA POR FAVOR' "); :}|
+LA CUENTA 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la solicitud de acción. \n Ejemplo: 'OYE SANJI QUIERO LA CUENTA POR FAVOR' "); :}|
+CUENTA 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la solicitud de acción. \n Ejemplo: 'OYE SANJI QUIERO LA CUENTA POR FAVOR' "); :}
+/*Error general*/  
 ;   
 
 SENT_MOSTRAR_MENU ::= QUIERO VER EL MENU  :s {: v.codObjPeticion.add("show,menu, , ");  :} | 
                       QUIERO VER LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :}| 
                       MOSTRAR EL MENU :s {: v.codObjPeticion.add("show,menu, , ");  :} | 
-                      MOSTRAR LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :}
+                      MOSTRAR LA CARTA  :s {: v.codObjPeticion.add("show,menu, , ");  :} |
+/*Error de menú*/
+QUIERO VER EL 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la solicitud de acción. \n Ejemplo: 'OYE SANJI QUIERO VER EL MENU POR FAVOR' "); :}|
+QUIERO VER 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la petición. \n Ejemplo: 'OYE SANJI QUIERO VER LA CUENTA POR FAVOR' "); :}|
+MOSTRAR EL 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la petición. \n Ejemplo: 'OYE SANJI MOSTRAR EL MENU POR FAVOR' "); :}|
+VER EL MENU 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. \n Ejemplo: 'OYE SANJI QUIERO VER EL MENU POR FAVOR' "); :}|
+VER LA CARTA
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. \n Ejemplo: 'OYE SANJI QUIERO VER LA CARTA POR FAVOR' "); :}|
+EL MENU 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. \n Ejemplo: 'OYE SANJI MOSTRAR EL MENU POR FAVOR' "); :}|
+LA CARTA
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. \n Ejemplo: 'OYE SANJI MOSTRAR LA CARTA POR FAVOR' "); :}
 ;
 
 SENT_DICTAR_MENU ::= LEER EL MENU :s {: v.codObjPeticion.add("show,menu, , ");  :}  | 
-                     LEER LA CARTA :s {: v.codObjPeticion.add("show,menu, , ");  :}
+                     LEER LA CARTA :s {: v.codObjPeticion.add("show,menu, , ");  :} |
+/*Error dictar menu*/
+LEER EL 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se especifica el objeto a leer. \n Ejemplo: 'OYE SANJI LEER EL MENU POR FAVOR' "); :}|
+LEER LA 
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se especifica el objeto a leer. \n Ejemplo: 'OYE SANJI LEER LA CARTA POR FAVOR' "); :}|
+LEER MENU
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la unión en la oración. \n Ejemplo: 'OYE SANJI LEER EL MENU POR FAVOR' "); :}|
+LEER CARTA
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la unión en la oración. \n Ejemplo: 'OYE SANJI LEER LA CARTA POR FAVOR' "); :}
 
 ;
 
