@@ -1,0 +1,12 @@
+1.- Mostrar Menú
+2.- Dar cuenta
+3.- Dictado de menú
+4.- Traes utencilios etc.
+5.- Retirada
+6.- Hasta pronto
+7.- Entrega mesa uno
+8.- Entrega mesa dos
+9.- Entrega mesa tres
+10.- Entrega mesa cuatro
+11.- No puedes entregar pedido
+12.- Pedido tomado

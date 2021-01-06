@@ -40,6 +40,8 @@ import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import jdk.nashorn.internal.runtime.regexp.joni.Syntax;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 
 /*
@@ -88,7 +90,7 @@ public class Ventana extends javax.swing.JFrame {
     static ArrayList <String> codObjPeticionOptimizado = new ArrayList<String>();
     static ArrayList <String> cantidadesPlatillos = new ArrayList<String>();
     static String codObjeto;
-
+    static String codArduinoGenerado ="";
     static String codObjGenerado=""; 
     static boolean delete=false;
     static int cantPlatillos;
@@ -165,7 +167,23 @@ public class Ventana extends javax.swing.JFrame {
      */
     
     PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
+    private final SerialPortEventListener listener;
+    
     public Ventana() {
+        this.listener = new SerialPortEventListener(){
+            
+            @Override
+            public void serialEvent(SerialPortEvent spe) {
+                    try{
+                        if(ino.isMessageAvailable()){
+                            codArduinoGenerado+=ino.printMessage();
+                        }
+                    }catch(SerialPortException|ArduinoException ex){
+                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE,null,ex);
+                    }
+            }
+            
+        };
 
         initComponents();
         
@@ -375,6 +393,7 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtCodObjGenerado = new javax.swing.JTextPane();
         jScrollPane8 = new javax.swing.JScrollPane();
+        txtArduinoCode = new javax.swing.JTextPane();
         jScrollPane9 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
@@ -384,6 +403,13 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         txtCodigoDictado = new javax.swing.JTextPane();
         btnConectarArduino = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -499,6 +525,11 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane7.setViewportView(txtCodObjGenerado);
 
         jTabbedPane1.addTab("Código Intermedio", jScrollPane7);
+
+        txtArduinoCode.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        txtArduinoCode.setForeground(new java.awt.Color(51, 51, 255));
+        jScrollPane8.setViewportView(txtArduinoCode);
+
         jTabbedPane1.addTab("Código Generado Arduino", jScrollPane8);
         jTabbedPane1.addTab("Gramáticas Generadas", jScrollPane9);
 
@@ -531,6 +562,13 @@ public class Ventana extends javax.swing.JFrame {
         txtCodigoDictado.setBorder(null);
         txtCodigoDictado.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         txtCodigoDictado.setForeground(new java.awt.Color(102, 102, 102));
+        txtCodigoDictado.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtCodigoDictadoInputMethodTextChanged(evt);
+            }
+        });
         txtCodigoDictado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCodigoDictadoKeyTyped(evt);
@@ -552,6 +590,62 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnConectarArduino, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, -1, -1));
+
+        jButton1.setText("Pedido");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, -1, -1));
+
+        jButton2.setText("Cuenta");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, -1, -1));
+
+        jButton3.setText("Utencilio");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, -1, -1));
+
+        jButton4.setText("Listo");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 70, -1, -1));
+
+        jButton5.setText("Adios");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, -1, -1));
+
+        jButton6.setText("Menú");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, -1, -1));
+
+        jButton7.setText("Entrega");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 70, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 630));
 
@@ -582,6 +676,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
        this.dispose();
+       System.exit(0);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -630,14 +725,20 @@ public class Ventana extends javax.swing.JFrame {
         compilar();
         
         sintactico();
-                            
-        //atender();
-        //mostrarMenu();
-
-        //SEPARACIÓN POR LETRAS 
+            String[] codeTemp=codArduinoGenerado.split(";");
+            String codeArduino="";
+     for(int i=0; i<codeTemp.length;i++){
+         codeArduino+=codeTemp[i]+";\n";
+     }
+     txtArduinoCode.setText("");
+     txtArduinoCode.setText(codeArduino);
+     
+     
+      
         
     }//GEN-LAST:event_lblCompilarMouseClicked
-  public void sonido(String archivo){
+            
+    public void sonido(String archivo){
         try{
             clip=AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo)));
@@ -647,7 +748,7 @@ public class Ventana extends javax.swing.JFrame {
     }
   public void reproduccionAudio(int a){
        if(error==0){ //analisis correcto
-           sonido("PedidoCapturado.wav"); 
+           //sonido("PedidoCapturado.wav"); 
        }else{
            sonido(""+a+".wav");
        }
@@ -757,6 +858,14 @@ public void sintactico(){
                                 totalPagar4=0;
                             }
                             delete=false;
+                            try {
+                                        ino.sendData("w");
+                                    } catch (ArduinoException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (SerialPortException ex) {
+                                        Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                         
                         }
                          if(!peticionesMarvin.isEmpty() && peticionesMarvin.size()>1 && statusMarvin==false){
                              statusMarvin=true;
@@ -844,26 +953,41 @@ public void sintactico(){
                      
                      //ENTREGAR PEDIDOS
                      
-                     if(codObjeto.equals("entregar,mesaa, , ")){  
+                     
+                     if(codObjeto.equals("entregar,mesaa, , ")){ 
+                         if(mesaActual!=5){sonido("11.wav");}else{
+                         sonido("7.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
                           traer("a");
                           regresarCocina();
+                         }
                      }
                      if(codObjeto.equals("entregar,mesab, , ")){  
+                         if(mesaActual!=5){sonido("11.wav");}else{
+                          sonido("8.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
                            traer("b");
                           regresarCocina();
+                         }
                      }
-                     if(codObjeto.equals("entregar,mesac, , ")){  
+                     if(codObjeto.equals("entregar,mesac, , ")){
+                         if(mesaActual!=5){sonido("11.wav");}else{
+                         
+                          sonido("9.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
                            traer("c");
                           regresarCocina();
+                         }
                      }
                      if(codObjeto.equals("entregar,mesad, , ")){  
+                         if(mesaActual!=5){sonido("11.wav");}else{
+                          sonido("10.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
                            traer("d");
                            regresarCocina();
+                         }
                      }
+                     
                     /*Agregar platillo*/
                     String[] params =  codObjeto.split(",");
                     /*for(int j=0;j<params.length;j++){
@@ -1095,7 +1219,7 @@ public void traer(String c){
 
     private void btnConectarArduinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConectarArduinoMouseClicked
         try {
-            ino.arduinoTX("COM3", 9600);
+            ino.arduinoRXTX("COM3", 9600,listener);
         }catch(ArduinoException e){
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -1103,6 +1227,53 @@ public void traer(String c){
        
         btnConectarArduino.setEnabled(false);        // TODO add your handling code here:
     }//GEN-LAST:event_btnConectarArduinoMouseClicked
+
+    private void txtCodigoDictadoInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtCodigoDictadoInputMethodTextChanged
+      
+        txtCodigo.setText(txtCodigoDictado.getText().toString());
+        compilar();
+        sintactico();
+                    String[] codeTemp=codArduinoGenerado.split(";");
+            String codeArduino="";
+     for(int i=0; i<codeTemp.length;i++){
+         codeArduino+=codeTemp[i]+";\n";
+     }
+     txtArduinoCode.setText("");
+     txtArduinoCode.setText(codeArduino);          
+        //atender();
+        //mostrarMenu();
+
+        //SEPARACIÓN POR LETRAS 
+    }//GEN-LAST:event_txtCodigoDictadoInputMethodTextChanged
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       txtCodigoDictado.setText("Oye Marvin muestrame el menú por favor");
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+     txtCodigoDictado.setText("Oye Marvin quiero un sushi de camaron y un vampiro por favor");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       txtCodigoDictado.setText("Oye Marvin quiero la cuenta por favor");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       txtCodigoDictado.setText("Oye Marvin traeme vasos por favor");
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       txtCodigoDictado.setText("Listo Marvin");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+       txtCodigoDictado.setText("Adiós Marvin");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        txtCodigoDictado.setText("Listo mesa uno");
+    }//GEN-LAST:event_jButton7ActionPerformed
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -1779,6 +1950,13 @@ break;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConectarArduino;
     private javax.swing.JButton btnFormato;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1806,6 +1984,7 @@ break;
     private javax.swing.JLabel lblNuevo;
     private javax.swing.JLabel lbllogo;
     private javax.swing.JTable tblTokens;
+    private javax.swing.JTextPane txtArduinoCode;
     private javax.swing.JTextPane txtCliente;
     private javax.swing.JTextPane txtCodObjGenerado;
     private javax.swing.JTextPane txtCodigo;

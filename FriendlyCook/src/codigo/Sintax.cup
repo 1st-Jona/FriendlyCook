@@ -34,9 +34,9 @@ non terminal INICIO,SENTENCIAS, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,PLATILLO,PET
 start with INICIO;
 
 INICIO ::= OYE SANJI SENTENCIAS POR FAVOR | 
-           LISTO SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, ");  :} |
+           LISTO SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, "); v.audio.add(5);  :} |
            LISTO MESAS |
-           ADIOS SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, "); v.delete=true;  :} |
+           ADIOS SANJI :s {: v.codObjPeticion.add("free,marvin,mesa, "); v.delete=true;  v.audio.add(6); :} |
 /*Errores de Inicio*/
 OYE SANJI SENTENCIAS POR :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce el fin de la petición.\n Ejemplo: 'OYE SANJI QUIERO UN SUSHI DE CAMARÓN POR FAVOR'\n"); :} |
 OYE SANJI SENTENCIAS FAVOR 
@@ -68,11 +68,11 @@ MESAS ::= MESAA :s {: v.codObjPeticion.add("entregar,mesaa, , "); :} |
           MESAD :s {: v.codObjPeticion.add("entregar,mesad, , "); :} 
 ;
                
-SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(0);  :}|
+SENTENCIAS ::= SENT_HACER_PEDIDO  :s {: v.audio.add(12);  :}|
                SENT_MOSTRAR_MENU  :s {: v.audio.add(1);  :} |  //1=Mostrar menu
                SENT_DAR_CUENTA    :s {: v.audio.add(2);  :} |
                SENT_DICTAR_MENU   :s {: v.audio.add(3);  :} |
-               TRAER UTENCILIOS   
+               TRAER UTENCILIOS   :s {: v.audio.add(4); :}
 ;
 ERROR_SENTENCIAS ::= SENT_DAR_CUENTA_ERR
 ;
