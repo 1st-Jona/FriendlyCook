@@ -72,6 +72,7 @@ MESAS ::= MESAA :s {: v.codObjPeticion.add("entregar,mesaa, , "); :} |
 SENTENCIAS ::= SENT_HACER_PEDIDO |
                SENT_HACER_PEDIDO_ERR |
                SENT_MOSTRAR_MENU  :s {: v.audio.add(1); v.rutaAutomata.add("/automatas/mostrarMenu.png");  :} |  //1=Mostrar menu
+               SENT_MOSTRAR_MENU_ERR  |
                SENT_DAR_CUENTA    :s {: v.audio.add(2); v.rutaAutomata.add("/automatas/mostrarCuenta.png"); :} |
                SENT_DICTAR_MENU   :s {: v.audio.add(3); v.rutaAutomata.add("/automatas/leerMenu.png"); :} |
                TRAER UTENCILIOS   :s {: v.audio.add(4); v.rutaAutomata.add("/automatas/traerUtencilios.png"); :} 
@@ -115,9 +116,9 @@ SENT_MOSTRAR_MENU_ERR ::=
 
 /*Error de menú*/
 QUIERO VER EL 
-:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la solicitud de acción. \n Ejemplo: 'OYE SANJI QUIERO VER EL MENU POR FAVOR' "); :}|
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la solicitud de acción. \n Ejemplo: 'OYE SANJI QUIERO VER EL MENU POR FAVOR' "); v.audio.add(18); :}|
 QUIERO VER 
-:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la petición. \n Ejemplo: 'OYE SANJI QUIERO VER LA CUENTA POR FAVOR' "); :}|
+:s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la petición. \n Ejemplo: 'OYE SANJI QUIERO VER LA CUENTA POR FAVOR' "); v.audio.add(18); :}|
 MOSTRAR EL 
 :s {: v.genErrores.add("Error sintáctico 1. LINEA:"+(sright+1)+"\n No se reconoce la petición. \n Ejemplo: 'OYE SANJI MOSTRAR EL MENU POR FAVOR' "); :}|
 VER EL MENU 

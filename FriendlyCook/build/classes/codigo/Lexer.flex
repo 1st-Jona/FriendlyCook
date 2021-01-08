@@ -16,7 +16,7 @@ espacio=[ ,\t,\r,\n]+
 %%
 
 /* Comillas */
-", " {lexeme=yytext(); return Coma;}
+(", " | " , " | " ,") {lexeme=yytext(); return Coma;}
 ( "Sanji" | "SANJI" | "sanji" | Marvin ) {lexeme=yytext(); return SANJI;}
 
 /* Tipos de datos */

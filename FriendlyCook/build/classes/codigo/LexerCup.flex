@@ -26,7 +26,7 @@ espacio=[ ,\t,\r,\n]+
 %%
 
 /* Comillas */
-", " {return new Symbol(sym.Coma,yychar,yyline,yytext());}
+(", " | " , " | " ,") {return new Symbol(sym.Coma,yychar,yyline,yytext());}
 
 /*Sanji*/
 ( "Sanji" | "SANJI" | "sanji" | "Marvin" ) {return new Symbol(sym.SANJI,yychar,yyline,yytext());}
