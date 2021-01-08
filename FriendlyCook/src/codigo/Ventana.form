@@ -322,19 +322,26 @@
                       <Color blue="ff" green="33" red="33" type="rgb"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="txtArduinoCodeInputMethodTextChanged"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JScrollPane" name="jScrollPane9">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Gram&#xe1;ticas Generadas">
-                    <Property name="tabTitle" type="java.lang.String" value="Gram&#xe1;ticas Generadas"/>
+                  <JTabbedPaneConstraints tabName="Automatas - Gram&#xe1;ticas">
+                    <Property name="tabTitle" type="java.lang.String" value="Automatas - Gram&#xe1;ticas"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblAutomata">
+                </Component>
+              </SubComponents>
             </Container>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <AccessibilityProperties>

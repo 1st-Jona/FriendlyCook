@@ -90,6 +90,10 @@ public class Ventana extends javax.swing.JFrame {
     static ArrayList <String> codObjPeticionOptimizado = new ArrayList<String>();
     static ArrayList <String> cantidadesPlatillos = new ArrayList<String>();
     static String codObjeto;
+     String acum="";
+     String [] codeT;
+     String codeArduino="";
+    static ArrayList <String> rutaAutomata = new ArrayList<String>();
     static String codArduinoGenerado ="";
     static String codObjGenerado=""; 
     static boolean delete=false;
@@ -175,12 +179,14 @@ public class Ventana extends javax.swing.JFrame {
             @Override
             public void serialEvent(SerialPortEvent spe) {
                     try{
-                        if(ino.isMessageAvailable()){
+                        if(ino.isMessageAvailable()){        
                             codArduinoGenerado+=ino.printMessage();
+                         
+                            txtArduinoCode.setText(codArduinoGenerado.replaceAll(";", ";\n"));
                         }
                     }catch(SerialPortException|ArduinoException ex){
                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE,null,ex);
-                    }
+                }
             }
             
         };
@@ -395,6 +401,7 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane8 = new javax.swing.JScrollPane();
         txtArduinoCode = new javax.swing.JTextPane();
         jScrollPane9 = new javax.swing.JScrollPane();
+        lblAutomata = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTokens = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -528,10 +535,20 @@ public class Ventana extends javax.swing.JFrame {
 
         txtArduinoCode.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         txtArduinoCode.setForeground(new java.awt.Color(51, 51, 255));
+        txtArduinoCode.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtArduinoCodeInputMethodTextChanged(evt);
+            }
+        });
         jScrollPane8.setViewportView(txtArduinoCode);
 
         jTabbedPane1.addTab("Código Generado Arduino", jScrollPane8);
-        jTabbedPane1.addTab("Gramáticas Generadas", jScrollPane9);
+
+        jScrollPane9.setViewportView(lblAutomata);
+
+        jTabbedPane1.addTab("Automatas - Gramáticas", jScrollPane9);
 
         tblTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -722,19 +739,14 @@ public class Ventana extends javax.swing.JFrame {
 
     private void lblCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCompilarMouseClicked
        txtCodigo.setText(txtCodigoDictado.getText().toString());
+        txtCliente.setText("");
         compilar();
-        
         sintactico();
-            String[] codeTemp=codArduinoGenerado.split(";");
-            String codeArduino="";
-     for(int i=0; i<codeTemp.length;i++){
-         codeArduino+=codeTemp[i]+";\n";
-     }
-     txtArduinoCode.setText("");
-     txtArduinoCode.setText(codeArduino);
-     
-     
-      
+        txtArduinoCode.setText("");
+        codArduinoGenerado="";
+
+        
+        
         
     }//GEN-LAST:event_lblCompilarMouseClicked
             
@@ -748,7 +760,7 @@ public class Ventana extends javax.swing.JFrame {
     }
   public void reproduccionAudio(int a){
        if(error==0){ //analisis correcto
-           //sonido("PedidoCapturado.wav"); 
+           sonido("13.wav"); 
        }else{
            sonido(""+a+".wav");
        }
@@ -779,6 +791,8 @@ public class Ventana extends javax.swing.JFrame {
          btnFormato.setText("Quitar formato");
         formatFlag=true;
     }
+        
+        
         
     }//GEN-LAST:event_btnFormatoActionPerformed
 public void sintactico(){
@@ -902,27 +916,27 @@ public void sintactico(){
                         String cuentaAcumulada="";
                         if(mesaActual==1){
                             for(int j=0;j<cuenta.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta.get(i)+"\n";
+                                cuentaAcumulada=cuentaAcumulada+cuenta.get(j)+"\n";
                             }
                             cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar;
                         }
                         if(mesaActual==2){
                             for(int j=0;j<cuenta2.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta2.get(i)+"\n";
+                                cuentaAcumulada=cuentaAcumulada+cuenta2.get(j)+"\n";
                             }
                              cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar2;
                         }
                         if(mesaActual==3){
                             for(int j=0;j<cuenta3.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta3.get(i)+"\n";
+                                cuentaAcumulada=cuentaAcumulada+cuenta3.get(j)+"\n";
                             }
                              cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar3;
                         }
                         if(mesaActual==4){
                             for(int j=0;j<cuenta4.size();j++){
-                                cuentaAcumulada=cuentaAcumulada+cuenta4.get(i)+"\n";
-                            }
-                             cuentaAcumulada+="\nTotal a pagar:             $"+totalPagar4;
+                                cuentaAcumulada=cuentaAcumulada+cuenta4.get(j)+"\n";
+                            }                                                
+                             cuentaAcumulada+="\n----------------------------------\nTotal a pagar:             $"+totalPagar4;
                         }
                     txtCliente.setText(cuentaAcumulada);
                     cuentaAcumulada="";
@@ -998,10 +1012,12 @@ public void sintactico(){
                         numeroPlatillo=Integer.parseInt(params[2]);
                         cantPlatillos=Integer.parseInt(cantidadesPlatillos.get(i));
                         for(int j=0;j<cantPlatillos;j++){
-                            JFlex.Out.println("se agrego "+Platillos[numeroPlatillo]);
+                            //JFlex.Out.println("se agrego "+Platillos[numeroPlatillo]);
                             if(mesaActual==1){
                             cuenta.add(Platillos[numeroPlatillo]);
                             totalPagar+=precioPlatillos[numeroPlatillo];
+                            
+                                
                             }
                             if(mesaActual==2){
                             cuenta2.add(Platillos[numeroPlatillo]);
@@ -1018,14 +1034,20 @@ public void sintactico(){
                             
                             
                         }
+                        String temp="";
+                            for(int q=0;q<cuenta.size();q++){
+                                temp=cuenta.get(i)+"\n";                            
+                            }
+                            JFlex.Out.println(temp);
+                        acum+="   [x"+cantPlatillos+"] - "+Platillos[numeroPlatillo]+"\n";
                         if(mesaActual==1){
-                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar );}
+                        txtCliente.setText("Se añadió a la cuenta:\n"+acum+"\n\n Total a pagar: $"+totalPagar+" MXN");}
                         if(mesaActual==2){
-                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar2 );}
+                        txtCliente.setText("Se añadió a la cuenta:\n"+acum+"\n\n Total a pagar: $"+totalPagar2+" MXN");}
                         if(mesaActual==3){
-                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar3 );}
+                        txtCliente.setText("Se añadió a la cuenta:\n"+acum+"\n\n Total a pagar: $"+totalPagar3+" MXN" );}
                         if(mesaActual==4){
-                        txtCliente.setText("Se agregaron :"+cantPlatillos+" de "+Platillos[numeroPlatillo]+"\nTotal actual: "+totalPagar4 );}
+                        txtCliente.setText("Se añadió a la cuenta:\n"+acum+"\n\n Total a pagar: $"+totalPagar4+" MXN");}
                     }
                        
                     
@@ -1046,7 +1068,15 @@ public void sintactico(){
             txtCodObjGenerado.setText(codObjGenerado);
             codObjGenerado="";
             codObjPeticionOptimizado.clear();
+            acum="";
             
+            if(!rutaAutomata.isEmpty()){
+            ImageIcon logo1= new ImageIcon(getClass().getResource(rutaAutomata.get(0)));
+            Icon logo=new ImageIcon(logo1.getImage().getScaledInstance(logo1.getIconWidth()/2, logo1.getIconHeight()/2,Image.SCALE_DEFAULT));
+            lblAutomata.setIcon(logo);
+            println(rutaAutomata.get(0));
+            }
+            rutaAutomata.clear();
              
              
         } catch (Exception ex) {
@@ -1230,20 +1260,13 @@ public void traer(String c){
 
     private void txtCodigoDictadoInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtCodigoDictadoInputMethodTextChanged
       
-        txtCodigo.setText(txtCodigoDictado.getText().toString());
+      txtCodigo.setText(txtCodigoDictado.getText().toString());
+        txtCliente.setText("");
         compilar();
         sintactico();
-                    String[] codeTemp=codArduinoGenerado.split(";");
-            String codeArduino="";
-     for(int i=0; i<codeTemp.length;i++){
-         codeArduino+=codeTemp[i]+";\n";
-     }
-     txtArduinoCode.setText("");
-     txtArduinoCode.setText(codeArduino);          
-        //atender();
-        //mostrarMenu();
-
-        //SEPARACIÓN POR LETRAS 
+        txtArduinoCode.setText("");
+        codArduinoGenerado="";
+        println("compilado");
     }//GEN-LAST:event_txtCodigoDictadoInputMethodTextChanged
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1274,6 +1297,10 @@ public void traer(String c){
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         txtCodigoDictado.setText("Listo mesa uno");
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void txtArduinoCodeInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtArduinoCodeInputMethodTextChanged
+       
+    }//GEN-LAST:event_txtArduinoCodeInputMethodTextChanged
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -1979,6 +2006,7 @@ break;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblAbrir;
+    private javax.swing.JLabel lblAutomata;
     private javax.swing.JLabel lblCompilar;
     private javax.swing.JLabel lblGuardar;
     private javax.swing.JLabel lblNuevo;
