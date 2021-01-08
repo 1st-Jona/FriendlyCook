@@ -165,7 +165,7 @@ public class Ventana extends javax.swing.JFrame {
     String resultado;
     String filename;
     boolean formatFlag=false;
-    
+    static boolean hayError=false;
     /**
      * Creates new form Analizador
      */
@@ -740,12 +740,13 @@ public class Ventana extends javax.swing.JFrame {
     private void lblCompilarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCompilarMouseClicked
        txtCodigo.setText(txtCodigoDictado.getText().toString());
         txtCliente.setText("");
+        
         compilar();
         sintactico();
         txtArduinoCode.setText("");
         codArduinoGenerado="";
 
-        
+        hayError=false;
         
         
     }//GEN-LAST:event_lblCompilarMouseClicked
@@ -799,6 +800,7 @@ public void sintactico(){
         String ST=txtCodigo.getText();
         Sintax s= new Sintax(new codigo.LexerCup(new StringReader(ST)));
         try {
+           
             s.parse();
             resultado="";
             txtErrores.setText("Analisis sintáctico realizado con exito");
@@ -806,7 +808,7 @@ public void sintactico(){
              for(int i=0;i<genErrores.size();i++){
                     resultado=resultado+genErrores.get(i)+"\n";
             }
-             
+            if(!hayError){
             /*Optimizr*/
             if (!codObjPeticion.isEmpty()){
                  int nPlatillo=0;
@@ -1057,6 +1059,7 @@ public void sintactico(){
                         mostrarMenu();
                     } 
                 }
+                 
              } else{
                  codObjeto="[ , , ]";
              }
@@ -1077,7 +1080,17 @@ public void sintactico(){
             println(rutaAutomata.get(0));
             }
             rutaAutomata.clear();
-             
+        }else{
+            txtErrores.setText(resultado+"Compilación completa.");
+            genErrores.clear();
+            codObjPeticion.clear();
+            cantidadesPlatillos.clear();
+            txtCodObjGenerado.setText(codObjGenerado);
+            codObjGenerado="";
+            codObjPeticionOptimizado.clear();
+            acum="";
+            }
+            
              
         } catch (Exception ex) {
            Symbol sym = s.getS();
