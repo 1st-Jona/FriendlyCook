@@ -29,7 +29,7 @@ FONDANT,MOSTRAR,VER,LEER,MENU,CARTA,DOS,TRES,CUATRO,CINCO,SEIS,SIETE,OCHO,NUEVE,
 
 non terminal INICIO,SENTENCIAS, SENT_HACER_PEDIDO,SENT_MOSTRAR_MENU,SENT_MOSTRAR_MENU_ERR,PLATILLO,PETICION,CANTIDAD_UN_PL,CANTIDAD_UNA_PL,
                CANTIDAD_CORRECTO_O,CANTIDAD_CORRECTO_A,SENT_DAR_CUENTA,CANT_PLURALES,SENT_DICTAR_MENU,UTENCILIOS,MESAS,ERROR_SENTENCIAS,SENT_DAR_CUENTA_ERR,
-               SENT_HACER_PEDIDO_ERR,PLATILLO_ERR_UN,PLATILLO_ERR_UNA,PLATILLO_ERR_UNA_UN 
+               SENT_HACER_PEDIDO_ERR,PLATILLO_ERR_UN,PLATILLO_ERR_UNA,PLATILLO_ERR_UNA_UN,PLATILLOS_A,PLATILLOS_O
 ; 
 
 start with INICIO;
@@ -145,14 +145,10 @@ LEER CARTA
 ;
 
 SENT_HACER_PEDIDO ::= QUIERO PLATILLO  :s {: v.audio.add(12); v.rutaAutomata.add("/automatas/hacerPedido.png"); :} | 
-                      SENT_HACER_PEDIDO QUIERO PLATILLO   :s {: v.audio.add(12); v.rutaAutomata.add("/automatas/hacerPedido.png"); :} | 
                       SENT_HACER_PEDIDO Coma PLATILLO  :s {: v.audio.add(12); v.rutaAutomata.add("/automatas/hacerPedido.png"); :} | 
-                      SENT_HACER_PEDIDO PLATILLO  :s {: v.audio.add(12); v.rutaAutomata.add("/automatas/hacerPedido.png"); :}  |
                       SENT_HACER_PEDIDO Y PLATILLO   :s {: v.audio.add(12); v.rutaAutomata.add("/automatas/hacerPedido.png"); :} |
                       QUIERO PLATILLO_ERR_UNA_UN | 
-                      SENT_HACER_PEDIDO QUIERO  PLATILLO_ERR_UNA_UN | 
                       SENT_HACER_PEDIDO Coma  PLATILLO_ERR_UNA_UN | 
-                      SENT_HACER_PEDIDO  PLATILLO_ERR_UNA_UN |
                       SENT_HACER_PEDIDO Y PLATILLO_ERR_UNA_UN 
 ;
 
@@ -192,122 +188,81 @@ PLATILLO_ERR_UN ::= CANT_UN HAMBURGUESA_ARROZ :s {:v.genErrores.add("Error semá
                     CANT_UN PIÑA_COLADA :s {:v.genErrores.add("Error semántico 2. LINEA:"+(sright+1)+"\n No es posible pedir un piña colada. \n Ejemplo: ' ...quiero 'una' piña colada'\n");:} 
 ;
 
-PLATILLO ::= CANTIDAD_CORRECTO_O SUSHI_CAMARON   /* Sushi de camaron - $80.00*/
+PLATILLOS_O ::=  SUSHI_CAMARON   /* Sushi de camaron - $80.00*/
                         :s {: v.codObjPeticion.add("add,cuenta,0"); :}  |
-             CANTIDAD_CORRECTO_O SUSHI_POLLO     /* Sushi de pollo - $80.00*/
-                        :s {:  v.codObjPeticion.add("add,cuenta,1"); :} |  
-             CANTIDAD_CORRECTO_O SUSHI_RES      /* Sushi de res - $80.00*/
-                        :s {:  v.codObjPeticion.add("add,cuenta,2"); :}|  
-             CANTIDAD_CORRECTO_O CAMARONITO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,3"); :}|  /* Camaronito - $100.00*/
-             CANTIDAD_CORRECTO_O BOMBAZO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,4"); :}|  /*  Bombazo - $100.00*/
-             CANTIDAD_CORRECTO_A HAMBURGUESA_ARROZ 
-                        :s {:  v.codObjPeticion.add("add,cuenta,5"); :}|  /* Hamburguesa de Arroz - $90.00*/
-             CANTIDAD_CORRECTO_O TERIYAKI 
-                        :s {:  v.codObjPeticion.add("add,cuenta,6");/* Teriyaki - $120.00*/ :}|  
-             CANTIDAD_CORRECTO_O HELADO_VAINILLA 
-                        :s {:   v.codObjPeticion.add("add,cuenta,7");/* Helado de vainilla - $30.00*/ :}|  
-             CANTIDAD_CORRECTO_A FRUTA_CARAMELO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,8");/* Fruta en caramelo - $28.00*/ :}|  
-             CANTIDAD_CORRECTO_O FONDANT 
-                        :s {:  v.codObjPeticion.add("add,cuenta,9");/* Fondant - $40.00*/ :}|  
-             CANTIDAD_CORRECTO_O HELADO_CACAO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,10");/* Helado de cacao - $30.00*/ :}|  
-             CANTIDAD_CORRECTO_O PIE_LIMON 
-                        :s {:  v.codObjPeticion.add("add,cuenta,11");/* Pie de limon - $26.00*/ :}|  
-             CANTIDAD_CORRECTO_O PIE_FRESA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,12");/* Pie de fresa - $26.00*/ :}|  
-             CANTIDAD_CORRECTO_O PIE_MORA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,13");/* Pie de mora - $26.00*/ :}|  
-             CANTIDAD_CORRECTO_O PIE_QUESO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,14");/* Pie de queso - $26.00*/ :}|  
-             CANTIDAD_CORRECTO_O CHURROS 
-                        :s {:  v.codObjPeticion.add("add,cuenta,15");/* Churros - $6.00*/ :}|  
-             CANTIDAD_CORRECTO_O CAFE 
-                        :s {:  v.codObjPeticion.add("add,cuenta,17");/* Cafe - $20.00*/ :}|  
-             CANTIDAD_CORRECTO_O EXPRESSO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,18");/* Expresso - $35.00*/ :}|  
-             CANTIDAD_CORRECTO_O MARTINI 
-                        :s {:  v.codObjPeticion.add("add,cuenta,19");/* Martini - $45.00*/ :}|  
-             CANTIDAD_CORRECTO_A LIMONADA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,20");/* Limonada - $22.00*/ :}|  
-             CANTIDAD_CORRECTO_A NARANJADA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,21");/* Naranjada - $22.00*/ :}|  
-             CANTIDAD_CORRECTO_A COCA_COLA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,22");/* Coca-cola - $18.00*/ :}|  
-             CANTIDAD_CORRECTO_A CORONA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,23");/* Corona - $39.00*/ :}|  
-             CANTIDAD_CORRECTO_A VICTORIA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,24");/* Victoria - $39.00*/ :}|  
-             CANTIDAD_CORRECTO_A PIÑA_COLADA 
-                        :s {:  v.codObjPeticion.add("add,cuenta,25");/* Piña colada - $45.00*/ :}|  
-             CANTIDAD_CORRECTO_O JUGO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,26");/* Jugo - $25.00*/ :}|  
-             CANTIDAD_CORRECTO_O VAMPIRO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,27");/* Vampiro - $55.00*/ :} |
-             SUSHI_CAMARON   /* Sushi de camaron - $80.00*/
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
               SUSHI_POLLO     /* Sushi de pollo - $80.00*/
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,1"); :} |  
               SUSHI_RES      /* Sushi de res - $80.00*/
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,2"); :}|  
               CAMARONITO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,3"); :}|  /* Camaronito - $100.00*/
               BOMBAZO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              HAMBURGUESA_ARROZ 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,4"); :}|  /*  Bombazo - $100.00*/
               TERIYAKI 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,6");/* Teriyaki - $120.00*/ :}|  
               HELADO_VAINILLA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              FRUTA_CARAMELO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:   v.codObjPeticion.add("add,cuenta,7");/* Helado de vainilla - $30.00*/ :}|  
               FONDANT 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,9");/* Fondant - $40.00*/ :}|  
               HELADO_CACAO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,10");/* Helado de cacao - $30.00*/ :}|  
               PIE_LIMON 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,11");/* Pie de limon - $26.00*/ :}|  
               PIE_FRESA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,12");/* Pie de fresa - $26.00*/ :}|  
               PIE_MORA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,13");/* Pie de mora - $26.00*/ :}|  
               PIE_QUESO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,14");/* Pie de queso - $26.00*/ :}|  
               CHURROS 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,15");/* Churros - $6.00*/ :}|  
               CAFE 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,17");/* Cafe - $20.00*/ :}|  
               EXPRESSO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,18");/* Expresso - $35.00*/ :}|  
               MARTINI 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              LIMONADA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              NARANJADA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              COCA_COLA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              CORONA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              VICTORIA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
-              PIÑA_COLADA 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,19");/* Martini - $45.00*/ :}|  
               JUGO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+                        :s {:  v.codObjPeticion.add("add,cuenta,26");/* Jugo - $25.00*/ :}|  
               VAMPIRO 
-                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} 
-
+                        :s {:  v.codObjPeticion.add("add,cuenta,27");/* Vampiro - $55.00*/ :}      
 ;
 
-CANTIDAD_CORRECTO_O ::= CANT_UN :s {: v.cantidadesPlatillos.add("1"); :} | CANT_PLURALES
+PLATILLOS_A ::= 
+                      
+              HAMBURGUESA_ARROZ 
+                        :s {:  v.codObjPeticion.add("add,cuenta,5"); :}|  /* Hamburguesa de Arroz - $90.00*/
+              FRUTA_CARAMELO 
+                        :s {:  v.codObjPeticion.add("add,cuenta,8");/* Fruta en caramelo - $28.00*/ :}|  
+              LIMONADA 
+                        :s {:  v.codObjPeticion.add("add,cuenta,20");/* Limonada - $22.00*/ :}|  
+              NARANJADA 
+                        :s {:  v.codObjPeticion.add("add,cuenta,21");/* Naranjada - $22.00*/ :}|  
+              COCA_COLA 
+                        :s {:  v.codObjPeticion.add("add,cuenta,22");/* Coca-cola - $18.00*/ :}|  
+              CORONA 
+                        :s {:  v.codObjPeticion.add("add,cuenta,23");/* Corona - $39.00*/ :}|  
+              VICTORIA 
+                        :s {:  v.codObjPeticion.add("add,cuenta,24");/* Victoria - $39.00*/ :}|  
+              PIÑA_COLADA 
+                        :s {:  v.codObjPeticion.add("add,cuenta,25");/* Piña colada - $45.00*/ :}
+          
+;
+PLATILLO::=
+    CANT_UN PLATILLOS_O  :s {: v.cantidadesPlatillos.add("1"); :} |
+    CANT_UNA PLATILLOS_A   :s {: v.cantidadesPlatillos.add("1"); :}|
+    CANT_PLURALES PLATILLOS_A |
+    CANT_PLURALES PLATILLOS_O |
+    CANT_PLURALES :s {:  v.genErrores.add("Error sintáctico 19. LINEA:"+(sright+1)+"\n Se especifica cantidad pero no un platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroCantidadPorfavor.png"); v.audio.add(17);  :}|
+    CANT_UN :s {:  v.genErrores.add("Error sintáctico 19. LINEA:"+(sright+1)+"\n Se especifica cantidad pero no un platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroCantidadPorfavor.png"); v.audio.add(17);  :}|
+    CANT_UNA :s {:  v.genErrores.add("Error sintáctico 19. LINEA:"+(sright+1)+"\n Se especifica cantidad pero no un platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroCantidadPorfavor.png"); v.audio.add(17);  :} |
+    PLATILLOS_O 
+      :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+    PLATILLOS_A
+      :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} 
 ;
 
-CANTIDAD_CORRECTO_A ::= CANT_UNA :s {: v.cantidadesPlatillos.add("1"); :} | CANT_PLURALES
-;
+
 
 CANT_PLURALES ::=   DOS      :s {: v.cantidadesPlatillos.add("2"); :} |
                     TRES     :s {: v.cantidadesPlatillos.add("3"); :} | 
