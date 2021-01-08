@@ -75,6 +75,7 @@ SENTENCIAS ::= SENT_HACER_PEDIDO |
                SENT_DAR_CUENTA    :s {: v.audio.add(2); v.rutaAutomata.add("/automatas/mostrarCuenta.png"); :} |
                SENT_DICTAR_MENU   :s {: v.audio.add(3); v.rutaAutomata.add("/automatas/leerMenu.png"); :} |
                TRAER UTENCILIOS   :s {: v.audio.add(4); v.rutaAutomata.add("/automatas/traerUtencilios.png"); :} 
+               
 ;
 ERROR_SENTENCIAS ::= SENT_DAR_CUENTA_ERR | SENT_MOSTRAR_MENU_ERR 
 ;
@@ -244,7 +245,62 @@ PLATILLO ::= CANTIDAD_CORRECTO_O SUSHI_CAMARON   /* Sushi de camaron - $80.00*/
              CANTIDAD_CORRECTO_O JUGO 
                         :s {:  v.codObjPeticion.add("add,cuenta,26");/* Jugo - $25.00*/ :}|  
              CANTIDAD_CORRECTO_O VAMPIRO 
-                        :s {:  v.codObjPeticion.add("add,cuenta,27");/* Vampiro - $55.00*/ :}
+                        :s {:  v.codObjPeticion.add("add,cuenta,27");/* Vampiro - $55.00*/ :} |
+             SUSHI_CAMARON   /* Sushi de camaron - $80.00*/
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              SUSHI_POLLO     /* Sushi de pollo - $80.00*/
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              SUSHI_RES      /* Sushi de res - $80.00*/
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              CAMARONITO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              BOMBAZO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              HAMBURGUESA_ARROZ 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              TERIYAKI 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              HELADO_VAINILLA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              FRUTA_CARAMELO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              FONDANT 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              HELADO_CACAO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              PIE_LIMON 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              PIE_FRESA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              PIE_MORA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              PIE_QUESO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              CHURROS 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              CAFE 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              EXPRESSO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              MARTINI 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              LIMONADA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              NARANJADA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              COCA_COLA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              CORONA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              VICTORIA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              PIÑA_COLADA 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              JUGO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} |
+              VAMPIRO 
+                        :s {:  v.genErrores.add("Error sintáctico 18. LINEA:"+(sright+1)+"\n No se especifico la cantidad para el platillo \n Ejemplo de solución: ' ...quiero 'una' platillo '\n"); v.hayError=true; v.rutaAutomata.add("/automatas/oyeMarvinQuieroPLatilloPorfavor.png"); v.audio.add(16);  :} 
+
 ;
 
 CANTIDAD_CORRECTO_O ::= CANT_UN :s {: v.cantidadesPlatillos.add("1"); :} | CANT_PLURALES

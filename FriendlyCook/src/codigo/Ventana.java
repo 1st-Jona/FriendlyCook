@@ -1089,6 +1089,13 @@ public void sintactico(){
             codObjGenerado="";
             codObjPeticionOptimizado.clear();
             acum="";
+            if(!rutaAutomata.isEmpty()){
+            ImageIcon logo1= new ImageIcon(getClass().getResource(rutaAutomata.get(0)));
+            Icon logo=new ImageIcon(logo1.getImage().getScaledInstance(logo1.getIconWidth()/2, logo1.getIconHeight()/2,Image.SCALE_DEFAULT));
+            lblAutomata.setIcon(logo);
+            println(rutaAutomata.get(0));
+            }
+            rutaAutomata.clear();
             }
             
              
