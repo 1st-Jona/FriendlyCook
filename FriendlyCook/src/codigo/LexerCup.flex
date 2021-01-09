@@ -80,7 +80,7 @@ espacio=[ ,\t,\r,\n]+
 
 /*-------------------- PLATILLOS (MENU) -----------------------*/
 /* Sushi de camaron				$80.00*/
-("sushi de camaron") {return new Symbol(sym.SUSHI_CAMARON,yychar,yyline,yytext());}
+("sushi de camaron" | "sushi de camarón") {return new Symbol(sym.SUSHI_CAMARON,yychar,yyline,yytext());}
 /*Sushi de pollo				$80.00*/
 ("sushi de pollo") {return new Symbol(sym.SUSHI_POLLO,yychar,yyline,yytext());}
 /*Sushi de res					$80.00*/
