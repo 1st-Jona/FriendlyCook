@@ -413,6 +413,9 @@ public class Ventana extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblArduino = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         jScrollPane4.setViewportView(jTextPane1);
 
@@ -619,6 +622,30 @@ public class Ventana extends javax.swing.JFrame {
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
         jPanel1.add(lblArduino, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 90, 20));
 
+        jButton4.setText("90");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
+
+        jButton5.setText("180");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
+
+        jButton7.setText("0");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 630));
 
         pack();
@@ -699,7 +726,10 @@ public class Ventana extends javax.swing.JFrame {
                  if(paramsObj[0].equals("show")){
                     paramsObj=codObjPeticion.get(0).split(",");
                     for(int p=0;p<codObjPeticion.size();p++){
-                        codObjGenerado+="[show,"+paramsObj[1]+mesaActual+","+mesaActual+", ]\n";
+                        if(paramsObj[1].equals("cuenta")){
+                         codObjGenerado+="[show,"+paramsObj[1]+mesaActual+",mesa"+mesaActual+", ]\n";}
+                        else{
+                        codObjGenerado+="[show,"+paramsObj[1]+",mesa"+mesaActual+", ]\n";}
                     }
                  }
                 
@@ -738,7 +768,9 @@ public class Ventana extends javax.swing.JFrame {
                             }
                             delete=false;
                             try {
+                                        ino.sendData("y");
                                         ino.sendData("w");
+                                        
                                     } catch (ArduinoException ex) {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                                     } catch (SerialPortException ex) {
@@ -752,7 +784,9 @@ public class Ventana extends javax.swing.JFrame {
                             mesaActual=peticionesMarvin.get(1);
                                     System.out.println(c);
                                      try {
+                                        
                                         ino.sendData(c);
+                                         if(mesaActual==5){ino.sendData("x");}
                                         ino.sendData("o");
                                     } catch (ArduinoException ex) {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
@@ -765,8 +799,10 @@ public class Ventana extends javax.swing.JFrame {
                              peticionesMarvin.remove(0);
                              if(peticionesMarvin.isEmpty()){
                               try {
-                                        ino.sendData("l");
+                                  if(mesaActual==5){ino.sendData("y");}
+                                        ino.sendData("l");//libre
                                         ino.sendData("5");
+                                        
                                     } catch (ArduinoException ex) {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                                     } catch (SerialPortException ex) {
@@ -820,28 +856,45 @@ public class Ventana extends javax.swing.JFrame {
                     if(mesaActual==2){m="b";}
                     if(mesaActual==3){m="c";}
                     if(mesaActual==4){m="d";}
-                    if(mesaActual==5){
+                  
+                     if(codObjeto.equals("traer,mesa,vaso, ")){  
+                         if(mesaActual==5){
                         audio.clear();
                         txtErrores.setForeground(Color.ORANGE);
                             sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
                     }else{
-                     if(codObjeto.equals("traer,mesa,vaso, ")){  
                           codObjGenerado+="[traer,mesa"+mesaActual+",vaso, ]\n";
                          traer(m);
                      }
+                     }
                      if(codObjeto.equals("traer,mesa,cuch, ")){
+                         if(mesaActual==5){
+                        audio.clear();
+                        txtErrores.setForeground(Color.ORANGE);
+                            sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
+                    }else{
                          codObjGenerado+="[traer,mesa"+mesaActual+",cuch, ]\n";
-                         traer(m);
+                         traer(m);}
                      }
                      if(codObjeto.equals("traer,mesa,tene, ")){
+                         if(mesaActual==5){
+                        audio.clear();
+                        txtErrores.setForeground(Color.ORANGE);
+                            sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
+                    }else{
                          codObjGenerado+="[traer,mesa"+mesaActual+",tene, ]\n";
                          traer(m);
-                     }
+                     }}
                      if(codObjeto.equals("traer,mesa,serv, ")){
+                         if(mesaActual==5){
+                        audio.clear();
+                        txtErrores.setForeground(Color.ORANGE);
+                            sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
+                    }else{
                          codObjGenerado+="[traer,mesa"+mesaActual+",serv, ]\n";
                          traer(m);
-                     }
-                 }
+                     }}
+                 
                      //ENTREGAR PEDIDOS
                      
                      
@@ -855,16 +908,17 @@ public class Ventana extends javax.swing.JFrame {
                              
                          sonido("7.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
-                          traer("a");
-                          regresarCocina();
+                          entregarPedido("h");
+                          
+                          
                          }
                      }
                      if(codObjeto.equals("entregar,mesab, , ")){  
                          if(mesaActual!=5){sonido("11.wav");}else{
                           sonido("8.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
-                           traer("b");
-                          regresarCocina();
+                           entregarPedido("j");
+                         
                          }
                      }
                      if(codObjeto.equals("entregar,mesac, , ")){
@@ -872,19 +926,19 @@ public class Ventana extends javax.swing.JFrame {
                          
                           sonido("9.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
-                           traer("c");
-                          regresarCocina();
+                           entregarPedido("k");
+                          
                          }
                      }
                      if(codObjeto.equals("entregar,mesad, , ")){  
                          if(mesaActual!=5){sonido("11.wav");}else{
                           sonido("10.wav");
                           codObjGenerado+="[entregar,mesa"+mesaActual+", , ]\n";
-                           traer("d");
-                           regresarCocina();
+                           entregarPedido("m");
+                           
                          }
                      }
-                    if(mesaActual!=5){
+                    //if(mesaActual!=5){
                     /*Agregar platillo*/
                     String[] params =  codObjeto.split(",");
                     /*for(int j=0;j<params.length;j++){
@@ -892,6 +946,11 @@ public class Ventana extends javax.swing.JFrame {
                     }*/
                     
                     if(params[0].equals("add")){
+                        if(mesaActual==5){
+                            txtErrores.setForeground(Color.ORANGE); 
+                            audio.clear(); sonido("29.wav");
+                            resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.";}
+                        else{
                         numeroPlatillo=Integer.parseInt(params[2]);
                         cantPlatillos=Integer.parseInt(cantidadesPlatillos.get(i));
                         for(int j=0;j<cantPlatillos;j++){
@@ -931,14 +990,14 @@ public class Ventana extends javax.swing.JFrame {
                         txtCliente.setText("Se añadió a la cuenta:\n"+acum+"\n\n Total a pagar: $"+totalPagar3+" MXN" );}
                         if(mesaActual==4){
                         txtCliente.setText("Se añadió a la cuenta:\n"+acum+"\n\n Total a pagar: $"+totalPagar4+" MXN");}
-                    }
+                    }}
                     
                     
                     /*Mostra menu*/
                     if(codObjeto.equals("show,menu, , ")){
                         JFlex.Out.println("Se mostro menú"+Platillos[0]);
                         mostrarMenu();
-                    }}else{ txtErrores.setForeground(Color.ORANGE); audio.clear(); sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.";}
+                    }//}else{ 
                 }
                  
              } else{
@@ -997,17 +1056,23 @@ public class Ventana extends javax.swing.JFrame {
                  }
             }
         reproduccionAudio(error);
+        audio.clear();
 }
-public void regresarCocina(){
-                                    try {
-                                        ino.sendData("r");
+   public void entregarPedido(String l){
+       
+       try {
+                                       
+                                        ino.sendData(l);
+                                        
                                     } catch (ArduinoException ex) {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                                     } catch (SerialPortException ex) {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                                     }
-                                    
-}
+       
+       
+   }
+
 public void traer(String c){
                                     try {
                                         ino.sendData(c);
@@ -1111,6 +1176,7 @@ public void traer(String c){
              try {
                 ino.sendData(c+"");
                 ino.sendData("o");
+                ino.sendData("x");
             } catch (ArduinoException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SerialPortException ex) {
@@ -1232,6 +1298,39 @@ public void traer(String c){
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+                ino.sendData("x");
+      
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+                ino.sendData("y");
+      
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       try {
+                ino.sendData("z");
+      
+            } catch (ArduinoException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SerialPortException ex) {
+                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton7ActionPerformed
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -1910,7 +2009,10 @@ break;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

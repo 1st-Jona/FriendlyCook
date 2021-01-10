@@ -5,13 +5,15 @@ const int libre=12;
  
 // Declaramos la variable para controlar el servo
 Servo servoMotor;
- 
+Servo servoMotor2;
+int pos = 90;
 void setup() {
   // Iniciamos el monitor serie para mostrar el resultado
   Serial.begin(9600);
  
   // Iniciamos el servo para que empiece a trabajar con el pin 9
   servoMotor.attach(9);
+  servoMotor2.attach(10);
   //led
   pinMode(ocupado,OUTPUT);
   pinMode(libre,OUTPUT);
@@ -66,40 +68,141 @@ void loop() {
       }
 
       if(input == 'a'){
+        
          delay(3000);
+         
          servoMotor.write(90);
-         delay(5000);
+         
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+  
+         delay(3000);
+         
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(500);
          servoMotor.write(20);
+         delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(3000);
+         for (pos = 180; pos >= 90; pos -= 1) {servoMotor2.write(pos);              
+              delay(7);                       
+           }
          Serial.println("delay(3000);");
          Serial.println("servoMotor.write(90);");
          Serial.println("delay(5000);");
          Serial.println("servoMotor.write(20);");
       }
       if(input == 'b'){
-         delay(3000);
+                  delay(3000);
+         
          servoMotor.write(90);
-         delay(5000);
+         
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+  
+         delay(3000);
+         
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(500);
          servoMotor.write(55);
+         delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(3000);
+         for (pos = 180; pos >= 90; pos -= 1) {servoMotor2.write(pos);              
+              delay(7);                       
+           }
          Serial.println("delay(3000);");
          Serial.println("servoMotor.write(90);");
          Serial.println("delay(5000);");
          Serial.println("servoMotor.write(55);");
       }
       if(input == 'c'){
-         delay(3000);
+                  delay(3000);
+         
          servoMotor.write(90);
-         delay(5000);
+         
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+  
+         delay(3000);
+         
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(500);
          servoMotor.write(135);
+         delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(3000);
+         for (pos = 180; pos >= 90; pos -= 1) {servoMotor2.write(pos);              
+              delay(7);                       
+           }
          Serial.println("delay(3000);");
          Serial.println("servoMotor.write(90);");
          Serial.println("delay(5000);");
          Serial.println("servoMotor.write(135);");
       }
       if(input == 'd'){
-         delay(3000);
+                  delay(3000);
+         
          servoMotor.write(90);
-         delay(5000);
+         
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+  
+         delay(3000);
+         
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(500);
          servoMotor.write(170);
+         delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(7);                       
+           }
+         delay(3000);
+         for (pos = 180; pos >= 90; pos -= 1) {servoMotor2.write(pos);              
+              delay(7);                       
+           }
          Serial.println("delay(3000);");
          Serial.println("servoMotor.write(90);");
          Serial.println("delay(5000);");
@@ -116,6 +219,162 @@ void loop() {
           delay(4000);  
           Serial.println("delay(4000);");
       }
+      if(input == 'x'){
+     
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+          servoMotor2.write(180);
+        
+      }
+      if(input == 'y'){
+          for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+          servoMotor2.write(90);
+        
+      }
+if(input == 'h'){
+         
+         delay(4000);
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+          servoMotor.write(20);
+          delay(500);
+             for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+            delay(3000);
+            for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+           servoMotor.write(90);
+           delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+
+         Serial.println("delay(3000);");
+         Serial.println("servoMotor.write(90);");
+         Serial.println("delay(5000);");
+         Serial.println("servoMotor.write(55);");
+      }
+      if(input == 'j'){
+     
+        delay(4000);
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+          servoMotor.write(55);
+          delay(500);
+             for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+            delay(3000);
+            for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+           servoMotor.write(90);
+           delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+
+         Serial.println("delay(3000);");
+         Serial.println("servoMotor.write(90);");
+         Serial.println("delay(5000);");
+         Serial.println("servoMotor.write(55);");
+      }
+      if(input == 'k'){
+       
+         delay(4000);
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+          servoMotor.write(135);
+          delay(500);
+             for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+            delay(3000);
+            for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+           servoMotor.write(90);
+           delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+
+         Serial.println("delay(3000);");
+         Serial.println("servoMotor.write(90);");
+         Serial.println("delay(5000);");
+         Serial.println("servoMotor.write(55);");
+      }
+      if(input == 'm'){
+      
+        delay(4000);
+         for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+          servoMotor.write(170);
+          delay(500);
+             for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+            delay(3000);
+            for (pos = 180; pos >= 90; pos -= 1) 
+           {
+              servoMotor2.write(pos);              
+              delay(15);                       
+           }
+           servoMotor.write(90);
+           delay(500);
+          for (pos = 90; pos <= 180; pos += 1) 
+           {
+               servoMotor2.write(pos);              
+              delay(15);                       
+           }
+
+         Serial.println("delay(3000);");
+         Serial.println("servoMotor.write(90);");
+         Serial.println("delay(5000);");
+         Serial.println("servoMotor.write(55);");
+      }
+
     }
  
 }
