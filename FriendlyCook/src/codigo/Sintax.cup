@@ -20,7 +20,7 @@ parser code
 :};
 
 terminal SANJI,QUIERO,OYE,TRAER,CUENTA,HACER,PEDIDO,LISTO,LA,Y,EL,LAS,LOS,CANT_UN,CANT_UNA,DE,VASOS,CUCHARAS,TENEDORES,SERVILLETAS,
-PEPSI,POR,FAVOR,Numero,Coma,LINEA,ERROR,SUSHI_CAMARON,MESAA,MESAB,MESAC,MESAD,
+PEPSI,POR,FAVOR,Coma,LINEA,ERROR,SUSHI_CAMARON,MESAA,MESAB,MESAC,MESAD,
 SUSHI_POLLO, SUSHI_RES, CAMARONITO, BOMBAZO, HAMBURGUESA_ARROZ,ADIOS,
 TERIYAKI, HELADO_VAINILLA, FRUTA_CARAMELO, HELADO_CACAO, PIE_LIMON, PIE_FRESA, PIE_MORA, PIE_QUESO, CHURROS,
 CAFE, EXPRESSO, MARTINI, LIMONADA, NARANJADA, COCA_COLA, VICTORIA, PIÑA_COLADA, JUGO, VAMPIRO, CORONA,
@@ -130,7 +130,7 @@ EL MENU
 LA CARTA
 :s {:  v.hayError=true; v.genErrores.add("Error sintáctico 23. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. Falta un 'quiero' o 'muestrame' antes de 'la'.\n Ejemplo: '...quiero la carta...' "); v.rutaAutomata.add("/automatas/sinQuieroVer.png"); v.audio.clear(); v.audio.add(24); :} |
 QUIERO
-:s {:  v.hayError=true; v.genErrores.add("Error sintáctico 24. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. No se especifíca que es lo que se quiere.\n Ejemplo: '...quiero la carta...', 'quiero el menu', '...quiero un sushi de pollo...'"); v.rutaAutomata.add("/automatas/sinQuieroVer.png"); v.audio.clear(); v.audio.add(24); :}
+:s {:  v.hayError=true; v.genErrores.add("Error sintáctico 24. LINEA:"+(sright+1)+"\n No se reconoce el inicio de la petición. No se especifíca que es lo que se quiere.\n Ejemplo: '...quiero la carta...', 'quiero el menu', '...quiero un sushi de pollo...'"); v.audio.clear(); v.audio.add(24); :}
 
 ;
 

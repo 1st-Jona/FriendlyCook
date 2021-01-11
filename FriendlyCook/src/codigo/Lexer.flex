@@ -4,8 +4,7 @@ import static codigo.Tokens.*;
 %class Lexer
 %type Tokens
 
-D=[0-9]+
-MM=[a-zA-Z_-ñÑ]+
+
 
 
 
@@ -180,8 +179,6 @@ espacio=[ ,\t,\r,\n]+
 /* Comentarios */
 ( "//"(.)* ) {/*Ignore*/}
 
-/* Salto de linea */
-("(-"{D}+")")|{D}+ {lexeme=yytext(); return Numero;}
 
 
 

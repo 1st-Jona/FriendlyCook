@@ -9,8 +9,7 @@ import java_cup.runtime.Symbol;
 %line
 %char
 
-D=[0-9]+
-MM=[a-zA-Z_-ñÑ]+
+
 
 
 

@@ -58,7 +58,7 @@ public class Ventana extends javax.swing.JFrame {
     int contador = 0;
     TextLineNumber lineas;
     DefaultTableModel model;
-    
+    static int compilacion=0;
     //AUDIO
     static ArrayList <Integer> audio = new ArrayList();
     public Clip clip;
@@ -96,6 +96,7 @@ public class Ventana extends javax.swing.JFrame {
      String codeArduino="";
     static ArrayList <String> rutaAutomata = new ArrayList<String>();
     static String codArduinoGenerado ="";
+    static String codArduinoGenerado2 ="";
     static String codObjGenerado=""; 
     static boolean delete=false;
     static int cantPlatillos;
@@ -182,8 +183,8 @@ public class Ventana extends javax.swing.JFrame {
                     try{
                         if(ino.isMessageAvailable()){        
                             codArduinoGenerado+=ino.printMessage();
-                         
-                            txtArduinoCode.setText(codArduinoGenerado.replaceAll(";", ";\n"));
+                            codArduinoGenerado2=codArduinoGenerado.replaceAll(";", ";\n");
+                            txtArduinoCode.setText(codArduinoGenerado2.replaceAll ("}", "}\n"));
                         }
                     }catch(SerialPortException|ArduinoException ex){
                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE,null,ex);
@@ -383,6 +384,8 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jPanel1 = new javax.swing.JPanel();
+        lblArduino = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtCodigo = new javax.swing.JTextPane();
@@ -412,10 +415,6 @@ public class Ventana extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        lblArduino = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
 
         jScrollPane4.setViewportView(jTextPane1);
 
@@ -425,6 +424,15 @@ public class Ventana extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(lblArduino, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 90, 20));
+
+        jButton5.setText("Limpiar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 83, 90, 20));
 
         jButton2.setBackground(new java.awt.Color(102, 255, 0));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/runFi.png"))); // NOI18N
@@ -492,6 +500,7 @@ public class Ventana extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Código Intermedio", jScrollPane7);
 
+        txtArduinoCode.setEditable(false);
         txtArduinoCode.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         txtArduinoCode.setForeground(new java.awt.Color(51, 51, 255));
         txtArduinoCode.addInputMethodListener(new java.awt.event.InputMethodListener() {
@@ -620,31 +629,6 @@ public class Ventana extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Berlin Sans FB Demi", 0, 18)); // NOI18N
         jLabel7.setText("Código Compilado: ");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
-        jPanel1.add(lblArduino, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 90, 20));
-
-        jButton4.setText("90");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
-
-        jButton5.setText("180");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
-
-        jButton7.setText("0");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 630));
 
@@ -706,6 +690,7 @@ public class Ventana extends javax.swing.JFrame {
                  String[] paramsObj;
                  paramsObj=codObjPeticion.get(0).split(",");
                  if(paramsObj[0].equals("add")){
+                     
                     while(nPlatillo<=27){
                         for(int l=0; l<codObjPeticion.size(); l++){
                             paramsObj=codObjPeticion.get(l).split(",");
@@ -714,7 +699,11 @@ public class Ventana extends javax.swing.JFrame {
                            }
                         }
                      if(cant>0){
+                           if(mesaActual==5){
+                           codObjPeticionOptimizado.add("add,cuentaCocina"+","+nPlatillo+","+cant);
+                           }else{
                         codObjPeticionOptimizado.add("add,cuenta"+mesaActual+","+nPlatillo+","+cant);}
+                     }
                         nPlatillo++;
                         cant=0;
 
@@ -727,9 +716,11 @@ public class Ventana extends javax.swing.JFrame {
                     paramsObj=codObjPeticion.get(0).split(",");
                     for(int p=0;p<codObjPeticion.size();p++){
                         if(paramsObj[1].equals("cuenta")){
-                         codObjGenerado+="[show,"+paramsObj[1]+mesaActual+",mesa"+mesaActual+", ]\n";}
+                             if(mesaActual==5){codObjGenerado+="[show,"+paramsObj[1]+",cocina"+", ]\n";}else{
+                         codObjGenerado+="[show,"+paramsObj[1]+mesaActual+",mesa"+mesaActual+", ]\n";}}
                         else{
-                        codObjGenerado+="[show,"+paramsObj[1]+",mesa"+mesaActual+", ]\n";}
+                            if(mesaActual==5){codObjGenerado+="[show,"+paramsObj[1]+",cocina"+", ]\n";}else{
+                        codObjGenerado+="[show,"+paramsObj[1]+",mesa"+mesaActual+", ]\n";}}
                     }
                  }
                 
@@ -748,8 +739,27 @@ public class Ventana extends javax.swing.JFrame {
                     
                     //Liberar
                     if(codObjeto.equals("free,marvin,mesa, ")){
+                        if (mesaActual==5) {
+                            codObjGenerado="[free,marvin,cocina, ]";
+                            
+                        }else{
+                        codObjGenerado="[free,marvin,"+mesaActual+", ]";}
                         statusMarvin=false;
                         if(delete){
+                        if(mesaActual==5){
+                            audio.clear();
+                            codObjGenerado="[bye,marvin,cocina, ]";
+                             txtErrores.setForeground(Color.ORANGE);
+                            sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.";
+                            delete=false;
+                        }else{
+                            
+                            
+                         
+                            
+                            
+                       
+                        codObjGenerado="[bye,marvin,"+mesaActual+", ]";
                             if(mesaActual==1){
                                    cuenta.clear();
                                    totalPagar=0;
@@ -777,7 +787,7 @@ public class Ventana extends javax.swing.JFrame {
                                         Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                          
-                        }
+                        }}
                          if(!peticionesMarvin.isEmpty() && peticionesMarvin.size()>1 && statusMarvin==false){
                              statusMarvin=true;
                             String c= peticionesMarvin.get(1)+"";
@@ -818,6 +828,7 @@ public class Ventana extends javax.swing.JFrame {
                             audio.clear();
                              txtErrores.setForeground(Color.ORANGE);
                             sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.";
+                            
                         }else{
                         JFlex.Out.println("se mostro cuenta");
                         String cuentaAcumulada="";
@@ -859,9 +870,11 @@ public class Ventana extends javax.swing.JFrame {
                   
                      if(codObjeto.equals("traer,mesa,vaso, ")){  
                          if(mesaActual==5){
+                               codObjGenerado+="[traer,cocina"+",vaso, ]\n";
                         audio.clear();
                         txtErrores.setForeground(Color.ORANGE);
                             sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
+                             
                     }else{
                           codObjGenerado+="[traer,mesa"+mesaActual+",vaso, ]\n";
                          traer(m);
@@ -869,6 +882,7 @@ public class Ventana extends javax.swing.JFrame {
                      }
                      if(codObjeto.equals("traer,mesa,cuch, ")){
                          if(mesaActual==5){
+                               codObjGenerado+="[traer,cocina"+",cuch, ]\n";
                         audio.clear();
                         txtErrores.setForeground(Color.ORANGE);
                             sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
@@ -878,6 +892,7 @@ public class Ventana extends javax.swing.JFrame {
                      }
                      if(codObjeto.equals("traer,mesa,tene, ")){
                          if(mesaActual==5){
+                             codObjGenerado+="[traer,cocina"+",tene, ]\n";
                         audio.clear();
                         txtErrores.setForeground(Color.ORANGE);
                             sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
@@ -886,7 +901,9 @@ public class Ventana extends javax.swing.JFrame {
                          traer(m);
                      }}
                      if(codObjeto.equals("traer,mesa,serv, ")){
+                         
                          if(mesaActual==5){
+                             codObjGenerado+="[traer,cocina"+",serv, ]\n";
                         audio.clear();
                         txtErrores.setForeground(Color.ORANGE);
                             sonido("29.wav");resultado="Excepción de ejecución. No se puede usar esta petición desde la cocina.\n\n";
@@ -1043,7 +1060,9 @@ public class Ventana extends javax.swing.JFrame {
              
         } catch (Exception ex) {
            Symbol sym = s.getS();
-            txtErrores.setText("Error de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", Texto: \""+ sym.value+ "\"");
+            txtErrores.setText("Error de sintaxis. Linea: "+ (sym.right +1)+ "Columna: "+ (sym.left + 1)+ ", \nTexto: \""+ sym.value+ "\n["+txtCodigo.getText()+"] No es una petición válida para el lenguaje. Marvin no puede entenderte :(");
+            audio.clear();
+            sonido("13.wav");
             txtErrores.setForeground(Color.RED);
             
              lblAutomata.setText("");
@@ -1213,17 +1232,24 @@ public void traer(String c){
     }//GEN-LAST:event_btnConectarArduinoMouseClicked
 
     private void txtCodigoDictadoInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtCodigoDictadoInputMethodTextChanged
-      
+      compilacion+=1;
+      if(compilacion==2){
+          compilacion=0;
+        if(arduinoOn==true){
+
         txtCodigo.setText(txtCodigoDictado.getText().toString());
         txtCliente.setText("");
         
         compilar();
-        sintactico();
+       if(txtErrores.getText().equals("SIN ERRORES LÉXICOS - COMPILACIÓN EXITOSA")){
+           sintactico();
+       }
         txtArduinoCode.setText("");
         codArduinoGenerado="";
 
         hayError=false;
-        
+        }else{JOptionPane.showMessageDialog(this, "¡No se ha establecido conexión con Arduino!", "Alerta de conexión", JOptionPane.WARNING_MESSAGE); }
+      }
     }//GEN-LAST:event_txtCodigoDictadoInputMethodTextChanged
 
     private void txtArduinoCodeInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtArduinoCodeInputMethodTextChanged
@@ -1236,12 +1262,14 @@ public void traer(String c){
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if(arduinoOn==true){
-           
+
         txtCodigo.setText(txtCodigoDictado.getText().toString());
         txtCliente.setText("");
         
         compilar();
-        sintactico();
+       if(txtErrores.getText().equals("SIN ERRORES LÉXICOS - COMPILACIÓN EXITOSA")){
+           sintactico();
+       }
         txtArduinoCode.setText("");
         codArduinoGenerado="";
 
@@ -1300,37 +1328,8 @@ public void traer(String c){
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        try {
-                ino.sendData("x");
-      
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
+       txtCodigoDictado.setText("");
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-                ino.sendData("y");
-      
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       try {
-                ino.sendData("z");
-      
-            } catch (ArduinoException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SerialPortException ex) {
-                Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }//GEN-LAST:event_jButton7ActionPerformed
     public void compilar(){
         String[] titulos = {"Nombre", "Componente léxico", "NoLinea"};
         model = new DefaultTableModel(null, titulos);
@@ -1360,18 +1359,8 @@ public void traer(String c){
                 }
                 switch (tokens) {
 
-                    case LINEA:
-                    cont++;
-                    break;
-                   
-                    case Numero:
-                    fila[0] = lexer.lexeme;
-                    fila[1] = "Constante Numérica";
-                    fila[2] = cont + "";
-                    model.addRow(fila);
-                    tblTokens.setModel(model);
-                    break;
                     
+                
                     
 case SANJI:
 fila[0] = lexer.lexeme;
@@ -1585,14 +1574,20 @@ fila[0] = lexer.lexeme;
     fila[2] = cont + "";
     model.addRow(fila);
     tblTokens.setModel(model);
+    
 break;
 case ERROR:
-fila[0] = lexer.lexeme;
-    fila[1] = "ERROR";
-    fila[2] = cont + "";
-    model.addRow(fila);
-    tblTokens.setModel(model);
-break;
+   
+     txtErrores.setForeground(Color.red);
+     txtArduinoCode.setText("");
+     txtCodObjGenerado.setText("");
+     txtCliente.setText("");
+     lblAutomata.setText("");
+                        resultado = "Linea: " + cont + " ¡Error Léxico!: \n"
+                                + "            Descripción: Palabra en petición no reconocida\n"
+                                + "            Propuesta de solución: Utilice palabras válidas para el lenguaje de Marvin.\n" ;
+                        
+                        break;
 //cuenta
 case CUENTA:
 fila[0] = lexer.lexeme;
@@ -1938,6 +1933,7 @@ break;
                 txtErrores.setText(resultado);
                 if(txtErrores.getText().equals("")){
                     txtErrores.setText("SIN ERRORES LÉXICOS - COMPILACIÓN EXITOSA");
+                    
                 };
 
             }
@@ -2009,10 +2005,8 @@ break;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

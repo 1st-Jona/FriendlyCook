@@ -127,10 +127,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     case ERROR:
                         resultado += "Simbolo no definido 'n";
                         break;
-                    case Numero: 
-                       
-                        resultado += lexer.lexeme + ": Es un " + tokens + "\n";
-                        break;
+                   
                     case Coma: 
                  
                         resultado += lexer.lexeme + ": Es una " + tokens + "\n";
